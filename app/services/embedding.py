@@ -23,9 +23,15 @@ def generate_embeddings_batch(texts: list[str]) -> list[list[float]]:
     return [item["embedding"] for item in response.data]
 
 
-def embed_all_documents(db: Session) -> int:
-    """Generate embeddings for all documents that don't have one yet."""
-    docs = db.query(Document).filter(Document.embedding.is_(None)).all()
+def embed_all_documents(db: Session, party_id: int | None = None) -> int:
+    """Generate embeddings for all documents that don't have one yet.
+
+    If party_id is given, only documents belonging to that party are processed.
+    """
+    q = db.query(Document).filter(Document.embedding.is_(None))
+    if party_id is not None:
+        q = q.filter(Document.party_id == party_id)
+    docs = q.all()
     if not docs:
         logger.info("No documents need embedding")
         return 0

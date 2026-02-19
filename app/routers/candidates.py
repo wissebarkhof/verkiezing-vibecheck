@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Request
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session, joinedload, selectinload
 
 from app.database import get_db
 from app.models import Candidate, Election, Motion, MotionCandidate, Party
@@ -10,20 +10,21 @@ router = APIRouter(prefix="/kandidaten")
 @router.get("/")
 def candidate_list(request: Request, db: Session = Depends(get_db)):
     election = db.query(Election).first()
-    candidates = []
+    parties = []
     if election:
-        candidates = (
-            db.query(Candidate)
-            .join(Party)
+        parties = (
+            db.query(Party)
             .filter(Party.election_id == election.id)
-            .options(joinedload(Candidate.party))
-            .order_by(Party.name, Candidate.position_on_list)
+            .options(selectinload(Party.candidates))
+            .order_by(Party.current_seats.desc().nullslast(), Party.name)
             .all()
         )
+        for party in parties:
+            party.candidates.sort(key=lambda c: c.position_on_list)
     return request.app.state.templates.TemplateResponse(
         request,
         "candidates/list.html",
-        {"election": election, "candidates": candidates},
+        {"election": election, "parties": parties},
     )
 
 

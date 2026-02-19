@@ -43,7 +43,7 @@ jobs:
       - name: Build and push image
         run: |
           IMAGE="${{ secrets.ACR_LOGIN_SERVER }}/verkiezing-vibecheck:${{ github.sha }}"
-          docker build -t "$IMAGE" -t "${{ secrets.ACR_LOGIN_SERVER }}/verkiezing-vibecheck:latest" .
+          docker build --platform linux/amd64 -t "$IMAGE" -t "${{ secrets.ACR_LOGIN_SERVER }}/verkiezing-vibecheck:latest" .
           docker push "$IMAGE"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/verkiezing-vibecheck:latest"
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV

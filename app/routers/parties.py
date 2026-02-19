@@ -16,7 +16,7 @@ def party_list(request: Request, db: Session = Depends(get_db)):
         parties = (
             db.query(Party)
             .filter(Party.election_id == election.id)
-            .order_by(Party.name)
+            .order_by(Party.current_seats.desc().nullslast(), Party.name)
             .all()
         )
     return request.app.state.templates.TemplateResponse(

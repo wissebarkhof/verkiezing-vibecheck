@@ -2,8 +2,10 @@
 
 Usage:
     uv run python scripts/generate_summaries.py
+    uv run python scripts/generate_summaries.py --party BIJ1
 """
 
+import argparse
 import logging
 import sys
 from pathlib import Path
@@ -22,9 +24,23 @@ logger = logging.getLogger(__name__)
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Generate AI summaries for party programs")
+    parser.add_argument(
+        "--party",
+        default=None,
+        help="Only generate summary for this party (abbreviation or name, e.g. BIJ1)",
+    )
+    args = parser.parse_args()
+
     db = SessionLocal()
     try:
-        parties = db.query(Party).filter(Party.program_text.isnot(None)).all()
+        q = db.query(Party).filter(Party.program_text.isnot(None))
+        if args.party:
+            needle = args.party.lower()
+            q = q.filter(
+                Party.abbreviation.ilike(needle) | (Party.name.ilike(needle))
+            )
+        parties = q.all()
         if not parties:
             logger.info("No parties with program text found. Run ingestion first.")
             return

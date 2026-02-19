@@ -21,6 +21,7 @@ POSTGRES_USER="pgadmin"
 POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-$(openssl rand -base64 24)}"
 CONTAINER_APP_ENV="verkiezing-env"
 CONTAINER_APP_NAME="verkiezing-app"
+CONTAINER_APP_LOCATION="${CONTAINER_APP_LOCATION:-$LOCATION}"  # override if region has capacity issues
 IMAGE_NAME="verkiezing-vibecheck"
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -74,7 +75,7 @@ echo "==> Creating Container Apps environment: $CONTAINER_APP_ENV"
 az containerapp env create \
   --name "$CONTAINER_APP_ENV" \
   --resource-group "$RESOURCE_GROUP" \
-  --location "$LOCATION"
+  --location "$CONTAINER_APP_LOCATION"
 
 echo "==> Creating Container App: $CONTAINER_APP_NAME"
 az containerapp create \

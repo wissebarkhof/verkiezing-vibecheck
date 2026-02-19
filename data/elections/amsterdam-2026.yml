@@ -484,53 +484,770 @@ parties:
 - name: "Partij voor de Dieren"
   abbreviation: "PvdD"
   website: "https://amsterdam.partijvoordedieren.nl"
+  program_pdf: "programs/amsterdam-2026/pvdd.pdf"
+  logo: "logos/pvdd.png"
   current_seats: 3
+  candidates:
+  - name: "Anke Bakker"
+    position: 1
+    linkedin: https://www.linkedin.com/in/anke-bakker-a3874ba0
+  - name: "Judith Kroon"
+    position: 2
+    linkedin: https://www.linkedin.com/in/judith-kroon-6bb88557
+  - name: "Ana Karadarevic"
+    position: 3
+    bluesky: '@anakaradarevic.bsky.social'
+  - name: "Anna Krijger"
+    position: 4
+    bluesky: '@annakrijger.bsky.social'
+    linkedin: https://www.linkedin.com/in/anna-krijger-10b53b211
+  - name: "Dave de Vos"
+    position: 5
+    linkedin: https://www.linkedin.com/in/davedevos
+  - name: "Mischa Meerburg"
+    position: 6
+  - name: "Deva Waal"
+    position: 7
+    bluesky: '@dwaal.bsky.social'
+    linkedin: https://www.linkedin.com/in/deva-waal-94a260354
+  - name: "Ryan McDonnel"
+    position: 8
+    linkedin: https://www.linkedin.com/in/ryan-mcdonnell-57a02a163
+  - name: "Daniëlle Akkermans"
+    position: 9
+  - name: "Laura Iqbal"
+    position: 10
 
+    linkedin: https://www.linkedin.com/in/laura-iqbal-23300b30a
 - name: "DENK"
   abbreviation: "DENK"
-  website: "https://amsterdam.bewegingdenk.nl"
+  website: "https://www.bewegingdenk.nl/amsterdam-2/"
   current_seats: 2
+  program_pdf: "programs/amsterdam-2026/denk.pdf"
+  logo: "logos/denk.png"
+  candidates:
+  - name: "Sheher Khan"
+    position: 1
+    linkedin: https://www.linkedin.com/in/sheher-khan-28402a59
+  - name: "Süleyman Koyuncu"
+    position: 2
+    bluesky: '@suleymankoyuncu.bsky.social'
+  - name: "Zoubida Bzim"
+    position: 3
+    linkedin: https://www.linkedin.com/in/zoubida-bzim-89597b18a
+  - name: "Numan Yilmaz"
+    position: 4
+    bluesky: '@numanyilmaz.bsky.social'
+    linkedin: https://www.linkedin.com/in/numan-yilmaz
+  - name: "Esraa Aboelkasem"
+    position: 5
+  - name: "Anwar Ihammanen"
+    position: 6
+  - name: "Michantely Lisse"
+    position: 7
+    linkedin: https://www.linkedin.com/in/michantely-lisse-0440a0a8
+  - name: "Iliaas Abdoelrahman"
+    position: 8
+    linkedin: https://www.linkedin.com/in/iliaas-abdoelrahman
+  - name: "Emma Manhoef"
+    position: 9
+    linkedin: https://www.linkedin.com/in/emma-manhoef-a0b3a5384
+  - name: "Atakhan Doğan"
+    position: 10
+  - name: "Alaina Choudhry"
+    position: 11
+  - name: "Soumia Aboutaleb"
+    position: 12
+    linkedin: https://www.linkedin.com/in/soumia-aboutaleb-991698347
+  - name: "Zaïnab Sakouhi"
+    position: 13
+  - name: "Aiden Gerrist"
+    position: 14
+  - name: "Ecrin Yilmaz"
+    position: 15
+    linkedin: https://www.linkedin.com/in/ecrin-yilmaz-7a6b0132a
+  - name: "George Owusu"
+    position: 16
+    linkedin: https://www.linkedin.com/in/george-owusu-3648a371
+  - name: "Latif Yakar"
+    position: 17
+    linkedin: https://www.linkedin.com/in/latif-yakar-8b59b01b9
+  - name: "Mustafa Üzel"
+    position: 18
+  - name: "Zeynep Taş"
+    position: 19
+    linkedin: https://www.linkedin.com/in/zeynep-ta
+  - name: "Ghizlaine Bousfia"
+    position: 20
+    linkedin: https://www.linkedin.com/in/ghizlaine-bousfia-3486001a5
+  - name: "Aziz Zaki"
+    position: 21
+    bluesky: '@azizzaki.bsky.social'
+    linkedin: https://www.linkedin.com/in/aziz-zaki-218b93151
+  - name: "Galib Gedik"
+    position: 22
+  - name: "Faried Bholai"
+    position: 23
+  - name: "Emel Gün"
+    position: 24
 
+
+    linkedin: https://www.linkedin.com/in/emelgun
 - name: "CDA"
   abbreviation: "CDA"
   website: "https://www.cda.nl/amsterdam"
   current_seats: 1
+  program_pdf: "programs/amsterdam-2026/cda.pdf"
+  logo: "logos/cda.png"
+  candidates:
+  - name: "Rogier Havelaar"
+    position: 1
+    bluesky: '@rogierhavelaar.bsky.social'
+    linkedin: https://www.linkedin.com/in/rogierhavelaar
+  - name: "Ciel Stevens-Meewis"
+    position: 2
+  - name: "Jurriaan Limburg"
+    position: 3
+    linkedin: https://www.linkedin.com/in/jurriaanlimburg
+  - name: "Katinka Hilders"
+    position: 4
+  - name: "Ibrahim Wijbenga"
+    position: 5
+    linkedin: https://www.linkedin.com/in/ibrahim-wijbenga-b871a925
+  - name: "Sophie Koppejan"
+    position: 6
+    linkedin: https://www.linkedin.com/in/sophie-koppejan-98a5a11b3
+  - name: "Laurens Lochtenberg"
+    position: 7
+    bluesky: '@lochtenberg.com'
+    linkedin: https://www.linkedin.com/in/laurenslochtenberg
+  - name: "Femke Schuddebeurs"
+    position: 8
+  - name: "Jozef Badal"
+    position: 9
+    linkedin: https://www.linkedin.com/in/jozef-badal-3b3978133
+  - name: "Robbert van Eerd"
+    position: 10
+    bluesky: '@rbgamstel.bsky.social'
+    linkedin: https://www.linkedin.com/in/robbertvaneerd
+  - name: "Brigitte Vonck"
+    position: 11
+    linkedin: https://www.linkedin.com/in/brigitte-vonck-0b6259137
+  - name: "Arthon Selbach"
+    position: 12
+    linkedin: https://www.linkedin.com/in/arthon-selbach-452551195
+  - name: "Harm Knoop"
+    position: 13
+    linkedin: https://www.linkedin.com/in/harm-knoop-332519a
+  - name: "Julius Croll"
+    position: 14
+  - name: "Lotje van Verschuer"
+    position: 15
+    linkedin: https://www.linkedin.com/in/lotje-van-verschuer-2ba23921b
+  - name: "Gerke Meijer"
+    position: 16
+    linkedin: https://www.linkedin.com/in/gerke-meijer-64b006109
+  - name: "Job Siegmann"
+    position: 17
+    linkedin: https://www.linkedin.com/in/job-siegmann-7a65241b6
+  - name: "Ramon Roks"
+    position: 18
+    linkedin: https://www.linkedin.com/in/ramon-roks-895555178
+  - name: "Charissa Nagassi"
+    position: 19
+    linkedin: https://www.linkedin.com/in/charissa-nagassi-651525225
+  - name: "Jeffrey Spijker"
+    position: 20
+    linkedin: https://www.linkedin.com/in/jeffrey-spijker-643ba192
+  - name: "Asha Ramkisoensing"
+    position: 21
+    linkedin: https://www.linkedin.com/in/asha-ramkisoensing-83499a6a
+  - name: "Steven Walker"
+    position: 22
+    bluesky: '@swalker.bsky.social'
+    linkedin: https://www.linkedin.com/in/steven-walker-748a1630
+  - name: "Maaike den Ouden"
+    position: 23
+    linkedin: https://www.linkedin.com/in/maaike-den-ouden-2a76b79
+  - name: "Ewoud Poerink"
+    position: 24
+    linkedin: https://www.linkedin.com/in/ewoud-poerink-a03373
+  - name: "Jolande Schoonenberg"
+    position: 25
+    linkedin: https://www.linkedin.com/in/nies-jolande-schoonenberg-60610547
+  - name: "Rijk van Ark"
+    position: 26
+    linkedin: https://www.linkedin.com/in/rijk-van-ark-22484714
+  - name: "Marcia Joosen"
+    position: 27
+    linkedin: https://www.linkedin.com/in/marciajoosen
+  - name: "André van Rijn"
+    position: 28
+  - name: "Angela Hoeve"
+    position: 29
+    linkedin: https://www.linkedin.com/in/angela-hoeve-762a6354
+  - name: "Daniel van Koert"
+    position: 30
+  - name: "David Naus"
+    position: 31
+    linkedin: https://www.linkedin.com/in/david-naus-028446103
+  - name: "Hans Res"
+    position: 32
+  - name: "Kees van Grootheest"
+    position: 33
+  - name: "Gonny van Oudenallen"
+    position: 34
+    linkedin: https://www.linkedin.com/in/gonny-van-oudenallen-6951638
+  - name: "Samuel Oomen"
+    position: 35
+  - name: "Jacob van Heerikhuizen"
+    position: 36
+    linkedin: https://www.linkedin.com/in/jacob-van-heerikhuizen-52635a32
+  - name: "Bram Thomassen"
+    position: 37
+    linkedin: https://www.linkedin.com/in/bram-thomassen-666a11115
+  - name: "Martijn Jonker"
+    position: 38
+    bluesky: '@martijnjonker.bsky.social'
+    linkedin: https://www.linkedin.com/in/martijn-jonker-789548
+  - name: "Julia van Litsenburg"
+    position: 39
+    linkedin: https://www.linkedin.com/in/julia-van-litsenburg-9416b3b8
+  - name: "Willem van Laatum"
+    position: 40
+    linkedin: https://www.linkedin.com/in/willem-van-laatum-b9ab7413a
+  - name: "Robert-Jan Bakker"
+    position: 41
+    linkedin: https://www.linkedin.com/in/robert-jan-bakker-b2a35783
+  - name: "Lisette van Nijhuis"
+    position: 42
+    linkedin: https://www.linkedin.com/in/lisette-van-nijhuis-20518ab1
+  - name: "Hans Burggraaff"
+    position: 43
+    linkedin: https://www.linkedin.com/in/hans-burggraaff-1a19b41b
+  - name: "Hermine Voûte"
+    position: 44
+    linkedin: https://www.linkedin.com/in/hermine-vo
+  - name: "Gregor Rossen"
+    position: 45
+    linkedin: https://www.linkedin.com/in/gregorrossen
+  - name: "Jonathan Soeharno"
+    position: 46
+    linkedin: https://www.linkedin.com/in/jonathan-soeharno-7166435
+  - name: "Lody van der Kamp"
+    position: 47
+  - name: "Martje Postma"
+    position: 48
+    linkedin: https://www.linkedin.com/in/martje-postma-8a590b288
+  - name: "Ben Knapen"
+    position: 49
+    linkedin: https://www.linkedin.com/in/ben-knapen-5a39075
+  - name: "Ferd Grapperhaus"
+    position: 50
 
+    linkedin: https://www.linkedin.com/in/ferdgrapperhaus
 - name: "VOLT"
   abbreviation: "VOLT"
   website: "https://www.voltnederland.org/amsterdam"
   current_seats: 2
+  logo: "logos/volt.png"
+  program_pdf: "programs/amsterdam-2026/volt.pdf"
+  candidates:
+  - name: "Juliet Broersen"
+    position: 1
+    bluesky: '@julietbroersen.bsky.social'
+    linkedin: https://www.linkedin.com/in/juliet-broersen-17279180
+  - name: "Pim van Burk"
+    position: 2
+    bluesky: '@vanburk.bsky.social'
+    linkedin: https://www.linkedin.com/in/pimvanburk
+  - name: "Sanne Klaver"
+    position: 3
+    linkedin: https://www.linkedin.com/in/sanne-klaver-482a6752
+  - name: "Bas van Bockel"
+    position: 4
+    linkedin: https://www.linkedin.com/in/bas-van-bockel-4038b2
+  - name: "Krystal-Marie Benjamins"
+    position: 5
+  - name: "Daan Vellema"
+    position: 6
+  - name: "Karin Nielsen"
+    position: 7
+    bluesky: '@nielsenkarin.bsky.social'
+    linkedin: https://www.linkedin.com/in/karin-nielsen-36603047
+  - name: "Mark Borst"
+    position: 8
+    linkedin: https://www.linkedin.com/in/mark-borst-b2343721
+  - name: "Rosalie Greven"
+    position: 9
+    linkedin: https://www.linkedin.com/in/rosaliegreven
+  - name: "Rick Bleumink"
+    position: 10
+    linkedin: https://www.linkedin.com/in/rick-bleumink-5114868a
+  - name: "Manou Zonderland"
+    position: 11
+  - name: "Stephan Weenk"
+    position: 12
+    linkedin: https://www.linkedin.com/in/stephan-weenk-2087a927
+  - name: "Eerke Steller"
+    position: 13
+  - name: "Bora Fidan"
+    position: 14
+    linkedin: https://www.linkedin.com/in/bora-fidan
+  - name: "Isabelle de Koning"
+    position: 15
+    linkedin: https://www.linkedin.com/in/isabelle-de-koning-1ba920104
+  - name: "Sacha de Haan"
+    position: 16
+  - name: "Verena Kitowski"
+    position: 17
+    linkedin: https://www.linkedin.com/in/verena-kitowski
+  - name: "Henk Boes"
+    position: 18
+    linkedin: https://www.linkedin.com/in/henk-boes-87b417135
+  - name: "Milou Vaal"
+    position: 19
+    linkedin: https://www.linkedin.com/in/milou-vaal-696527b2
+  - name: "Diederick Voskuil"
+    position: 20
+    linkedin: https://www.linkedin.com/in/diederick-voskuil
+  - name: "Eva Vesseur"
+    position: 21
+    linkedin: https://www.linkedin.com/in/eva-vesseur-533034a
+  - name: "Abel de Vries"
+    position: 22
+    bluesky: '@ableservied.bsky.social'
+    linkedin: https://www.linkedin.com/in/abel-de-vries-08397a101
+  - name: "Merel Frencken"
+    position: 23
+    linkedin: https://www.linkedin.com/in/merel-frencken-a18676131
+  - name: "Tom Bruin"
+    position: 24
+    linkedin: https://www.linkedin.com/in/tom--bruin
+  - name: "Jesler Voerman"
+    position: 25
+    linkedin: https://www.linkedin.com/in/jesler-voerman
+  - name: "Max Holl"
+    position: 26
+  - name: "Anna Klapwijk"
+    position: 27
+    linkedin: https://www.linkedin.com/in/annaklapwijk
+  - name: "Mujtaba Ariaie-Buurke"
+    position: 28
+  - name: "Malu Pasman"
+    position: 29
+  - name: "Rens de Boer"
+    position: 30
+    linkedin: https://www.linkedin.com/in/rens-de-boer-307a4189
+  - name: "Marlene van Loo"
+    position: 31
+    linkedin: https://www.linkedin.com/in/marlene-van-loo-aa56a5162
+  - name: "Itay Garmy"
+    position: 32
 
+    linkedin: https://www.linkedin.com/in/itaygarmy
 - name: "SP"
   abbreviation: "SP"
   website: "https://amsterdam.sp.nl"
   current_seats: 2
+  logo: "logos/sp.png"
+  program_pdf: "programs/amsterdam-2026/sp.pdf"
+  candidates:
+  - name: "Angelo Delsen"
+    position: 1
+  - name: "Jim Haijen"
+    position: 2
+    linkedin: https://www.linkedin.com/in/jim-haijen-43606414b
+  - name: "Dane Harris"
+    position: 3
+    linkedin: https://www.linkedin.com/in/dane-harris-a059a82b7
+  - name: "Erna Berends"
+    position: 4
+    bluesky: '@erna02.bsky.social'
+    linkedin: https://www.linkedin.com/in/erna-berends-aab5344b
+  - name: "Dessie Lividikou"
+    position: 5
+    linkedin: https://www.linkedin.com/in/dessie-lividikou-41b2079
+  - name: "Cuno Nasserie"
+    position: 6
+  - name: "Damiaan Reijnaers"
+    position: 7
+    linkedin: https://www.linkedin.com/in/damiaan-reijnaers
+  - name: "Esther van Marrewijk"
+    position: 8
+    linkedin: https://www.linkedin.com/in/esther-van-marrewijk
+  - name: "Niels Scheele"
+    position: 9
+    linkedin: https://www.linkedin.com/in/niels-scheele-633362150
+  - name: "Fred Yntema"
+    position: 10
+    linkedin: https://www.linkedin.com/in/alfred-yntema-575428101
+  - name: "Hans van Heijningen"
+    position: 11
+    bluesky: '@hvh1957.bsky.social'
+    linkedin: https://www.linkedin.com/in/hans-van-heijningen-522655178
+  - name: "Jet van Rijswijk"
+    position: 12
+    linkedin: https://www.linkedin.com/in/jetvanrijswijk
+  - name: "Daniël Peters"
+    position: 13
+    bluesky: '@leroy421.bsky.social'
+    linkedin: https://www.linkedin.com/in/daniel-peters
+  - name: "Mark van Dongen"
+    position: 14
+    bluesky: '@markvandongen.bsky.social'
+    linkedin: https://www.linkedin.com/in/mark-van-dongen-93375111
+  - name: "Neeltje Peters"
+    position: 15
+    linkedin: https://www.linkedin.com/in/neeltje-peters
+  - name: "Rada Ruijter"
+    position: 16
+    linkedin: https://www.linkedin.com/in/rada-ruijter-21a358183
+  - name: "Wouter Monteban"
+    position: 17
+  - name: "Melissa Costello"
+    position: 18
+    linkedin: https://www.linkedin.com/in/melissa-costello-043ba8165
+  - name: "Jos Modeste-Boonekamp"
+    position: 19
+    linkedin: https://www.linkedin.com/in/jos-modeste-boonekamp-92087648
+  - name: "Rosa Kroon"
+    position: 20
+  - name: "Peter Abbink"
+    position: 21
+    bluesky: '@peterabbink.bsky.social'
+    linkedin: https://www.linkedin.com/in/peter-abbink-986aa1106
+  - name: "Katja Doomernik"
+    position: 22
+  - name: "Naomi de Rooy ten Meer"
+    position: 23
+  - name: "Laurens de Rooij"
+    position: 24
+    linkedin: https://www.linkedin.com/in/laurens-de-rooij-a6337248
+  - name: "Chaheed Chekhchar"
+    position: 25
+    linkedin: https://www.linkedin.com/in/chaheed-chekhchar-42988b302
+  - name: "Ezra Beyhansoy"
+    position: 26
+  - name: "Jochem Bodewes"
+    position: 27
+    linkedin: https://www.linkedin.com/in/jochem-bodewes-9224291a4
+  - name: "Feliciën Veldema"
+    position: 28
+  - name: "Jeroen Rijnders"
+    position: 29
+    linkedin: https://www.linkedin.com/in/jeroen-rijnders-248b718
+  - name: "Dragan Bakema"
+    position: 30
+  - name: "Peter Kwint"
+    position: 31
 
+
+    bluesky: '@peterkwint.bsky.social'
+    linkedin: https://www.linkedin.com/in/peter-kwint-80ba09311
 - name: "JA21"
   abbreviation: "JA21"
   website: "https://amsterdam.ja21.nl"
   current_seats: 2
+  logo: "logos/ja21.png"
+  program_pdf: "programs/amsterdam-2026/ja21.pdf"
+  candidates:
+  - name: "Sytze Rijpkema"
+    position: 1
+    linkedin: https://www.linkedin.com/in/sytze-rijpkema-147a75136
+  - name: "Stef Keij"
+    position: 2
+    linkedin: https://www.linkedin.com/in/stef-keij-3b70b2191
+  - name: "Naomi Italiaander"
+    position: 3
+    linkedin: https://www.linkedin.com/in/naomi-italiaander-a066b7b
+  - name: "Carina Molema"
+    position: 4
+  - name: "Rutger van den Bosch"
+    position: 5
+    linkedin: https://www.linkedin.com/in/rutger-van-den-bosch-9280121bb
+  - name: "Bas de Kort"
+    position: 6
+    bluesky: '@tryshasla.bsky.social'
+    linkedin: https://www.linkedin.com/in/bas-de-kort-a19496175
+  - name: "Maarten Brante"
+    position: 7
+    linkedin: https://www.linkedin.com/in/maarten-brante-8367a52
+  - name: "Jacques Groenewoudt"
+    position: 8
+  - name: "Janneke Lagerwaard"
+    position: 9
+    linkedin: https://www.linkedin.com/in/janneke-lagerwaard-5855579b
+  - name: "Erick Outshoorn"
+    position: 10
+  - name: "Juliette Politiek-Kerstens"
+    position: 11
+  - name: "Tim Tambach"
+    position: 12
+  - name: "Emil Reen"
+    position: 13
+    linkedin: https://www.linkedin.com/in/emilreen
+  - name: "Miklos Lelkes"
+    position: 14
+    linkedin: https://www.linkedin.com/in/miklos-lelkes-aa0b8650
+  - name: "Kevin van Meurs"
+    position: 15
+    linkedin: https://www.linkedin.com/in/kevin-van-meurs-6161b352
+  - name: "Rene Visser"
+    position: 16
+    linkedin: https://www.linkedin.com/in/rene-visser-8876a214b
+  - name: "Wouter Klinkenberg"
+    position: 17
+    linkedin: https://www.linkedin.com/in/wouter-klinkenberg-b165aa28
+  - name: "Machteld Allan"
+    position: 18
+  - name: "Roland de Jong"
+    position: 19
+    linkedin: https://www.linkedin.com/in/roland-de-jong-381b1929
+  - name: "Cas van Berkel"
+    position: 20
+    linkedin: https://www.linkedin.com/in/cas-van-berkel-9224a93a
+  - name: "Annabel Nanninga"
+    position: 21
 
+    bluesky: '@ananninga.bsky.social'
+    linkedin: https://www.linkedin.com/in/annabel-nanninga-228738158
 - name: "BIJ1"
   abbreviation: "BIJ1"
-  website: "https://bij1.org"
+  website: "https://amsterdam.bij1.org"
   current_seats: 0  # split into De Vonk + Partij voor Morgen
+  logo: "logos/bij1.png"
+  program_pdf: "programs/bij1.pdf"
+  candidates:
+  - name: "Tofik Dibi"
+    position: 1
+  - name: "Dylan Lennox Bakker"
+    position: 2
+    bluesky: '@dylanfixthet.bsky.social'
+    linkedin: https://www.linkedin.com/in/dylanlbakker
+  - name: "Saskia Meiland"
+    position: 3
+    linkedin: https://www.linkedin.com/in/saskia-meiland-ab86a6327
+  - name: "Dorien Ballout"
+    position: 4
+    bluesky: '@dorienballout.bsky.social'
+    linkedin: https://www.linkedin.com/in/dorien-ballout-siemons-6969a217
+  - name: "Glenda Vijzelman"
+    position: 5
+    linkedin: https://www.linkedin.com/in/glenda-vijzelman-263a2715
+  - name: "Fatima Hakiki"
+    position: 6
+  - name: "Teun Otte"
+    position: 7
+    linkedin: https://www.linkedin.com/in/teun-otte-a6584b2b1
+  - name: "Mariska Reemnet"
+    position: 8
+  - name: "Kenneth Donau"
+    position: 9
+  - name: "Patricia Pinas"
+    position: 10
+  - name: "FG"
+    position: 11
+  - name: "Fabian Vroom"
+    position: 12
+  - name: "Natifha Aarland"
+    position: 13
+  - name: "Kantinka Krom"
+    position: 14
+  - name: "Emke de Vries"
+    position: 15
+    linkedin: https://www.linkedin.com/in/emke-de-vries
+  - name: "Rene Adriaan"
+    position: 16
+  - name: "Chihiro Geuzebroek"
+    position: 17
+    linkedin: https://www.linkedin.com/in/chihiro-geuzebroek-0037ba21
+  - name: "Yvette Luhrs"
+    position: 18
+    bluesky: '@yvetteluhrs.bsky.social'
+    linkedin: https://www.linkedin.com/in/yvette-luhrs-6608037b
+  - name: "Andre Damian"
+    position: 19
+    linkedin: https://www.linkedin.com/in/andre-damian-42487b40
+  - name: "Tate Gibbs"
+    position: 20
+    linkedin: https://www.linkedin.com/in/tate-gibbs
+  - name: "Jill Mathon"
+    position: 21
+    linkedin: https://www.linkedin.com/in/jill-mathon-546a6725
+  - name: "Soheila Najand"
+    position: 22
+  - name: "vreer verkerke"
+    position: 23
+  - name: "Stephen Toft"
+    position: 24
+    bluesky: '@stephentoft.bsky.social'
+  - name: "Marieke de Lange"
+    position: 25
+    linkedin: https://www.linkedin.com/in/marieke-de-lange-b5801514
+  - name: "Kelly Mostert"
+    position: 26
+    linkedin: https://www.linkedin.com/in/kellymostert
+  - name: "Rob Marijnissen"
+    position: 27
+    linkedin: https://www.linkedin.com/in/rob-marijnissen-399621b
+  - name: "Frank van der Linde"
+    position: 28
+    bluesky: '@frankvanderlinde.bsky.social'
+    linkedin: https://www.linkedin.com/in/frank-van-der-linde-3b8a06a0
+  - name: "Glenn Helberg"
+    position: 29
+    linkedin: https://www.linkedin.com/in/glenn-helberg-baa441b
+  - name: "Vayhishta Miskin"
+    position: 30
 
+    linkedin: https://www.linkedin.com/in/vayhishtamiskin
 - name: "De Vonk"
   abbreviation: "De Vonk"
   website: "https://www.devonk.org"
   current_seats: 2  # split from BIJ1
+  logo: "logos/devonk.png"
+  program_pdf: "programs/amsterdam-2026/devonk.pdf"
+  candidates:
+  - name: "Chris de Ploeg"
+    position: 1
+    linkedin: https://www.linkedin.com/in/chris-de-ploeg-92966458
+  - name: "Suzanne Luchthart"
+    position: 2
+  - name: "Freya Chiappino"
+    position: 3
+    linkedin: https://www.linkedin.com/in/freya-chiappino-30b926158
+  - name: "Carlos van Eck"
+    position: 4
+    bluesky: '@carlos00.bsky.social'
+    linkedin: https://www.linkedin.com/in/carlos-van-eck-616a91198
+  - name: "Niels Moek"
+    position: 5
+    linkedin: https://www.linkedin.com/in/niels-moek-471420ba
+  - name: "Hidde Heijnis"
+    position: 6
+    linkedin: https://www.linkedin.com/in/hidde-heijnis-16b94272
+  - name: "David Schreuders"
+    position: 7
+    bluesky: '@davidschreuders.bsky.social'
+    linkedin: https://www.linkedin.com/in/david-schreuders-406a6ba6
+  - name: "Nina Boelsums"
+    position: 8
+    linkedin: https://www.linkedin.com/in/ninaboelsums
+  - name: "Fatima Anwar Malik"
+    position: 9
+  - name: "Justin Ait Abdesselam"
+    position: 10
+  - name: "Freddie Kiel"
+    position: 11
+  - name: "Bayu Junaid"
+    position: 12
+  - name: "Anne Kaal"
+    position: 13
+    linkedin: https://www.linkedin.com/in/anne-kaal-b7249885
+  - name: "Beer Breederveld"
+    position: 14
+  - name: "Olivier Kools"
+    position: 15
+  - name: "Linda van Klink-Issmaili"
+    position: 16
+  - name: "Annelies van der Meij"
+    position: 17
+    linkedin: https://www.linkedin.com/in/annelies-van-der-meij-329883132
+  - name: "Wouter Stroet"
+    position: 18
+    linkedin: https://www.linkedin.com/in/wouter-stroet-b7934275
+  - name: "Julian van den Tooren"
+    position: 19
+  - name: "Jazie Veldhuyzen"
+    position: 20
 
+
+    linkedin: https://www.linkedin.com/in/jazieveldhuyzen
 - name: "Partij voor Morgen"
   abbreviation: "PvM"
   website: "https://partijvoormorgen.nl"
   current_seats: 1  # split from BIJ1 (formerly Lijst Kabamba)
+  logo: "logos/pvm.svg"
+  program_pdf: "programs/amsterdam-2026/pvm.pdf"
+
 
 - name: "Forum voor Democratie"
   abbreviation: "FvD"
-  website: "https://www.fvd.nl"
+  website: "https://fvd.nl/gemeentes/amsterdam"
   current_seats: 1
+  logo: "logos/fvd.png"
+  program_pdf: "programs/amsterdam-2026/fvd.pdf"
+  candidates:
+  - name: "Johan Dessing"
+    position: 1
+    linkedin: https://www.linkedin.com/in/johan-dessing-90019514
+  - name: "Arianne Berardi"
+    position: 2
+  - name: "Levi Vethman"
+    position: 3
+  - name: "Cirano van Haarlem"
+    position: 4
+    linkedin: https://www.linkedin.com/in/cirano-van-haarlem-5a7588197
+  - name: "Douwe Filz"
+    position: 5
+    linkedin: https://www.linkedin.com/in/douwe-filz
+  - name: "Anna Snijders"
+    position: 6
+  - name: "Reginald Eeckhout"
+    position: 7
+  - name: "Erik Masseling"
+    position: 8
+    linkedin: https://www.linkedin.com/in/erik-masseling-45898514
+  - name: "Jan Noordman"
+    position: 9
+    linkedin: https://www.linkedin.com/in/jan-noordman-34120927
+  - name: "Peter van Duijvenvoorde"
+    position: 10
+    linkedin: https://www.linkedin.com/in/peter-van-duijvenvoorde-5027a1398
+  - name: "Richard Simons"
+    position: 11
+    linkedin: https://www.linkedin.com/in/richard-simons-73b27511b
+  - name: "Isabelle Vervuurt"
+    position: 12
+  - name: "Jonathan Zaaijer"
+    position: 13
+  - name: "Yvonne van Holsteijn"
+    position: 14
+    linkedin: https://www.linkedin.com/in/yvonnevanholsteijn
+  - name: "Harm Woortmeijer"
+    position: 15
+    linkedin: https://www.linkedin.com/in/harm-woortmeijer-9b82025
+  - name: "Daniel Levi"
+    position: 16
+    bluesky: '@danuschi.bsky.social'
+    linkedin: https://www.linkedin.com/in/daniel-levi-79776555
+  - name: "Sergio Odinga"
+    position: 17
+    linkedin: https://www.linkedin.com/in/sergio-odinga-8362747b
+  - name: "Lotte Deen"
+    position: 18
+  - name: "Sergio Schaart"
+    position: 19
+    linkedin: https://www.linkedin.com/in/sergioschaart
+  - name: "Marco van der Slot"
+    position: 20
+  - name: "Bachir Splinter"
+    position: 21
+  - name: "Inge Helmstrijd"
+    position: 22
+  - name: "Ralf Dekker"
+    position: 23
+    linkedin: https://www.linkedin.com/in/ralf-dekker-27153a148
+  - name: "Freek Jansen"
+    position: 24
+    linkedin: https://www.linkedin.com/in/freek-jansen-876531150
+  - name: "Thierry Baudet"
+    position: 25
 
+
+    bluesky: '@thierrybaudetfvd.bsky.social'
+    linkedin: https://www.linkedin.com/in/thierry-baudet-68543712
 - name: "Lijst Kabamba"
   abbreviation: "Lijst Kabamba"
   current_seats: 0  # now Partij voor Morgen
@@ -542,3 +1259,9 @@ topics:
 - "Veiligheid"
 - "Onderwijs"
 - "Mobiliteit en verkeer"
+
+polling_sources:
+- name: "Onderzoek en Statistiek (O&S)"
+  type: "onderzoek_amsterdam"
+  url: "https://onderzoek.amsterdam.nl/artikel/peiling-pvda-groenlinks-en-d66-dicht-bij-elkaar"
+  enabled: true

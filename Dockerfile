@@ -9,22 +9,23 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies first (better layer caching)
-COPY pyproject.toml uv.lock* ./
+COPY pyproject.toml uv.lock* README.md ./
 RUN uv sync --frozen --no-dev
 
-# Download spaCy Dutch model
-RUN uv run python -m spacy download nl_core_news_sm
+# Download spaCy Dutch model (install directly to avoid pip dependency)
+RUN uv pip install https://github.com/explosion/spacy-models/releases/download/nl_core_news_sm-3.8.0/nl_core_news_sm-3.8.0-py3-none-any.whl
 
 # Copy application code and data
 COPY app/ app/
 COPY alembic/ alembic/
 COPY alembic.ini .
 COPY data/ data/
+COPY docker-entrypoint.sh .
 
 # Run as non-root user
-RUN useradd -r -u 1001 appuser && chown -R appuser /app
+RUN useradd -r -u 1001 -m appuser && chown -R appuser /app
 USER appuser
 
 EXPOSE 8000
 
-CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["sh", "docker-entrypoint.sh"]

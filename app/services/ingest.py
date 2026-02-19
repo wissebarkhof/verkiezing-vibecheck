@@ -20,10 +20,13 @@ def slugify(city: str, date_val: date) -> str:
     return f"{city}-{date_val.year}"
 
 
-def ingest_election(db: Session, config_path: Path) -> Election:
+def ingest_election(
+    db: Session, config_path: Path, party_filter: str | None = None
+) -> Election:
     """Load YAML config and populate DB with election, parties, and candidates.
 
     Safe to re-run: uses upsert logic based on slug / name matching.
+    If party_filter is given (abbreviation or name), only that party is ingested.
     """
     config = load_yaml_config(config_path)
     data_dir = config_path.parent.parent  # data/ directory (parent of elections/)
@@ -50,8 +53,18 @@ def ingest_election(db: Session, config_path: Path) -> Election:
         db.flush()
         logger.info(f"Created election: {election.name}")
 
-    # Ingest parties
-    for party_data in config.get("parties", []):
+    # Ingest parties (optionally filtered to a single party)
+    parties = config.get("parties", [])
+    if party_filter:
+        needle = party_filter.lower()
+        parties = [
+            p for p in parties
+            if p.get("abbreviation", "").lower() == needle
+            or p.get("name", "").lower() == needle
+        ]
+        if not parties:
+            logger.warning(f"No party matching '{party_filter}' found in config")
+    for party_data in parties:
         _ingest_party(db, election, party_data, data_dir)
 
     db.commit()

@@ -19,6 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 app.mount("/logos", StaticFiles(directory=BASE_DIR.parent / "data" / "logos"), name="logos")
+app.mount("/programs", StaticFiles(directory=BASE_DIR.parent / "data" / "programs"), name="programs")
 app.state.templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 

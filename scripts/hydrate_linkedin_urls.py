@@ -119,6 +119,11 @@ def find_best_match(candidate_name: str, urls: list[str]) -> tuple[str, float] |
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true", help="Print matches without writing to YAML")
+    parser.add_argument(
+        "--party",
+        default=None,
+        help="Only process candidates from this party (abbreviation or name, e.g. BIJ1)",
+    )
     args = parser.parse_args()
 
     api_key = os.getenv("BRAVE_API_KEY")
@@ -148,6 +153,13 @@ def main():
 
     for party in config.get("parties", []):
         party_name = party.get("name", "")
+        if args.party:
+            needle = args.party.lower()
+            if (
+                party.get("abbreviation", "").lower() != needle
+                and party_name.lower() != needle
+            ):
+                continue
         logger.info(f"\n--- {party_name} ---")
 
         for candidate in party.get("candidates", []):

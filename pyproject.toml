@@ -43,6 +43,8 @@ dependencies = [
     "pydantic-settings>=2.6.1",
     "ruamel.yaml>=0.18.0",
     "staffspy[browser]>=0.2.25",
+    "fpdf2>=2.8.6",
+    "cryptography>=46.0.5",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -51,3 +53,8 @@ packages = ["app"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "fpdf2>=2.8.6",
+]

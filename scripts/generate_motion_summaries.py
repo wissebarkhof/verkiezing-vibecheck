@@ -6,8 +6,10 @@ summary of their priorities. Stores the result in party.motion_summary.
 
 Usage:
     uv run python scripts/generate_motion_summaries.py
+    uv run python scripts/generate_motion_summaries.py --party BIJ1
 """
 
+import argparse
 import logging
 import sys
 from pathlib import Path
@@ -29,6 +31,14 @@ logger = logging.getLogger(__name__)
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Generate AI motion summaries per party")
+    parser.add_argument(
+        "--party",
+        default=None,
+        help="Only generate summary for this party (abbreviation or name, e.g. BIJ1)",
+    )
+    args = parser.parse_args()
+
     db = SessionLocal()
     try:
         election = db.query(Election).first()
@@ -36,12 +46,13 @@ def main():
             logger.error("No election found. Run ingestion first.")
             return
 
-        parties = (
-            db.query(Party)
-            .filter(Party.election_id == election.id)
-            .order_by(Party.name)
-            .all()
-        )
+        q = db.query(Party).filter(Party.election_id == election.id)
+        if args.party:
+            needle = args.party.lower()
+            q = q.filter(
+                Party.abbreviation.ilike(needle) | (Party.name.ilike(needle))
+            )
+        parties = q.order_by(Party.name).all()
 
         for party in parties:
             # Get motions submitted by this party

@@ -24,3 +24,4 @@ class Election(Base):
         back_populates="election"
     )
     motions: Mapped[list["Motion"]] = relationship(back_populates="election")
+    polls: Mapped[list["Poll"]] = relationship(back_populates="election")

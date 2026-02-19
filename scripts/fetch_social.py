@@ -7,8 +7,10 @@ For each candidate in the DB that has a bluesky_handle:
 
 Usage:
     uv run python scripts/fetch_social.py
+    uv run python scripts/fetch_social.py --party BIJ1
 """
 
+import argparse
 import logging
 import sys
 import time
@@ -113,6 +115,14 @@ def upsert_posts(db, candidate: Candidate, feed_items: list[dict]) -> list[str]:
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Fetch Bluesky posts and generate AI summaries")
+    parser.add_argument(
+        "--party",
+        default=None,
+        help="Only process candidates from this party (abbreviation or name, e.g. BIJ1)",
+    )
+    args = parser.parse_args()
+
     db = SessionLocal()
     try:
         election = db.query(Election).first()
@@ -120,16 +130,20 @@ def main():
             logger.error("No election found. Run ingestion first.")
             return
 
-        candidates = (
+        q = (
             db.query(Candidate)
             .join(Party)
             .filter(
                 Party.election_id == election.id,
                 Candidate.bluesky_handle.isnot(None),
             )
-            .order_by(Party.name, Candidate.position_on_list)
-            .all()
         )
+        if args.party:
+            needle = args.party.lower()
+            q = q.filter(
+                Party.abbreviation.ilike(needle) | (Party.name.ilike(needle))
+            )
+        candidates = q.order_by(Party.name, Candidate.position_on_list).all()
 
         if not candidates:
             logger.info("No candidates with Bluesky handles found in the database.")

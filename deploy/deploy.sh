@@ -23,7 +23,7 @@ echo "==> Logging into ACR"
 az acr login --name "$ACR_NAME"
 
 echo "==> Building image: $FULL_IMAGE"
-docker build -t "$FULL_IMAGE" -t "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:latest" .
+docker build --platform linux/amd64 -t "$FULL_IMAGE" -t "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:latest" .
 
 echo "==> Pushing image"
 docker push "$FULL_IMAGE"

@@ -31,6 +31,11 @@ def main():
         default=Path(settings.ELECTION_CONFIG),
         help="Path to election YAML config file",
     )
+    parser.add_argument(
+        "--party",
+        default=None,
+        help="Only ingest this party (abbreviation or name, e.g. BIJ1)",
+    )
     args = parser.parse_args()
 
     if not args.config.exists():
@@ -39,7 +44,7 @@ def main():
 
     db = SessionLocal()
     try:
-        election = ingest_election(db, args.config)
+        election = ingest_election(db, args.config, party_filter=args.party)
         logging.info(f"Done! Election '{election.name}' loaded with slug '{election.slug}'")
     finally:
         db.close()

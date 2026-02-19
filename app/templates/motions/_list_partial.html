@@ -1,36 +1,38 @@
-<p class="text-sm text-gray-500 mb-4">{{ total }} resultaten</p>
+<p class="text-sm text-gray-400 mb-4">{{ total }} resultaten</p>
 
 {% if motions %}
-<div class="space-y-3">
+<div class="space-y-2">
     {% for motion in motions %}
-    <a href="/moties/{{ motion.id }}" class="block bg-white rounded-lg shadow p-4 hover:shadow-md transition">
+    <a href="/moties/{{ motion.id }}"
+       class="block bg-white rounded-lg border border-gray-200 hover:border-gray-300 p-4 transition-all duration-200">
         <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
                 <h3 class="font-medium text-gray-900 line-clamp-2">{{ motion.title }}</h3>
-                <div class="flex flex-wrap gap-2 mt-2 text-xs">
+                <div class="flex flex-wrap items-center gap-2 mt-2 text-xs">
                     {% if motion.motion_type %}
-                    <span class="px-2 py-0.5 rounded-full {% if motion.motion_type == 'Motie' %}bg-blue-100 text-blue-700{% else %}bg-purple-100 text-purple-700{% endif %}">
+                    <span class="px-2 py-0.5 rounded-full font-medium
+                        {% if motion.motion_type == 'Motie' %}badge-motie{% else %}badge-amendement{% endif %}">
                         {{ motion.motion_type }}
                     </span>
                     {% endif %}
                     {% if motion.result %}
-                    <span class="px-2 py-0.5 rounded-full {% if motion.result|lower == 'aangenomen' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                    <span class="px-2 py-0.5 rounded-full font-medium
+                        {% if motion.result|lower == 'aangenomen' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
                         {{ motion.result|capitalize }}
                     </span>
                     {% endif %}
                     {% if motion.submission_date %}
                     <span class="text-gray-400">{{ motion.submission_date.strftime('%d-%m-%Y') }}</span>
                     {% endif %}
-                </div>
-                {% if motion.parties %}
-                <div class="flex flex-wrap gap-1 mt-2">
+                    {% if motion.parties %}
+                    <span class="text-gray-400">&middot;</span>
                     {% for mp in motion.parties %}
-                    <span class="text-xs text-gray-500">
+                    <span class="text-gray-500">
                         {% if mp.party %}{{ mp.party.abbreviation }}{% else %}{{ mp.notubiz_party_name }}{% endif %}{% if not loop.last %},{% endif %}
                     </span>
                     {% endfor %}
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
     </a>
@@ -39,19 +41,23 @@
 
 {# Pagination #}
 {% if total_pages > 1 %}
-<div class="flex justify-center gap-2 mt-6">
+<div class="flex justify-center items-center gap-2 mt-6 text-sm">
     {% if page > 1 %}
     <a href="/moties/?page={{ page - 1 }}&type={{ filter_type }}&result={{ filter_result }}&party_id={{ filter_party_id or '' }}&q={{ filter_q }}"
-       class="px-3 py-1 border rounded text-sm hover:bg-gray-100">&laquo; Vorige</a>
+       class="px-3 py-1.5 border border-gray-200 rounded-lg text-gray-600 hover:border-gray-300 hover:text-gray-900 transition-colors">
+        &laquo; Vorige
+    </a>
     {% endif %}
-    <span class="px-3 py-1 text-sm text-gray-500">Pagina {{ page }} van {{ total_pages }}</span>
+    <span class="px-3 py-1.5 text-gray-400">Pagina {{ page }} van {{ total_pages }}</span>
     {% if page < total_pages %}
     <a href="/moties/?page={{ page + 1 }}&type={{ filter_type }}&result={{ filter_result }}&party_id={{ filter_party_id or '' }}&q={{ filter_q }}"
-       class="px-3 py-1 border rounded text-sm hover:bg-gray-100">Volgende &raquo;</a>
+       class="px-3 py-1.5 border border-gray-200 rounded-lg text-gray-600 hover:border-gray-300 hover:text-gray-900 transition-colors">
+        Volgende &raquo;
+    </a>
     {% endif %}
 </div>
 {% endif %}
 
 {% else %}
-<p class="text-gray-500 text-sm">Geen moties gevonden met deze filters.</p>
+<p class="text-gray-400 text-sm">Geen moties gevonden met deze filters.</p>
 {% endif %}

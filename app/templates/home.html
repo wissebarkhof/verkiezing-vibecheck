@@ -5,34 +5,41 @@
 {% block nav_links %}{% endblock %}
 
 {% block content %}
-<div class="max-w-xl">
-    <h1 class="text-3xl font-bold text-gray-900 mb-3">VerkiezingsVibecheck</h1>
-    <p class="text-gray-600 mb-8">
-        Vergelijk gemakkelijk partijprogramma's, verken kandidaten en krijg inzicht in waar ze voor staan via hun socials, CV en moties, 
-        en stel vragen aan onze AI over wat partijen echt beloven.
+<div class="max-w-lg pt-6">
+
+    <!-- Hero -->
+    <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-5">Gemeenteraadsverkiezingen</p>
+    <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
+        Wat is de vibe<br>van jouw partij?
+    </h1>
+    <div class="h-1 w-10 rounded-full mb-6" style="background: linear-gradient(90deg, #2dd4bf, #a78bfa)"></div>
+    <p class="text-base text-gray-500 leading-relaxed mb-3">
+        Waar houden kandidaten zich mee bezig? Wat voor moties dient een partij in? Zijn die succesvol?
     </p>
-</div>
+    <p class="text-base text-gray-500 leading-relaxed mb-10">
+        Vergelijk partijprogramma's, verken kandidaten en stel vragen aan onze AI over wat partijen echt beloven.
+    </p>
 
-<h2 class="text-sm font-medium text-gray-400 uppercase tracking-wide mb-3">Kies een verkiezing</h2>
-
-{% if elections %}
-    <div class="flex flex-col gap-3 max-w-xl">
+    <!-- Election card -->
+    {% if elections %}
         {% for election in elections %}
         <a href="/verkiezingen/{{ election.slug }}"
-           class="block bg-white rounded-lg shadow hover:shadow-md transition p-5">
+           class="group card-accent-top block bg-white rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200 p-6"
+           style="--card-accent: linear-gradient(90deg, #a0f5e9, #a6a0f5)">
             <div class="flex items-center justify-between">
                 <div>
-                    <h3 class="text-base font-semibold text-blue-700">{{ election.name }}</h3>
-                    <p class="text-sm text-gray-400 mt-0.5">
+                    <p class="text-xs font-medium text-gray-400 mb-1">
                         {{ election.date.strftime('%d %B %Y') }} &middot; {{ election.city | capitalize }}
                     </p>
+                    <h2 class="text-lg font-semibold text-gray-900">{{ election.name }}</h2>
                 </div>
-                <span class="text-gray-300 text-lg">&rarr;</span>
+                <span class="text-xl text-gray-300 group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
             </div>
         </a>
         {% endfor %}
-    </div>
-{% else %}
-    <p class="text-gray-500">Nog geen verkiezingen beschikbaar.</p>
-{% endif %}
+    {% else %}
+        <p class="text-gray-400">Nog geen verkiezingen beschikbaar.</p>
+    {% endif %}
+
+</div>
 {% endblock %}

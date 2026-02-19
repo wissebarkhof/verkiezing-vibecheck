@@ -5,26 +5,34 @@
 {% block content %}
 {% if party %}
     <div class="mb-4">
-        <a href="/partijen" class="text-blue-600 hover:underline text-sm">&larr; Alle partijen</a>
+        <a href="/partijen" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">&larr; Alle partijen</a>
     </div>
 
     <h1 class="text-3xl font-bold text-gray-900 mb-1">{{ party.name }}</h1>
-    <p class="text-gray-500 mb-6">{{ party.abbreviation }}</p>
+    <p class="text-gray-400 mb-1">{{ party.abbreviation }}</p>
 
     {% if party.website_url %}
-        <p class="mb-4"><a href="{{ party.website_url }}" target="_blank" class="text-blue-600 hover:underline text-sm">Website &rarr;</a></p>
+        <p class="mb-6">
+            <a href="{{ party.website_url }}" target="_blank"
+               class="text-sm text-gray-500 hover:text-gray-900 transition-colors underline decoration-gray-300">
+                Website &rarr;
+            </a>
+        </p>
+    {% else %}
+        <div class="mb-6"></div>
     {% endif %}
 
     {% if party.description %}
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 class="text-lg font-semibold mb-2">Samenvatting verkiezingsprogramma</h2>
+        <div class="bg-white rounded-lg border border-gray-200 card-accent-top p-6 mb-6"
+             style="--card-accent: linear-gradient(90deg,#a0f5e9,#9ddcf2)">
+            <h2 class="text-lg font-semibold mb-3">Samenvatting verkiezingsprogramma</h2>
             <div class="prose prose-sm max-w-none text-gray-700">{{ party.description | markdown }}</div>
             {% if party.program_text %}
             <p class="mt-4 pt-4 border-t border-gray-100 text-sm text-gray-500">
                 Gebaseerd op dit verkiezingsprogramma:
                 <a href="/programs/{{ party.election.slug }}/{{ party.abbreviation | lower | replace(' ', '') }}.pdf"
                    target="_blank"
-                   class="text-blue-600 hover:underline">
+                   class="underline decoration-gray-300 hover:text-gray-900 transition-colors">
                     {{ party.name }} (PDF)
                 </a>
             </p>
@@ -40,10 +48,11 @@
 
     {% if party.candidates %}
         <h2 class="text-xl font-semibold mt-8 mb-4">Kandidaten</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             {% for candidate in party.candidates | sort(attribute='position_on_list') %}
-            <a href="/kandidaten/{{ candidate.id }}" class="flex items-center gap-3 p-3 bg-white rounded-lg shadow hover:shadow-md transition">
-                <span class="text-sm font-mono text-gray-400 w-6 text-right">{{ candidate.position_on_list }}.</span>
+            <a href="/kandidaten/{{ candidate.id }}"
+               class="flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200">
+                <span class="text-sm font-mono text-gray-400 w-6 text-right shrink-0">{{ candidate.position_on_list }}.</span>
                 <span class="font-medium text-gray-800">{{ candidate.name }}</span>
             </a>
             {% endfor %}

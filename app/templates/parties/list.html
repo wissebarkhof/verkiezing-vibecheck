@@ -5,11 +5,25 @@
 {% block content %}
 <h1 class="text-3xl font-bold text-gray-900 mb-6">Partijen</h1>
 
+{# Palette cycles so each card flows to the next colour in the set #}
+{% set card_gradients = [
+    'linear-gradient(90deg,#a0f5e9,#9ddcf2)',
+    'linear-gradient(90deg,#9ddcf2,#a6a0f5)',
+    'linear-gradient(90deg,#a6a0f5,#eaa0f5)',
+    'linear-gradient(90deg,#eaa0f5,#99f09f)',
+    'linear-gradient(90deg,#99f09f,#f5ad6e)',
+    'linear-gradient(90deg,#f5ad6e,#a0f5e9)',
+] %}
+{% set avatar_colors = ['#a0f5e9','#9ddcf2','#a6a0f5','#eaa0f5','#99f09f','#f5ad6e'] %}
+
 {% if parties %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for party in parties %}
+        {% set ci = loop.index0 % 6 %}
         {% set lijsttrekker = party.candidates | selectattr('position_on_list', 'eq', 1) | first %}
-        <a href="/partijen/{{ party.id }}" class="flex flex-col bg-white rounded-lg shadow hover:shadow-md transition p-5 gap-4">
+        <a href="/partijen/{{ party.id }}"
+           class="flex flex-col bg-white rounded-lg border border-gray-200 hover:border-gray-300 card-accent-top transition-all duration-200 p-5 gap-4"
+           style="--card-accent: {{ card_gradients[ci] }}">
 
             {# Header: logo + name #}
             <div class="flex items-center gap-3">
@@ -18,12 +32,13 @@
                          alt="{{ party.abbreviation }} logo"
                          class="h-10 w-10 object-contain flex-shrink-0">
                 {% else %}
-                    <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                        <span class="text-xs font-bold text-blue-700">{{ party.abbreviation[:2] }}</span>
+                    <div class="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0"
+                         style="background: {{ avatar_colors[ci] }}">
+                        <span class="text-xs font-bold text-gray-700">{{ party.abbreviation[:2] }}</span>
                     </div>
                 {% endif %}
                 <div>
-                    <h2 class="text-base font-semibold text-blue-700 leading-tight">{{ party.name }}</h2>
+                    <h2 class="text-base font-semibold text-gray-900 leading-tight">{{ party.name }}</h2>
                     <p class="text-xs text-gray-400">{{ party.abbreviation }}</p>
                 </div>
             </div>

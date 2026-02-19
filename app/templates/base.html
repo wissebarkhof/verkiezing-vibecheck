@@ -4,41 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}VerkiezingsVibecheck{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}Ontdek en verglijk partijen, kandidaten en verkiezingsprogramma's{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Ontdek en vergelijk partijen, kandidaten en verkiezingsprogramma's{% endblock %}">
     <meta property="og:title" content="{% block og_title %}Verkiezing Vibecheck{% endblock %}">
     <meta property="og:description" content="{% block og_description %}AI-gestuurde analyse van verkiezingsinformatie.{% endblock %}">
     <meta property="og:type" content="website">
     <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
     {% block head %}{% endblock %}
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
-    <nav class="bg-white shadow-sm border-b">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="/" class="text-xl font-bold text-blue-700">VerkiezingsVibecheck</a>
+<body class="bg-white min-h-screen flex flex-col">
+    <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-5 flex items-center justify-between">
+            <a href="/" class="site-logo">VerkiezingsVibecheck</a>
             {% block nav_links %}
-            <div class="flex gap-6 text-sm font-medium">
-                <a href="/partijen" class="text-gray-600 hover:text-blue-700">Partijen</a>
-                <a href="/kandidaten" class="text-gray-600 hover:text-blue-700">Kandidaten</a>
-                <a href="/moties/" class="text-gray-600 hover:text-blue-700">Moties</a>
-                <a href="/vergelijk" class="text-gray-600 hover:text-blue-700">Vergelijk</a>
-                <a href="/zoeken" class="text-gray-600 hover:text-blue-700">Zoeken</a>
+            {% set path = request.url.path %}
+            <div class="flex gap-8">
+                <a href="/partijen"   class="nav-link {% if path.startswith('/partijen') %}nav-link--active{% endif %}"   style="--accent: #a0f5e9">Partijen</a>
+                <a href="/kandidaten" class="nav-link {% if path.startswith('/kandidaten') %}nav-link--active{% endif %}" style="--accent: #9ddcf2">Kandidaten</a>
+                <a href="/programmas" class="nav-link {% if path.startswith('/programmas') %}nav-link--active{% endif %}" style="--accent: #f5d76e">Programma's</a>
+                <a href="/moties/"    class="nav-link {% if path.startswith('/moties') %}nav-link--active{% endif %}"     style="--accent: #a6a0f5">Moties</a>
+                <a href="/vergelijk"  class="nav-link {% if path.startswith('/vergelijk') %}nav-link--active{% endif %}"  style="--accent: #eaa0f5">Vergelijk</a>
+                <a href="/zoeken"     class="nav-link {% if path.startswith('/zoeken') %}nav-link--active{% endif %}"     style="--accent: #99f09f">Zoeken</a>
             </div>
             {% endblock %}
         </div>
     </nav>
 
-    <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+    <main class="flex-1 max-w-6xl mx-auto px-4 sm:px-6 py-10 w-full">
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-white border-t mt-auto">
-        <div class="max-w-6xl mx-auto px-4 py-4 text-center text-sm text-gray-500 space-y-1">
-            <div>Verkiezing Vibecheck &mdash; AI-gestuurde verkiezingsinformatie</div>
-            <div class="flex justify-center gap-4">
-                <a href="https://github.com/wissebarkhof/verkiezing-vibecheck/" target="_blank" rel="noopener noreferrer" class="hover:text-gray-700 transition-colors">GitHub</a>
-                <a href="mailto:verkiezingenvibecheck@gmail.com" class="hover:text-gray-700 transition-colors">verkiezingenvibecheck@gmail.com</a>
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 text-center text-sm space-y-2">
+            <div class="text-gray-500">Verkiezing Vibecheck &mdash; AI-gestuurde verkiezingsinformatie</div>
+            <div class="flex justify-center gap-6 text-gray-400">
+                <a href="https://github.com/wissebarkhof/verkiezing-vibecheck/" target="_blank" rel="noopener noreferrer" class="hover:text-gray-600 transition-colors">GitHub</a>
+                <a href="mailto:verkiezingenvibecheck@gmail.com" class="hover:text-gray-600 transition-colors">verkiezingenvibecheck@gmail.com</a>
             </div>
         </div>
     </footer>

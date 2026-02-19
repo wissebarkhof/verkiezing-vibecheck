@@ -3,20 +3,43 @@
 {% block title %}Zoeken — Verkiezing Vibecheck{% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-bold text-gray-900 mb-6">Zoeken in verkiezingsprogramma's</h1>
+<h1 class="text-3xl font-bold text-gray-900 mb-2">Zoeken in verkiezingsprogramma's</h1>
+<p class="text-sm text-gray-400 mb-6">
+    Antwoorden worden uitsluitend gegenereerd op basis van de <a href="/programmas" class="underline hover:text-gray-600">verkiezingsprogramma's</a>.
+    Bronnen onderaan elk antwoord verwijzen naar de bijbehorende pagina's in de originele pdf's.
+</p>
 
-<form hx-get="/zoeken/" hx-target="#results" hx-swap="innerHTML" hx-indicator="#loading" class="mb-8">
+<form id="search-form" hx-get="/zoeken/" hx-target="#results" hx-swap="innerHTML" hx-indicator="#loading" class="mb-4">
     <div class="flex gap-2">
-        <input type="text" name="q" value="{{ query }}" placeholder="Stel een vraag over de verkiezingen..."
-               class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+        <input id="search-input" type="text" name="q" value="{{ query }}"
+               placeholder="Stel een vraag over de verkiezingen..."
+               class="flex-1 px-4 py-2 border border-gray-200 rounded-lg bg-white text-gray-900 placeholder-gray-400
+                      focus:outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-200 transition-colors">
+        <button type="submit"
+                class="btn-gradient-border px-6 py-2 rounded-lg whitespace-nowrap">
             Zoeken
         </button>
     </div>
 </form>
 
-<div id="loading" class="htmx-indicator text-center py-4 text-gray-500">
-    Zoeken en antwoord genereren...
+<div class="flex flex-wrap gap-2 mb-8">
+    {% for suggestion in [
+        "Wat willen verschillende partijen met fatbikes in de stad?",
+        "Hoe wil GroenLinks het afvalprobleem aanpakken?",
+        "Hoe wil de VVD huisjesmelkers nog meer tegemoet komen?",
+        "Wat doen partijen aan betaalbare woningen voor starters?",
+        "Welke partijen willen meer fietspaden?"
+    ] %}
+    <button type="button"
+            class="suggestion-chip text-sm px-3 py-1.5 rounded-full border border-gray-200 text-gray-600 bg-white transition-colors"
+            onclick="document.getElementById('search-input').value = this.textContent.trim(); htmx.trigger('#search-form', 'submit');">
+        {{ suggestion }}
+    </button>
+    {% endfor %}
+</div>
+
+<div id="loading" class="htmx-indicator text-center py-6 text-gray-400 text-sm">
+    Zoeken en antwoord genereren&hellip;
 </div>
 
 <div id="results">

@@ -5,45 +5,56 @@
 {% block content %}
 {% if candidate %}
     <div class="mb-4">
-        <a href="/kandidaten" class="text-blue-600 hover:underline text-sm">&larr; Alle kandidaten</a>
+        <a href="/kandidaten" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">&larr; Alle kandidaten</a>
     </div>
 
-    <div class="flex items-center gap-5 mb-6">
+    {# Hero #}
+    <div class="flex items-center gap-5 mb-3">
         {% if candidate.photo_url %}
             <img src="{{ candidate.photo_url }}" alt="{{ candidate.name }}"
                  referrerpolicy="no-referrer"
-                 class="w-24 h-24 rounded-full object-cover flex-shrink-0 shadow">
+                 class="w-24 h-24 rounded-full object-cover flex-shrink-0 ring-1 ring-gray-200">
         {% endif %}
         <div>
             <h1 class="text-3xl font-bold text-gray-900 mb-1">{{ candidate.name }}</h1>
             <p class="text-gray-500">
                 Nr. {{ candidate.position_on_list }} —
-                <a href="/partijen/{{ candidate.party.id }}" class="text-blue-600 hover:underline">{{ candidate.party.name }}</a>
+                <a href="/partijen/{{ candidate.party.id }}"
+                   class="underline decoration-gray-300 hover:text-gray-900 transition-colors">
+                    {{ candidate.party.name }}
+                </a>
             </p>
         </div>
     </div>
+    <div class="h-1 w-10 rounded-full mb-8" style="background: linear-gradient(90deg, #a6a0f5, #eaa0f5)"></div>
 
+    {# Bio #}
     {% if candidate.bio %}
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 class="text-lg font-semibold mb-2">Biografie</h2>
+        <div class="bg-white rounded-lg border border-gray-200 card-accent-top p-6 mb-6"
+             style="--card-accent: linear-gradient(90deg,#a6a0f5,#eaa0f5)">
+            <h2 class="text-lg font-semibold mb-3">Biografie</h2>
             <div class="prose prose-sm max-w-none text-gray-700">{{ candidate.bio | markdown }}</div>
         </div>
     {% endif %}
 
+    {# Bluesky activity summary #}
     {% if candidate.social_summary %}
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 class="text-lg font-semibold mb-2">Bluesky activiteit samenvatting</h2>
+        <div class="bg-white rounded-lg border border-gray-200 card-accent-top p-6 mb-6"
+             style="--card-accent: linear-gradient(90deg,#9ddcf2,#a6a0f5)">
+            <h2 class="text-lg font-semibold mb-3">Bluesky activiteit samenvatting</h2>
             <div class="prose prose-sm max-w-none text-gray-700">{{ candidate.social_summary | markdown }}</div>
         </div>
     {% endif %}
 
+    {# LinkedIn profile #}
     {% if candidate.linkedin_current_position or candidate.linkedin_experiences or candidate.linkedin_education or candidate.linkedin_summary %}
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <div class="bg-white rounded-lg border border-gray-200 card-accent-top p-6 mb-6"
+             style="--card-accent: linear-gradient(90deg,#99f09f,#a0f5e9)">
             <h2 class="text-lg font-semibold mb-4">LinkedIn profiel</h2>
 
             {% if candidate.linkedin_current_position %}
                 <div class="mb-4">
-                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">Huidige functie</p>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Huidige functie</p>
                     <p class="text-gray-900 font-medium">{{ candidate.linkedin_current_position }}</p>
                     {% if candidate.linkedin_current_company and candidate.linkedin_current_company != candidate.linkedin_current_position %}
                         <p class="text-gray-600 text-sm">{{ candidate.linkedin_current_company }}</p>
@@ -53,7 +64,7 @@
 
             {% if candidate.linkedin_experiences and candidate.linkedin_experiences | length > 1 %}
                 <div class="mb-4">
-                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Werkervaring</p>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Werkervaring</p>
                     <ul class="space-y-2">
                         {% set seen = [] %}
                         {% for exp in candidate.linkedin_experiences %}
@@ -73,7 +84,7 @@
 
             {% if candidate.linkedin_education %}
                 <div class="mb-4">
-                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Opleiding</p>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Opleiding</p>
                     <ul class="space-y-2">
                         {% set seen_schools = [] %}
                         {% for edu in candidate.linkedin_education %}
@@ -94,17 +105,21 @@
         </div>
     {% endif %}
 
+    {# LinkedIn activity summary #}
     {% if candidate.linkedin_summary %}
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 class="text-lg font-semibold mb-2">LinkedIn activiteit samenvatting</h2>
+        <div class="bg-white rounded-lg border border-gray-200 card-accent-top p-6 mb-6"
+             style="--card-accent: linear-gradient(90deg,#f5ad6e,#99f09f)">
+            <h2 class="text-lg font-semibold mb-3">LinkedIn activiteit samenvatting</h2>
             <div class="prose prose-sm max-w-none text-gray-700">{{ candidate.linkedin_summary | markdown }}</div>
         </div>
     {% endif %}
 
+    {# Motions #}
     {% if candidate_motions is defined and candidate_motions %}
         {% include "motions/_candidate_section.html" %}
     {% endif %}
 
+    {# Bluesky posts #}
     {% set bluesky_posts = candidate.posts | selectattr('platform', 'equalto', 'bluesky') | sort(attribute='posted_at', reverse=True) | list %}
     {% if bluesky_posts %}
         <div class="mb-6">
@@ -113,15 +128,12 @@
                 {% for post in bluesky_posts %}
                 {% set bsky_handle = candidate.bluesky_handle.lstrip('@') %}
                 {% set post_id = post.uri.split('/')[-1] %}
-                <div class="bg-white rounded-lg shadow p-4 flex flex-col">
-                    {# Post text #}
+                <div class="bg-white rounded-lg border border-gray-200 p-4 flex flex-col">
                     <p class="text-gray-800 whitespace-pre-line mb-3">{{ post.text }}</p>
 
-                    {# Embed rendering #}
                     {% if post.embed_json %}
                         {% set embed_type = post.embed_json.get('$type', '') %}
 
-                        {# Images #}
                         {% if embed_type == 'app.bsky.embed.images#view' %}
                             <div class="flex flex-wrap gap-2 mb-3">
                                 {% for img in post.embed_json.get('images', []) %}
@@ -132,7 +144,6 @@
                                 {% endfor %}
                             </div>
 
-                        {# Video — show thumbnail, link out to Bluesky #}
                         {% elif embed_type == 'app.bsky.embed.video#view' %}
                             <a href="https://bsky.app/profile/{{ bsky_handle }}/post/{{ post_id }}"
                                target="_blank" rel="noopener" class="block mb-3 relative w-fit">
@@ -144,11 +155,10 @@
                                              bg-black/30 rounded text-white text-3xl">&#9654;</span>
                             </a>
 
-                        {# External link card #}
                         {% elif embed_type == 'app.bsky.embed.external#view' %}
                             {% set ext = post.embed_json.get('external', {}) %}
                             <a href="{{ ext.uri }}" target="_blank" rel="noopener"
-                               class="flex gap-3 border rounded-lg overflow-hidden mb-3 hover:bg-gray-50 transition">
+                               class="flex gap-3 border border-gray-200 rounded-lg overflow-hidden mb-3 hover:bg-gray-50 transition-colors">
                                 {% if ext.thumb %}
                                     <img src="{{ ext.thumb }}" alt=""
                                          class="w-24 h-24 object-cover flex-shrink-0">
@@ -158,22 +168,20 @@
                                     {% if ext.description %}
                                         <p class="text-xs text-gray-500 mt-1 line-clamp-2">{{ ext.description }}</p>
                                     {% endif %}
-                                    <p class="text-xs text-blue-600 mt-1 truncate">{{ ext.uri }}</p>
+                                    <p class="text-xs text-gray-400 mt-1 truncate">{{ ext.uri }}</p>
                                 </div>
                             </a>
 
-                        {# Quoted post — link out #}
                         {% elif 'record' in embed_type %}
                             <a href="https://bsky.app/profile/{{ bsky_handle }}/post/{{ post_id }}"
                                target="_blank" rel="noopener"
-                               class="text-xs text-blue-600 hover:underline mb-3 block">
+                               class="text-xs text-gray-500 hover:text-gray-900 underline decoration-gray-300 mb-3 block transition-colors">
                                 ↩ Geciteerde post bekijken op Bluesky
                             </a>
                         {% endif %}
                     {% endif %}
 
-                    {# Footer: timestamp + engagement + link — pushed to bottom of card #}
-                    <div class="flex items-center justify-between text-xs text-gray-400 mt-auto pt-3">
+                    <div class="flex items-center justify-between text-xs text-gray-400 mt-auto pt-3 border-t border-gray-100">
                         <div class="flex gap-3">
                             <span>{{ post.posted_at.strftime('%d %b %Y') }}</span>
                             {% if post.like_count %}<span>♥ {{ post.like_count }}</span>{% endif %}
@@ -181,7 +189,8 @@
                             {% if post.repost_count %}<span>↺ {{ post.repost_count }}</span>{% endif %}
                         </div>
                         <a href="https://bsky.app/profile/{{ bsky_handle }}/post/{{ post_id }}"
-                           target="_blank" rel="noopener" class="hover:text-blue-500">
+                           target="_blank" rel="noopener"
+                           class="text-sky-500 hover:text-sky-600 transition-colors">
                             Bekijk op Bluesky →
                         </a>
                     </div>
@@ -191,18 +200,20 @@
         </div>
     {% endif %}
 
+    {# LinkedIn posts #}
     {% set linkedin_posts = candidate.posts | selectattr('platform', 'equalto', 'linkedin') | sort(attribute='posted_at', reverse=True) | list %}
     {% if linkedin_posts %}
         <div class="mb-6">
             <h2 class="text-lg font-semibold mb-3">Recente LinkedIn posts</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {% for post in linkedin_posts %}
-                <div class="bg-white rounded-lg shadow p-4 flex flex-col">
+                <div class="bg-white rounded-lg border border-gray-200 p-4 flex flex-col">
                     <p class="text-gray-800 whitespace-pre-line mb-3">{{ post.text }}</p>
-                    <div class="flex items-center justify-between text-xs text-gray-400 mt-auto pt-3">
+                    <div class="flex items-center justify-between text-xs text-gray-400 mt-auto pt-3 border-t border-gray-100">
                         <span>{{ post.posted_at.strftime('%d %b %Y') }}</span>
                         {% if post.uri.startswith('http') %}
-                            <a href="{{ post.uri }}" target="_blank" rel="noopener" class="hover:text-blue-500">
+                            <a href="{{ post.uri }}" target="_blank" rel="noopener"
+                               class="hover:text-gray-600 transition-colors">
                                 Bekijk op LinkedIn →
                             </a>
                         {% endif %}
@@ -213,18 +224,21 @@
         </div>
     {% endif %}
 
+    {# Social profile links #}
     {% if candidate.bluesky_handle or candidate.linkedin_url %}
     <div class="flex gap-4 text-sm mt-2">
         {% if candidate.bluesky_handle %}
             {% set bsky_handle = candidate.bluesky_handle.lstrip('@') %}
             <a href="https://bsky.app/profile/{{ bsky_handle }}" target="_blank" rel="noopener"
-               class="text-blue-600 hover:underline">
+               class="text-sky-500 hover:text-sky-600 transition-colors">
                 Bluesky: {{ candidate.bluesky_handle }}
             </a>
         {% endif %}
         {% if candidate.linkedin_url %}
             <a href="{{ candidate.linkedin_url }}" target="_blank" rel="noopener"
-               class="text-blue-600 hover:underline">LinkedIn</a>
+               class="text-gray-500 hover:text-gray-900 underline decoration-gray-300 transition-colors">
+                LinkedIn
+            </a>
         {% endif %}
     </div>
     {% endif %}

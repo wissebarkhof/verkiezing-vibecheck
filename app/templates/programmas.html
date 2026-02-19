@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Verkiezingsprogramma's — Verkiezing Vibecheck{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold text-gray-900 mb-2">Verkiezingsprogramma's</h1>
+<p class="text-sm text-gray-400 mb-8">
+    Hieronder vind je de originele verkiezingsprogramma's van alle deelnemende partijen.
+    De AI-antwoorden op de <a href="/zoeken/" class="underline hover:text-gray-600">zoekpagina</a> zijn uitsluitend gebaseerd op deze documenten.
+</p>
+
+{% set avatar_colors = ['#a0f5e9','#9ddcf2','#a6a0f5','#eaa0f5','#99f09f','#f5ad6e'] %}
+
+{% if parties %}
+<div class="divide-y divide-gray-100 border border-gray-200 rounded-lg bg-white overflow-hidden">
+    {% for party in parties %}
+    {% set pdf_url = pdf_map.get(party.name) %}
+    {% set ci = loop.index0 % 6 %}
+    <div class="flex items-center gap-4 px-4 py-3">
+        {# Logo #}
+        {% if party.logo_url %}
+            <img src="/logos/{{ party.logo_url | replace('logos/', '') }}"
+                 alt="{{ party.abbreviation }} logo"
+                 class="h-8 w-8 object-contain flex-shrink-0">
+        {% else %}
+            <div class="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0"
+                 style="background: {{ avatar_colors[ci] }}">
+                <span class="text-xs font-bold text-gray-700">{{ party.abbreviation[:2] }}</span>
+            </div>
+        {% endif %}
+
+        {# Name #}
+        <div class="flex-1 min-w-0">
+            <a href="/partijen/{{ party.id }}" class="text-sm font-medium text-gray-900 hover:underline">
+                {{ party.name }}
+            </a>
+        </div>
+
+        {# PDF link or missing notice #}
+        {% if pdf_url %}
+            <a href="{{ pdf_url }}" target="_blank" rel="noopener"
+               class="flex-shrink-0 text-sm px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors">
+                Programma &darr; pdf
+            </a>
+        {% else %}
+            <span class="flex-shrink-0 text-xs text-gray-300 italic">Programma nog niet beschikbaar</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-gray-500">Nog geen partijen geladen.</p>
+{% endif %}
+{% endblock %}

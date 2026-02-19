@@ -557,18 +557,18 @@ def main():
             .filter(
                 Party.election_id == election.id,
                 Candidate.linkedin_url.isnot(None),
-                Candidate.linkedin_headline.is_(None),
             )
         )
 
         if args.skip_fetched:
             query = query.filter(
+                Candidate.linkedin_summary.is_(None),
                 ~exists().where(
                     SocialPost.candidate_id == Candidate.id,
                     SocialPost.platform == "linkedin",
-                )
+                ),
             )
-            logger.info("--skip-fetched: also skipping candidates with existing LinkedIn posts")
+            logger.info("--skip-fetched: skipping candidates that already have a summary or LinkedIn posts")
 
         if args.party:
             party_filter = args.party.lower()

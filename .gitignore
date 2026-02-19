@@ -49,8 +49,12 @@ docker-compose.override.yml
 .DS_Store
 Thumbs.db
 
+# Session files
+*.pkl
+
 # Data files
 data/raw/*
 data/processed/*
 data/programs/*
 !data/.gitkeep
+!data/programs/.gitkeep

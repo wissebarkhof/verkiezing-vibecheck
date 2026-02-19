@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Motie-statistieken — Verkiezing Vibecheck{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="/moties/" class="text-blue-600 hover:underline text-sm">&larr; Alle moties</a>
+</div>
+
+<h1 class="text-3xl font-bold text-gray-900 mb-6">Statistieken per partij</h1>
+
+{% if stats %}
+<div class="bg-white rounded-lg shadow overflow-x-auto">
+    <table class="w-full text-sm">
+        <thead class="bg-gray-50 border-b">
+            <tr>
+                <th class="text-left px-4 py-3 font-medium text-gray-700">Partij</th>
+                <th class="text-right px-4 py-3 font-medium text-gray-700">Totaal</th>
+                <th class="text-right px-4 py-3 font-medium text-gray-700">Moties</th>
+                <th class="text-right px-4 py-3 font-medium text-gray-700">Amendementen</th>
+                <th class="text-right px-4 py-3 font-medium text-gray-700">Aangenomen</th>
+                <th class="text-right px-4 py-3 font-medium text-gray-700">Verworpen</th>
+                <th class="text-right px-4 py-3 font-medium text-gray-700">Slagingspercentage</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y">
+            {% for s in stats %}
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3">
+                    <a href="/partijen/{{ s.party.id }}" class="text-blue-600 hover:underline font-medium">{{ s.party.abbreviation }}</a>
+                    <span class="text-gray-400 text-xs ml-1">{{ s.party.name }}</span>
+                </td>
+                <td class="text-right px-4 py-3 font-mono">{{ s.total }}</td>
+                <td class="text-right px-4 py-3 font-mono">{{ s.moties }}</td>
+                <td class="text-right px-4 py-3 font-mono">{{ s.amendementen }}</td>
+                <td class="text-right px-4 py-3 font-mono text-green-600">{{ s.adopted }}</td>
+                <td class="text-right px-4 py-3 font-mono text-red-600">{{ s.rejected }}</td>
+                <td class="text-right px-4 py-3">
+                    <div class="flex items-center justify-end gap-2">
+                        <div class="w-16 bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: {{ s.success_rate }}%"></div>
+                        </div>
+                        <span class="font-mono text-xs w-8 text-right">{{ s.success_rate }}%</span>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p class="text-gray-500">Geen motie-statistieken beschikbaar.</p>
+{% endif %}
+{% endblock %}

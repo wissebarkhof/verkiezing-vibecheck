@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Partijen — Verkiezing Vibecheck{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold text-gray-900 mb-6">Partijen</h1>
+
+{% if parties %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for party in parties %}
+        {% set lijsttrekker = party.candidates | selectattr('position_on_list', 'eq', 1) | first %}
+        <a href="/partijen/{{ party.id }}" class="flex flex-col bg-white rounded-lg shadow hover:shadow-md transition p-5 gap-4">
+
+            {# Header: logo + name #}
+            <div class="flex items-center gap-3">
+                {% if party.logo_url %}
+                    <img src="/logos/{{ party.logo_url | replace('logos/', '') }}"
+                         alt="{{ party.abbreviation }} logo"
+                         class="h-10 w-10 object-contain flex-shrink-0">
+                {% else %}
+                    <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                        <span class="text-xs font-bold text-blue-700">{{ party.abbreviation[:2] }}</span>
+                    </div>
+                {% endif %}
+                <div>
+                    <h2 class="text-base font-semibold text-blue-700 leading-tight">{{ party.name }}</h2>
+                    <p class="text-xs text-gray-400">{{ party.abbreviation }}</p>
+                </div>
+            </div>
+
+            {# Lijsttrekker #}
+            {% if lijsttrekker %}
+            <div class="text-sm text-gray-600">
+                <span class="text-xs uppercase tracking-wide text-gray-400 font-medium">Lijsttrekker</span><br>
+                {{ lijsttrekker.name }}
+            </div>
+            {% endif %}
+
+            {# Stats row #}
+            <div class="flex items-end justify-between mt-auto pt-3 border-t border-gray-100 text-sm">
+
+                <div class="text-gray-500">
+                    <span class="text-gray-400 text-xs">Kandidaten</span><br>
+                    <span class="font-medium text-gray-700">{{ party.candidates | length }}</span>
+                </div>
+
+                {% if party.current_seats is not none %}
+                <div class="text-center">
+                    <span class="text-gray-400 text-xs">Huidige zetels</span><br>
+                    <span class="font-medium text-gray-700">{{ party.current_seats }}</span>
+                </div>
+                {% endif %}
+
+                {% if party.polled_seats is not none %}
+                <div class="text-right">
+                    <span class="text-gray-400 text-xs">
+                        Gepolst
+                        {% if party.poll_updated_at %}
+                        <span class="text-gray-300">&middot; {{ party.poll_updated_at.strftime('%-d %b') }}</span>
+                        {% endif %}
+                    </span><br>
+                    <span class="font-semibold
+                        {% if party.current_seats is not none %}
+                            {% if party.polled_seats > party.current_seats %}text-green-600
+                            {% elif party.polled_seats < party.current_seats %}text-red-500
+                            {% else %}text-gray-700{% endif %}
+                        {% else %}text-gray-700{% endif %}
+                    ">
+                        {{ party.polled_seats }}
+                        {% if party.current_seats is not none %}
+                            {% set diff = party.polled_seats - party.current_seats %}
+                            {% if diff > 0 %}<span class="text-xs">(+{{ diff }})</span>
+                            {% elif diff < 0 %}<span class="text-xs">({{ diff }})</span>
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                </div>
+                {% endif %}
+
+            </div>
+
+        </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-gray-500">Nog geen partijen geladen. Voer het ingest-script uit om data te laden.</p>
+{% endif %}
+{% endblock %}

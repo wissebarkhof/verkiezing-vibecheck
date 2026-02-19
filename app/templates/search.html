@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Zoeken — Verkiezing Vibecheck{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold text-gray-900 mb-6">Zoeken in verkiezingsprogramma's</h1>
+
+<form hx-get="/zoeken/" hx-target="#results" hx-swap="innerHTML" hx-indicator="#loading" class="mb-8">
+    <div class="flex gap-2">
+        <input type="text" name="q" value="{{ query }}" placeholder="Stel een vraag over de verkiezingen..."
+               class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            Zoeken
+        </button>
+    </div>
+</form>
+
+<div id="loading" class="htmx-indicator text-center py-4 text-gray-500">
+    Zoeken en antwoord genereren...
+</div>
+
+<div id="results">
+    {% if results %}
+        {% include "search_results.html" %}
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ election.name }} — Verkiezing Vibecheck{% endblock %}
+{% block og_title %}{{ election.name }} — Verkiezing Vibecheck{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-1">{{ election.name }}</h1>
+    <p class="text-sm text-gray-400">
+        {{ election.date.strftime('%d %B %Y') }} &middot; {{ election.city | capitalize }}
+    </p>
+
+    {% if party_count or candidate_count or motion_count %}
+    <div class="flex gap-6 mt-4 text-sm text-gray-500">
+        {% if party_count %}<span><span class="font-semibold text-gray-700">{{ party_count }}</span> partijen</span>{% endif %}
+        {% if candidate_count %}<span><span class="font-semibold text-gray-700">{{ candidate_count }}</span> kandidaten</span>{% endif %}
+        {% if motion_count %}<span><span class="font-semibold text-gray-700">{{ motion_count }}</span> moties</span>{% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<h2 class="text-sm font-medium text-gray-400 uppercase tracking-wide mb-3">Verken de verkiezing</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <a href="/partijen" class="block bg-white rounded-lg shadow hover:shadow-md transition p-5">
+        <h3 class="text-base font-semibold text-blue-700 mb-1">Partijen</h3>
+        <p class="text-sm text-gray-500">Bekijk alle deelnemende partijen en hun programma's</p>
+        {% if party_count %}<p class="text-xs text-gray-400 mt-2">{{ party_count }} partijen</p>{% endif %}
+    </a>
+
+    <a href="/kandidaten" class="block bg-white rounded-lg shadow hover:shadow-md transition p-5">
+        <h3 class="text-base font-semibold text-blue-700 mb-1">Kandidaten</h3>
+        <p class="text-sm text-gray-500">Leer de kandidaten kennen</p>
+        {% if candidate_count %}<p class="text-xs text-gray-400 mt-2">{{ candidate_count }} kandidaten</p>{% endif %}
+    </a>
+
+    <a href="/vergelijk" class="block bg-white rounded-lg shadow hover:shadow-md transition p-5">
+        <h3 class="text-base font-semibold text-blue-700 mb-1">Vergelijk</h3>
+        <p class="text-sm text-gray-500">Vergelijk partijstandpunten per onderwerp</p>
+    </a>
+
+    <a href="/zoeken" class="block bg-white rounded-lg shadow hover:shadow-md transition p-5">
+        <h3 class="text-base font-semibold text-blue-700 mb-1">Zoeken</h3>
+        <p class="text-sm text-gray-500">Stel vragen over verkiezingsprogramma's</p>
+    </a>
+
+    <a href="/moties/" class="block bg-white rounded-lg shadow hover:shadow-md transition p-5">
+        <h3 class="text-base font-semibold text-blue-700 mb-1">Moties</h3>
+        <p class="text-sm text-gray-500">Bekijk moties en amendementen uit de gemeenteraad</p>
+        {% if motion_count %}<p class="text-xs text-gray-400 mt-2">{{ motion_count }} moties</p>{% endif %}
+    </a>
+</div>
+{% endblock %}

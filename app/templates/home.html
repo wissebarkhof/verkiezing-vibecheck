@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Verkiezing Vibecheck{% endblock %}
+
+{% block nav_links %}{% endblock %}
+
+{% block content %}
+<div class="max-w-xl">
+    <h1 class="text-3xl font-bold text-gray-900 mb-3">Verkiezing Vibecheck</h1>
+    <p class="text-gray-600 mb-8">
+        Vergelijk gemakkelijk partijprogramma's, verken kandidaten en krijg inzicht in waar ze voor staan via hun socials, CV en moties, 
+        en stel vragen aan onze AI over wat partijen echt beloven.
+    </p>
+</div>
+
+<h2 class="text-sm font-medium text-gray-400 uppercase tracking-wide mb-3">Kies een verkiezing</h2>
+
+{% if elections %}
+    <div class="flex flex-col gap-3 max-w-xl">
+        {% for election in elections %}
+        <a href="/verkiezingen/{{ election.slug }}"
+           class="block bg-white rounded-lg shadow hover:shadow-md transition p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-semibold text-blue-700">{{ election.name }}</h3>
+                    <p class="text-sm text-gray-400 mt-0.5">
+                        {{ election.date.strftime('%d %B %Y') }} &middot; {{ election.city | capitalize }}
+                    </p>
+                </div>
+                <span class="text-gray-300 text-lg">&rarr;</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-gray-500">Nog geen verkiezingen beschikbaar.</p>
+{% endif %}
+{% endblock %}

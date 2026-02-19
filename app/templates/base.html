@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Verkiezing Vibecheck{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Ontdek partijen, kandidaten en verkiezingsprogramma's voor de Amsterdamse gemeenteraadsverkiezingen 2026.{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Verkiezing Vibecheck{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}AI-gestuurde verkiezingsinformatie voor Amsterdam 2026.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="text-xl font-bold text-blue-700">Verkiezing Vibecheck</a>
+            {% block nav_links %}
+            <div class="flex gap-6 text-sm font-medium">
+                <a href="/partijen" class="text-gray-600 hover:text-blue-700">Partijen</a>
+                <a href="/kandidaten" class="text-gray-600 hover:text-blue-700">Kandidaten</a>
+                <a href="/moties/" class="text-gray-600 hover:text-blue-700">Moties</a>
+                <a href="/vergelijk" class="text-gray-600 hover:text-blue-700">Vergelijk</a>
+                <a href="/zoeken" class="text-gray-600 hover:text-blue-700">Zoeken</a>
+            </div>
+            {% endblock %}
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white border-t mt-auto">
+        <div class="max-w-6xl mx-auto px-4 py-4 text-center text-sm text-gray-500">
+            Verkiezing Vibecheck &mdash; AI-gestuurde verkiezingsinformatie
+        </div>
+    </footer>
+</body>
+</html>

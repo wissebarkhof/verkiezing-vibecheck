@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ party.name if party else 'Partij' }} — Verkiezing Vibecheck{% endblock %}
+
+{% block content %}
+{% if party %}
+    <div class="mb-4">
+        <a href="/partijen" class="text-blue-600 hover:underline text-sm">&larr; Alle partijen</a>
+    </div>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-1">{{ party.name }}</h1>
+    <p class="text-gray-500 mb-6">{{ party.abbreviation }}</p>
+
+    {% if party.website_url %}
+        <p class="mb-4"><a href="{{ party.website_url }}" target="_blank" class="text-blue-600 hover:underline text-sm">Website &rarr;</a></p>
+    {% endif %}
+
+    {% if party.description %}
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-lg font-semibold mb-2">Samenvatting verkiezingsprogramma</h2>
+            <div class="prose prose-sm max-w-none text-gray-700">{{ party.description | markdown }}</div>
+        </div>
+    {% endif %}
+
+    {% if motion_count is defined and motion_count > 0 %}
+        {% with motion_summary=party.motion_summary, recent_motions=recent_motions, motion_count=motion_count %}
+            {% include "motions/_party_section.html" %}
+        {% endwith %}
+    {% endif %}
+
+    {% if party.candidates %}
+        <h2 class="text-xl font-semibold mt-8 mb-4">Kandidaten</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {% for candidate in party.candidates | sort(attribute='position_on_list') %}
+            <a href="/kandidaten/{{ candidate.id }}" class="flex items-center gap-3 p-3 bg-white rounded-lg shadow hover:shadow-md transition">
+                <span class="text-sm font-mono text-gray-400 w-6 text-right">{{ candidate.position_on_list }}.</span>
+                <span class="font-medium text-gray-800">{{ candidate.name }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% else %}
+    <p class="text-gray-500">Partij niet gevonden.</p>
+{% endif %}
+{% endblock %}

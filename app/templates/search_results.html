@@ -1,0 +1,27 @@
+{% if results %}
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-3">Antwoord</h2>
+        <div class="prose prose-sm max-w-none text-gray-700">{{ results.answer | markdown }}</div>
+    </div>
+
+    {% if results.sources %}
+    <div class="mt-4">
+        <h3 class="text-sm font-semibold text-gray-500 mb-2">Bronnen</h3>
+        <div class="space-y-2">
+            {% for source in results.sources %}
+            <div class="bg-gray-50 rounded p-3 text-sm">
+                <span class="font-medium text-blue-700">{{ source.party }}</span>
+                {% if source.page_start %}
+                    <span class="text-gray-400 ml-2">
+                        p.&nbsp;{{ source.page_start }}{% if source.page_end %}–{{ source.page_end }}{% endif %}
+                    </span>
+                {% endif %}
+                <span class="text-gray-300 ml-2">&middot;</span>
+                <span class="text-gray-400 ml-2">{{ (source.score * 100)|round|int }}% relevant</span>
+                <p class="text-gray-600 mt-1">{{ source.content }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endif %}

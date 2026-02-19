@@ -1,0 +1,53 @@
+[project]
+name = "verkiezing-vibecheck"
+version = "0.1.0"
+description = "AI-powered election information platform for Dutch municipal elections"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    # Core web framework
+    "fastapi>=0.115.5",
+    "uvicorn[standard]>=0.32.1",
+    "jinja2>=3.1.4",
+    "python-multipart>=0.0.12",
+    # Database
+    "sqlalchemy>=2.0.36",
+    "psycopg2-binary>=2.9.10",
+    "alembic>=1.14.0",
+    "pgvector>=0.3.6",
+    # LLM providers via abstraction
+    "litellm>=1.52.14",
+    "openai>=1.57.2",
+    "anthropic>=0.39.0",
+    # Traditional ML
+    "scikit-learn>=1.5.2",
+    "spacy>=3.8.2",
+    # Data processing
+    "pandas>=2.2.3",
+    "numpy>=2.1.3",
+    "httpx>=0.27.2",
+    "beautifulsoup4>=4.12.3",
+    "lxml>=5.3.0",
+    "pypdf>=5.1.0",
+    # Markdown rendering
+    "markdown>=3.7",
+    # Rate limiting
+    "slowapi>=0.1.9",
+    # Testing
+    "pytest>=8.0.0",
+    "pytest-anyio>=0.0.0",
+    "httpx>=0.27.2",
+    # Utilities
+    "python-dotenv>=1.0.1",
+    "pydantic>=2.10.3",
+    "pydantic-settings>=2.6.1",
+    "ruamel.yaml>=0.18.0",
+    "staffspy[browser]>=0.2.25",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

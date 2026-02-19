@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 import markdown as md_lib
@@ -24,7 +25,12 @@ app.state.templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 
 def _markdown(text: str) -> Markup:
-    return Markup(md_lib.markdown(text or "", extensions=["sane_lists"]))
+    if not text:
+        return Markup("")
+    # Ensure a blank line before list items so the markdown library renders
+    # them as <ul>/<li> rather than leaving "- " as literal paragraph text.
+    processed = re.sub(r"([^\n])\n([-*+] |\d+\. )", r"\1\n\n\2", text)
+    return Markup(md_lib.markdown(processed, extensions=["sane_lists"]))
 
 
 app.state.templates.env.filters["markdown"] = _markdown

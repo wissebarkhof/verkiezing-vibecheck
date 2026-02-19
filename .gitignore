@@ -58,3 +58,4 @@ data/processed/*
 data/programs/*
 !data/.gitkeep
 !data/programs/.gitkeep
+logs/*

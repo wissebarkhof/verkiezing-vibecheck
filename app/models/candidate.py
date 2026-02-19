@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -19,6 +20,11 @@ class Candidate(Base):
     linkedin_url: Mapped[str | None] = mapped_column(String(500))
     social_summary: Mapped[str | None] = mapped_column(Text)
     linkedin_summary: Mapped[str | None] = mapped_column(Text)
+    linkedin_headline: Mapped[str | None] = mapped_column(String(500))
+    linkedin_current_position: Mapped[str | None] = mapped_column(String(500))
+    linkedin_current_company: Mapped[str | None] = mapped_column(String(500))
+    linkedin_experiences: Mapped[list | None] = mapped_column(JSONB)
+    linkedin_education: Mapped[list | None] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), onupdate=func.now()

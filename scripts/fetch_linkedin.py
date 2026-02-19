@@ -1,11 +1,12 @@
 """Fetch LinkedIn profile data and posts for candidates.
 
-For each candidate in the DB that has a linkedin_url (and no linkedin_summary yet):
+For each candidate in the DB that has a linkedin_url (and no linkedin_headline yet):
   1. Extracts the LinkedIn username from the URL.
   2. Fetches the public LinkedIn profile page via Selenium (real browser).
-  3. Extracts profile data (headline, about, experience) from the page.
-  4. Generates a Dutch AI summary and saves to candidate.linkedin_summary.
-  5. Fetches recent posts from the activity page and stores as SocialPost rows.
+  3. Extracts structured profile data (headline, experiences, education) and saves to DB.
+  4. Fetches recent posts from the activity page and stores as SocialPost rows.
+
+Run generate_linkedin_summaries.py separately to generate AI summaries from stored data.
 
 Usage:
     uv run python scripts/fetch_linkedin.py
@@ -29,7 +30,6 @@ load_dotenv()
 
 from app.database import SessionLocal
 from app.models import Candidate, Election, Party, SocialPost
-from app.services.llm import summarize_linkedin_profile
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -283,7 +283,6 @@ def login_and_scrape(driver, candidates):
 
     db = SessionLocal()
     scraped = 0
-    summarized = 0
     posts_total = 0
 
     try:
@@ -294,41 +293,41 @@ def login_and_scrape(driver, candidates):
 
             logger.info(f"[{i}/{len(candidates)}] {candidate.name} ({username})")
 
-            # Fetch profile data
+            # Re-attach the detached candidate object to this session
+            db_candidate = db.merge(candidate)
+
+            # Fetch profile data and persist structured fields
             profile = fetch_profile_selenium(driver, username)
             if not profile or not any(profile.get(k) for k in ["headline", "bio", "experiences"]):
-                logger.info(f"  No useful profile data, skipping profile summary")
+                logger.info(f"  No useful profile data, skipping")
             else:
                 scraped += 1
                 logger.info(f"  Scraped: {profile.get('headline', '(no headline)')}")
 
-                try:
-                    candidate.linkedin_summary = summarize_linkedin_profile(
-                        candidate.name, profile
-                    )
-                    if profile.get("photo_url") and not candidate.photo_url:
-                        candidate.photo_url = profile["photo_url"]
-                        logger.info(f"  Photo saved")
-                    db.commit()
-                    summarized += 1
-                    logger.info(f"  Summary saved")
-                except Exception:
-                    logger.exception(f"  Summary generation failed")
+                db_candidate.linkedin_headline = profile.get("headline") or None
+                db_candidate.linkedin_current_position = profile.get("current_position") or None
+                db_candidate.linkedin_current_company = profile.get("current_company") or None
+                db_candidate.linkedin_experiences = profile.get("experiences") or None
+                db_candidate.linkedin_education = profile.get("schools") or None
+                if profile.get("photo_url") and not db_candidate.photo_url:
+                    db_candidate.photo_url = profile["photo_url"]
+                    logger.info(f"  Photo saved")
+                db.commit()
+                logger.info(f"  Structured profile fields saved")
 
             # Fetch posts from activity page
             time.sleep(SCRAPE_DELAY)
             logger.info(f"  Fetching posts...")
             posts = fetch_posts_selenium(driver, username)
             if posts:
-                texts = upsert_linkedin_posts(db, candidate, posts)
+                texts = upsert_linkedin_posts(db, db_candidate, posts)
                 posts_total += len(texts)
                 logger.info(f"  Upserted {len(texts)} LinkedIn posts")
 
             time.sleep(SCRAPE_DELAY)
 
         logger.info(
-            f"\nLinkedIn fetch complete: "
-            f"scraped {scraped}, summarized {summarized}, posts {posts_total}"
+            f"\nLinkedIn fetch complete: scraped {scraped}, posts {posts_total}"
         )
     finally:
         db.close()
@@ -345,22 +344,48 @@ def fetch_profile_selenium(driver, username: str) -> dict | None:
     page_text = driver.find_element(By.TAG_NAME, "body").text
     page_title = driver.title
 
-    # Extract profile photo URL
+    # Extract profile photo URL — try progressively broader selectors
     photo_url = None
-    try:
-        # LinkedIn profile photos are in an img tag inside the profile header
-        photo_el = driver.find_element(
-            By.CSS_SELECTOR,
-            "img.pv-top-card-profile-picture__image--show, "
-            "img.evi-image.ember-view[alt], "
-            "button.pv-top-card__photo img, "
-            "div.pv-top-card__photo-wrapper img"
-        )
-        src = photo_el.get_attribute("src")
-        if src and "linkedin.com" in src and "ghost" not in src:
-            photo_url = src
-    except Exception:
-        pass
+    photo_selectors = [
+        # Modern LinkedIn (2024+)
+        "img.pv-top-card-profile-picture__image--show",
+        "img.profile-photo-edit__preview",
+        "div.pv-top-card__photo-wrapper img",
+        "button.pv-top-card__photo img",
+        # Older class names still seen in some views
+        "img.pv-top-card-profile-picture__image",
+        "img.evi-image.ember-view",
+        # Generic: any img inside the top-card section
+        "section.artdeco-card img[src*='profile-displayphoto']",
+        "section.artdeco-card img[src*='media.licdn.com']",
+        # Broadest fallback: first non-icon img with a licdn.com media URL
+        "img[src*='media.licdn.com/dms/image']",
+    ]
+    for selector in photo_selectors:
+        try:
+            photo_el = driver.find_element(By.CSS_SELECTOR, selector)
+            src = photo_el.get_attribute("src") or ""
+            if src and "ghost" not in src and "static" not in src:
+                photo_url = src
+                logger.info(f"  Photo found via selector: {selector}")
+                break
+        except Exception:
+            continue
+
+    if not photo_url:
+        # Log candidate img srcs to help identify the right selector next time
+        try:
+            all_imgs = driver.find_elements(By.TAG_NAME, "img")
+            linkedin_srcs = [
+                i.get_attribute("src") for i in all_imgs
+                if (i.get_attribute("src") or "").startswith("https://media.licdn.com")
+            ]
+            if linkedin_srcs:
+                logger.info(f"  No photo selector matched. Candidate srcs: {linkedin_srcs[:3]}")
+            else:
+                logger.info(f"  No photo found and no media.licdn.com img srcs on page")
+        except Exception:
+            pass
 
     if not page_text or len(page_text) < 100:
         logger.warning(f"    Page too short ({len(page_text)} chars)")
@@ -532,7 +557,7 @@ def main():
             .filter(
                 Party.election_id == election.id,
                 Candidate.linkedin_url.isnot(None),
-                Candidate.linkedin_summary.is_(None),
+                Candidate.linkedin_headline.is_(None),
             )
         )
 
@@ -555,7 +580,7 @@ def main():
         candidates = query.order_by(Party.name, Candidate.position_on_list).all()
 
         if not candidates:
-            logger.info("No candidates needing LinkedIn summaries.")
+            logger.info("No candidates needing LinkedIn data fetch.")
             return
 
         if args.limit:

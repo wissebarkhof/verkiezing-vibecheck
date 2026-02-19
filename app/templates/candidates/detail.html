@@ -8,11 +8,20 @@
         <a href="/kandidaten" class="text-blue-600 hover:underline text-sm">&larr; Alle kandidaten</a>
     </div>
 
-    <h1 class="text-3xl font-bold text-gray-900 mb-1">{{ candidate.name }}</h1>
-    <p class="text-gray-500 mb-6">
-        Nr. {{ candidate.position_on_list }} —
-        <a href="/partijen/{{ candidate.party.id }}" class="text-blue-600 hover:underline">{{ candidate.party.name }}</a>
-    </p>
+    <div class="flex items-center gap-5 mb-6">
+        {% if candidate.photo_url %}
+            <img src="{{ candidate.photo_url }}" alt="{{ candidate.name }}"
+                 referrerpolicy="no-referrer"
+                 class="w-24 h-24 rounded-full object-cover flex-shrink-0 shadow">
+        {% endif %}
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-1">{{ candidate.name }}</h1>
+            <p class="text-gray-500">
+                Nr. {{ candidate.position_on_list }} —
+                <a href="/partijen/{{ candidate.party.id }}" class="text-blue-600 hover:underline">{{ candidate.party.name }}</a>
+            </p>
+        </div>
+    </div>
 
     {% if candidate.bio %}
         <div class="bg-white rounded-lg shadow p-6 mb-6">
@@ -23,14 +32,71 @@
 
     {% if candidate.social_summary %}
         <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 class="text-lg font-semibold mb-2">Social media samenvatting</h2>
+            <h2 class="text-lg font-semibold mb-2">Bluesky activiteit samenvatting</h2>
             <div class="prose prose-sm max-w-none text-gray-700">{{ candidate.social_summary | markdown }}</div>
+        </div>
+    {% endif %}
+
+    {% if candidate.linkedin_current_position or candidate.linkedin_experiences or candidate.linkedin_education or candidate.linkedin_summary %}
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-lg font-semibold mb-4">LinkedIn profiel</h2>
+
+            {% if candidate.linkedin_current_position %}
+                <div class="mb-4">
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">Huidige functie</p>
+                    <p class="text-gray-900 font-medium">{{ candidate.linkedin_current_position }}</p>
+                    {% if candidate.linkedin_current_company and candidate.linkedin_current_company != candidate.linkedin_current_position %}
+                        <p class="text-gray-600 text-sm">{{ candidate.linkedin_current_company }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if candidate.linkedin_experiences and candidate.linkedin_experiences | length > 1 %}
+                <div class="mb-4">
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Werkervaring</p>
+                    <ul class="space-y-2">
+                        {% set seen = [] %}
+                        {% for exp in candidate.linkedin_experiences %}
+                            {% if exp.title and exp.title not in seen %}
+                                {% if seen.append(exp.title) %}{% endif %}
+                                <li class="text-sm">
+                                    <span class="font-medium text-gray-800">{{ exp.title }}</span>
+                                    {% if exp.company and exp.company != exp.title %}
+                                        <span class="text-gray-500"> · {{ exp.company }}</span>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if candidate.linkedin_education %}
+                <div class="mb-4">
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Opleiding</p>
+                    <ul class="space-y-2">
+                        {% set seen_schools = [] %}
+                        {% for edu in candidate.linkedin_education %}
+                            {% if edu.school and edu.school not in seen_schools %}
+                                {% if seen_schools.append(edu.school) %}{% endif %}
+                                <li class="text-sm">
+                                    <span class="font-medium text-gray-800">{{ edu.school }}</span>
+                                    {% if edu.degree and edu.degree != edu.school %}
+                                        <span class="text-gray-500"> · {{ edu.degree }}</span>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
         </div>
     {% endif %}
 
     {% if candidate.linkedin_summary %}
         <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 class="text-lg font-semibold mb-2">LinkedIn profiel</h2>
+            <h2 class="text-lg font-semibold mb-2">LinkedIn activiteit samenvatting</h2>
             <div class="prose prose-sm max-w-none text-gray-700">{{ candidate.linkedin_summary | markdown }}</div>
         </div>
     {% endif %}

@@ -107,6 +107,18 @@ def summarize_social_posts(candidate_name: str, posts: list[str]) -> str:
     return _complete(prompt, system=SYSTEM_PROMPT)
 
 
+def summarize_linkedin_posts(candidate_name: str, posts: list[str]) -> str:
+    """Summarize a candidate's recent LinkedIn posts in Dutch."""
+    posts_text = "\n\n".join(f"- {p}" for p in posts)
+    prompt = (
+        f"Hieronder staan recente berichten van {candidate_name} op LinkedIn.\n\n"
+        f"{posts_text}\n\n"
+        f"Geef een samenvatting van 2-3 zinnen over de thema's en standpunten die "
+        f"deze kandidaat op LinkedIn deelt. Schrijf in het Nederlands."
+    )
+    return _complete(prompt, system=SYSTEM_PROMPT)
+
+
 def summarize_linkedin_profile(candidate_name: str, profile_data: dict) -> str:
     """Summarize a candidate's LinkedIn profile in Dutch."""
     parts = []

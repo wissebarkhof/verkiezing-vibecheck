@@ -16,13 +16,14 @@
 #   step6  summaries        Generate AI party program summaries
 #   step7  comparisons      Generate AI topic comparisons (skipped when --party is set)
 #   step8  social           Fetch Bluesky posts + AI social summaries
-#   step9  linkedin         Fetch LinkedIn posts per candidate
-#   step10 motions          Fetch council motions from Notubiz (always runs unfiltered)
-#   step11 motion-summaries Generate AI motion summaries per party
+#   step9  linkedin              Fetch LinkedIn profile data + posts per candidate
+#   step10 linkedin-summaries    Generate AI LinkedIn summaries from stored profile data
+#   step11 motions               Fetch council motions from Notubiz (always runs unfiltered)
+#   step12 motion-summaries      Generate AI motion summaries per party
 
 set -euo pipefail
 
-STEPS=(step1 step2 step3 step4 step5 step6 step7 step8 step9 step10 step11)
+STEPS=(step1 step2 step3 step4 step5 step6 step7 step8 step9 step10 step11 step12)
 FROM_STEP=""
 PARTY=""
 
@@ -113,13 +114,16 @@ fi
 run_step step8  "Fetch Bluesky posts + AI social summaries" \
     uv run python scripts/fetch_social.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
-run_step step9  "Fetch LinkedIn posts per candidate" \
+run_step step9  "Fetch LinkedIn profile data + posts per candidate" \
     uv run python scripts/fetch_linkedin.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
-run_step step10 "Fetch council motions from Notubiz" \
+run_step step10 "Generate AI LinkedIn summaries" \
+    uv run python scripts/generate_linkedin_summaries.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+
+run_step step11 "Fetch council motions from Notubiz" \
     uv run python scripts/fetch_motions.py
 
-run_step step11 "Generate AI motion summaries per party" \
+run_step step12 "Generate AI motion summaries per party" \
     uv run python scripts/generate_motion_summaries.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 echo ""

@@ -1170,8 +1170,12 @@ parties:
   current_seats: 1  # split from BIJ1 (formerly Lijst Kabamba)
   logo: "logos/pvm.svg"
   program_pdf: "programs/amsterdam-2026/pvm.pdf"
-
-
+  candidates:
+  - name: "Carla Kabamba"
+    position: 1
+    bluesky: '@carlakabamba.bsky.social'
+    linkedin: https://www.linkedin.com/in/carla-kabamba-626b43b5
+  
 - name: "Forum voor Democratie"
   abbreviation: "FvD"
   website: "https://fvd.nl/gemeentes/amsterdam"

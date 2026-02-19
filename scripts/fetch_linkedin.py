@@ -500,16 +500,33 @@ def main():
         default=0,
         help="Limit number of candidates to process (0 = all)",
     )
+    parser.add_argument(
+        "--party",
+        type=str,
+        default=None,
+        help="Filter by party name or abbreviation (case-insensitive substring match)",
+    )
+    parser.add_argument(
+        "--skip-fetched",
+        action="store_true",
+        default=False,
+        help=(
+            "Also skip candidates that already have LinkedIn posts stored "
+            "(useful when adding new accounts without re-fetching existing ones)"
+        ),
+    )
     args = parser.parse_args()
 
     db = SessionLocal()
     try:
+        from sqlalchemy import exists
+
         election = db.query(Election).first()
         if not election:
             logger.error("No election found. Run ingestion first.")
             return
 
-        candidates = (
+        query = (
             db.query(Candidate)
             .join(Party)
             .filter(
@@ -517,9 +534,25 @@ def main():
                 Candidate.linkedin_url.isnot(None),
                 Candidate.linkedin_summary.is_(None),
             )
-            .order_by(Party.name, Candidate.position_on_list)
-            .all()
         )
+
+        if args.skip_fetched:
+            query = query.filter(
+                ~exists().where(
+                    SocialPost.candidate_id == Candidate.id,
+                    SocialPost.platform == "linkedin",
+                )
+            )
+            logger.info("--skip-fetched: also skipping candidates with existing LinkedIn posts")
+
+        if args.party:
+            party_filter = args.party.lower()
+            query = query.filter(
+                (Party.name.ilike(f"%{party_filter}%"))
+                | (Party.abbreviation.ilike(f"%{party_filter}%"))
+            )
+
+        candidates = query.order_by(Party.name, Candidate.position_on_list).all()
 
         if not candidates:
             logger.info("No candidates needing LinkedIn summaries.")

@@ -55,6 +55,9 @@ Thumbs.db
 data/raw/*
 data/processed/*
 data/programs/*
+!data/programs/amsterdam-2026/
+data/programs/amsterdam-2026/*
+!data/programs/amsterdam-2026/*.pdf
 !data/.gitkeep
 !data/programs/.gitkeep
 logs/*

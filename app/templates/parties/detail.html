@@ -19,6 +19,16 @@
         <div class="bg-white rounded-lg shadow p-6 mb-6">
             <h2 class="text-lg font-semibold mb-2">Samenvatting verkiezingsprogramma</h2>
             <div class="prose prose-sm max-w-none text-gray-700">{{ party.description | markdown }}</div>
+            {% if party.program_text %}
+            <p class="mt-4 pt-4 border-t border-gray-100 text-sm text-gray-500">
+                Gebaseerd op dit verkiezingsprogramma:
+                <a href="/programs/{{ party.election.slug }}/{{ party.abbreviation | lower | replace(' ', '') }}.pdf"
+                   target="_blank"
+                   class="text-blue-600 hover:underline">
+                    {{ party.name }} (PDF)
+                </a>
+            </p>
+            {% endif %}
         </div>
     {% endif %}
 

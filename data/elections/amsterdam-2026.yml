@@ -8,7 +8,7 @@ parties:
   abbreviation: "GL"
   website: "https://amsterdam.groenlinks.nl"
   logo: "logos/groenlinks.png"
-  program_pdf: "programs/amsterdam-2026/groenlinks.pdf"
+  program_pdf: "programs/amsterdam-2026/gl.pdf"
   current_seats: 8
   polled_seats: 7
   poll_updated_at: "2026-02-10"
@@ -1016,7 +1016,7 @@ parties:
   website: "https://amsterdam.bij1.org"
   current_seats: 0  # split into De Vonk + Partij voor Morgen
   logo: "logos/bij1.png"
-  program_pdf: "programs/bij1.pdf"
+  program_pdf: "programs/amsterdam-2026/bij1.pdf"
   candidates:
   - name: "Tofik Dibi"
     position: 1

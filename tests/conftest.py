@@ -17,8 +17,10 @@ def _mock_db():
     # MagicMock auto-creates chained attributes; override the terminal calls.
     for chain in [
         db.query.return_value.filter.return_value,
+        db.query.return_value.options.return_value.filter.return_value,
         db.query.return_value.join.return_value.filter.return_value,
         db.query.return_value.filter.return_value.order_by.return_value,
+        db.query.return_value.options.return_value.filter.return_value.order_by.return_value,
         db.query.return_value.join.return_value.filter.return_value.options.return_value.order_by.return_value,
         db.query.return_value.join.return_value.filter.return_value.filter.return_value.order_by.return_value,
     ]:

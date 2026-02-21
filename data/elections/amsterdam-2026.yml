@@ -1020,7 +1020,7 @@ parties:
   program_pdf: "programs/amsterdam-2026/bij1.pdf"
   candidates:
   - name: "Tofik Dibi"
-    position: 1Up
+    position: 1
   - name: "Dylan Lennox Bakker"
     position: 2
     bluesky: '@dylanfixthet.bsky.social'

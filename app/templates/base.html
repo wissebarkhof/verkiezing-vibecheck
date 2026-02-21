@@ -35,6 +35,26 @@
         </div>
     </nav>
 
+    <div id="disclaimer-banner" class="bg-amber-50 border-b border-amber-200 text-amber-900 text-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-start gap-3">
+            <span class="text-amber-500 mt-0.5 shrink-0">&#9888;</span>
+            <p class="flex-1">
+                <strong>Let op:</strong> Samenvattingen, vergelijkingen en zoekresultaten worden gegenereerd door AI (grote taalmodellen) en zijn niet gegarandeerd feitelijk juist &mdash; controleer altijd de bronnen.
+                De inhoud van deze website is grotendeels automatisch verzameld; neem contact op via <a href="mailto:verkiezingenvibecheck@gmail.com" class="underline hover:text-amber-700">verkiezingenvibecheck@gmail.com</a> bij fouten of klachten.
+            </p>
+            <button onclick="dismissBanner()" class="shrink-0 text-amber-500 hover:text-amber-700 transition-colors font-bold leading-none" aria-label="Sluiten">&times;</button>
+        </div>
+    </div>
+    <script>
+        if (localStorage.getItem('disclaimerDismissed') === '1') {
+            document.getElementById('disclaimer-banner').style.display = 'none';
+        }
+        function dismissBanner() {
+            document.getElementById('disclaimer-banner').style.display = 'none';
+            localStorage.setItem('disclaimerDismissed', '1');
+        }
+    </script>
+
     <main class="flex-1 max-w-6xl mx-auto px-4 sm:px-6 py-10 w-full">
         {% block content %}{% endblock %}
     </main>

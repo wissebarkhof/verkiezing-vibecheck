@@ -43,6 +43,8 @@ dependencies = [
     "pydantic-settings>=2.6.1",
     "ruamel.yaml>=0.18.0",
     "staffspy[browser]>=0.2.25",
+    "undetected-chromedriver>=3.5.0",
+    "selenium>=4.0.0",
     "fpdf2>=2.8.6",
     "cryptography>=46.0.5",
 ]

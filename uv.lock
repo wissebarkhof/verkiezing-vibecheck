@@ -3441,6 +3441,17 @@ wheels = [
 ]
 
 [[package]]
+name = "undetected-chromedriver"
+version = "3.5.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+    { name = "selenium" },
+    { name = "websockets" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1f/98/7ab46625ce2317756e4e857fe6ac24b6378c3e8f477da26c95226ed8ccb7/undetected-chromedriver-3.5.5.tar.gz", hash = "sha256:9f945e1435005247abe17de316bcfda85b284a4177fd5f25167c78ced33b65ec", size = 65409, upload-time = "2024-02-17T17:18:36.855Z" }
+
+[[package]]
 name = "urllib3"
 version = "2.6.3"
 source = { registry = "https://pypi.org/simple" }
@@ -3546,10 +3557,12 @@ dependencies = [
     { name = "python-multipart" },
     { name = "ruamel-yaml" },
     { name = "scikit-learn" },
+    { name = "selenium" },
     { name = "slowapi" },
     { name = "spacy" },
     { name = "sqlalchemy" },
     { name = "staffspy", extra = ["browser"] },
+    { name = "undetected-chromedriver" },
     { name = "uvicorn", extra = ["standard"] },
 ]
 
@@ -3585,10 +3598,12 @@ requires-dist = [
     { name = "python-multipart", specifier = ">=0.0.12" },
     { name = "ruamel-yaml", specifier = ">=0.18.0" },
     { name = "scikit-learn", specifier = ">=1.5.2" },
+    { name = "selenium", specifier = ">=4.0.0" },
     { name = "slowapi", specifier = ">=0.1.9" },
     { name = "spacy", specifier = ">=3.8.2" },
     { name = "sqlalchemy", specifier = ">=2.0.36" },
     { name = "staffspy", extras = ["browser"], specifier = ">=0.2.25" },
+    { name = "undetected-chromedriver", specifier = ">=3.5.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32.1" },
 ]
 

@@ -186,8 +186,8 @@ parties:
     linkedin: https://www.linkedin.com/in/sibren-van-hoeven-1838b3198
   - name: "Béla Hulsman"
     position: 23
-
     bluesky: '@belahulsman.bsky.social'
+  
 - name: "VVD"
   abbreviation: "VVD"
   website: "https://www.vvd.nl/gemeente-amsterdam/"
@@ -203,7 +203,8 @@ parties:
     linkedin: https://www.linkedin.com/in/daan-wijnants-039622a6
   - name: "Wout Deterink"
     position: 2
-    linkedin: https://www.linkedin.com/in/wout-deterink-54ba1653
+    linkedin: https://www.linkedin.com/in/wout-deterink/
+    bluesky: 
   - name: "Dorle Kok"
     position: 3
     linkedin: https://www.linkedin.com/in/dorle-kok-92870a82
@@ -1019,7 +1020,7 @@ parties:
   program_pdf: "programs/amsterdam-2026/bij1.pdf"
   candidates:
   - name: "Tofik Dibi"
-    position: 1
+    position: 1Up
   - name: "Dylan Lennox Bakker"
     position: 2
     bluesky: '@dylanfixthet.bsky.social'

@@ -15,6 +15,7 @@ Usage:
 import argparse
 import hashlib
 import logging
+import random
 import re
 import sys
 import time
@@ -34,7 +35,55 @@ from app.models import Candidate, Election, Party, SocialPost
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-SCRAPE_DELAY = 5  # seconds between profile fetches
+SCRAPE_DELAY_MIN = 6   # seconds — min delay between profile fetches
+SCRAPE_DELAY_MAX = 14  # seconds — max delay
+
+
+def _pause(min_sec: float = SCRAPE_DELAY_MIN, max_sec: float = SCRAPE_DELAY_MAX) -> None:
+    """Sleep for a random duration in [min_sec, max_sec]."""
+    duration = random.uniform(min_sec, max_sec)
+    logger.debug(f"  Sleeping {duration:.1f}s")
+    time.sleep(duration)
+
+# Phrases that mean the activity page has no posts — bail out immediately.
+_EMPTY_ACTIVITY_SIGNALS = [
+    "Momenteel is hier niets te zien",
+    "worden ze hier weergegeven",
+    "Currently, there's nothing to show here",
+    "will appear here",
+]
+
+# LinkedIn UI / navigation strings. If any of these appear in extracted post
+# text it means we captured the page chrome, not an actual post.
+_NAV_STRINGS = [
+    "meldingen in totaal",
+    "Feedupdates meldingen",
+    "Mijn netwerk",
+    "Voor bedrijven",
+    "Probeer Premium",
+    "© LinkedIn Corporation",
+    "Helpcentrum",
+    "Toegankelijkheid",
+]
+
+
+def _is_nav_text(text: str) -> bool:
+    """Return True if the text looks like LinkedIn navigation / UI chrome."""
+    return any(nav in text for nav in _NAV_STRINGS)
+
+
+def _names_match(candidate_name: str, scraped_name: str) -> bool:
+    """Loose check: at least one significant token of the candidate name
+    appears in the scraped profile name (case-insensitive).
+
+    This catches cases where a LinkedIn slug resolves to a completely
+    different person (different country, different field).
+    """
+    if not scraped_name:
+        return True  # can't tell — give benefit of the doubt
+    candidate_tokens = [t for t in candidate_name.lower().split() if len(t) > 2]
+    scraped_lower = scraped_name.lower()
+    return any(tok in scraped_lower for tok in candidate_tokens)
 
 
 def _extract_username(linkedin_url: str) -> str | None:
@@ -47,15 +96,49 @@ def _extract_username(linkedin_url: str) -> str | None:
     return parts[-1] if parts else None
 
 
-def create_driver():
-    """Create a Selenium Chrome driver."""
-    from selenium import webdriver
-    from selenium.webdriver.chrome.options import Options
+def create_driver(profile_dir: str | None = None):
+    """Create an undetected Chrome driver with anti-fingerprinting options.
 
-    options = Options()
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    driver = webdriver.Chrome(options=options)
+    Args:
+        profile_dir: Path to a persistent Chrome user-data directory. When set,
+                     cookies, browsing history, and login sessions survive between
+                     runs — which makes the browser look far more like a real user.
+                     Example: ~/.config/linkedin-scraper-profile
+    """
+    import undetected_chromedriver as uc
+
+    options = uc.ChromeOptions()
+    options.add_argument("--window-size=1440,900")
+    options.add_argument("--start-maximized")
+    # undetected_chromedriver patches AutomationControlled and the automation banner
+    # internally — do NOT add excludeSwitches/useAutomationExtension here, they conflict.
+
+    if profile_dir:
+        options.add_argument(f"--user-data-dir={profile_dir}")
+        logger.info(f"Using persistent Chrome profile: {profile_dir}")
+
+    driver = uc.Chrome(options=options)
+    # Mask navigator.webdriver via CDP
+    driver.execute_cdp_cmd(
+        "Page.addScriptToEvaluateOnNewDocument",
+        {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"},
+    )
     return driver
+
+
+def _human_scroll(driver) -> None:
+    """Scroll the page in a human-like pattern: several random-sized steps with pauses."""
+    total_height = driver.execute_script("return document.body.scrollHeight")
+    current_pos = 0
+    while current_pos < total_height:
+        scroll_by = random.randint(250, 700)
+        driver.execute_script(f"window.scrollBy(0, {scroll_by});")
+        current_pos += scroll_by
+        time.sleep(random.uniform(0.4, 1.5))
+    # Brief pause at the bottom, then scroll back up a little (common human behaviour)
+    time.sleep(random.uniform(0.5, 1.5))
+    driver.execute_script(f"window.scrollBy(0, -{random.randint(100, 400)});")
+    time.sleep(random.uniform(0.3, 0.8))
 
 
 def fetch_posts_selenium(driver, username: str) -> list[dict]:
@@ -67,20 +150,30 @@ def fetch_posts_selenium(driver, username: str) -> list[dict]:
 
     url = f"https://www.linkedin.com/in/{username}/recent-activity/all/"
     driver.get(url)
-    time.sleep(5)
+    time.sleep(random.uniform(4, 7))
 
-    # Scroll down a couple of times to load more posts
-    for _ in range(3):
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(2)
+    # Bail out immediately if the page signals there are no posts.
+    try:
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        if any(signal in body_text for signal in _EMPTY_ACTIVITY_SIGNALS):
+            logger.info("  Activity page is empty, skipping")
+            return []
+    except Exception:
+        pass
+
+    # Scroll in a human-like pattern to trigger lazy-loaded posts
+    _human_scroll(driver)
+    time.sleep(random.uniform(1.5, 3.0))
+    _human_scroll(driver)
 
     posts = []
     seen_texts = set()
 
-    # Try to find post containers via data-urn attribute or feed update elements
+    # Use specific post-card selectors only — div[data-urn] is too broad and
+    # matches many structural LinkedIn elements that aren't post cards.
     post_elements = driver.find_elements(
         By.CSS_SELECTOR,
-        "div.feed-shared-update-v2, div[data-urn], article"
+        "div.feed-shared-update-v2, article",
     )
 
     if not post_elements:
@@ -116,6 +209,11 @@ def fetch_posts_selenium(driver, username: str) -> list[dict]:
                 text = text_el.text.strip()
 
             if not text or len(text) < 10:
+                continue
+
+            # Reject if the text looks like LinkedIn UI chrome
+            if _is_nav_text(text):
+                logger.debug(f"  Skipping nav-text fragment: {text[:60]!r}")
                 continue
 
             # Deduplicate
@@ -191,27 +289,37 @@ def _clean_post_text(full_text: str) -> str:
 
 
 def _extract_posts_from_text(driver, username: str) -> list[dict]:
-    """Fallback: extract posts from the full page text when selectors fail."""
+    """Fallback: extract posts from the full page text when selectors fail.
+
+    Only used when CSS selectors found no post elements. Splits by the
+    engagement-button pattern that separates posts in the rendered page text.
+    If the split yields only one block the page is nav/empty chrome — skip it.
+    """
     from selenium.webdriver.common.by import By
 
     page_text = driver.find_element(By.TAG_NAME, "body").text
     if not page_text or len(page_text) < 100:
         return []
 
-    # Split by common post separators in the text
-    # LinkedIn activity pages show posts separated by engagement action text
-    posts = []
-    # Look for blocks of text between "Like Comment Repost Send" patterns
     blocks = re.split(
         r"(?:Vind ik leuk|Like)\s+(?:Reageren|Comment)\s+(?:Opnieuw posten|Repost)\s+(?:Verzenden|Send)",
         page_text,
     )
 
+    # If the separator never appeared the page has no post cards — the single
+    # block is just nav/chrome and must not be stored.
+    if len(blocks) <= 1:
+        logger.info("  Fallback found no post separators — page appears empty or is nav-only, skipping")
+        return []
+
+    posts = []
     for block in blocks:
         block = block.strip()
         if len(block) < 30:
             continue
-        # Clean up: remove leading author info lines
+        # Skip blocks that contain LinkedIn UI strings
+        if _is_nav_text(block):
+            continue
         lines = [l.strip() for l in block.split("\n") if l.strip()]
         if len(lines) < 2:
             continue
@@ -298,6 +406,18 @@ def login_and_scrape(driver, candidates):
 
             # Fetch profile data and persist structured fields
             profile = fetch_profile_selenium(driver, username)
+
+            # Guard: check that the scraped profile is actually this candidate.
+            # LinkedIn slugs can resolve to a completely different person.
+            scraped_name = profile.get("name", "") if profile else ""
+            if scraped_name and not _names_match(candidate.name, scraped_name):
+                logger.warning(
+                    f"  Name mismatch — expected '{candidate.name}', "
+                    f"page shows '{scraped_name}'. Skipping profile and posts."
+                )
+                _pause()
+                continue
+
             if not profile or not any(profile.get(k) for k in ["headline", "bio", "experiences"]):
                 logger.info(f"  No useful profile data, skipping")
             else:
@@ -316,7 +436,7 @@ def login_and_scrape(driver, candidates):
                 logger.info(f"  Structured profile fields saved")
 
             # Fetch posts from activity page
-            time.sleep(SCRAPE_DELAY)
+            _pause()
             logger.info(f"  Fetching posts...")
             posts = fetch_posts_selenium(driver, username)
             if posts:
@@ -324,7 +444,7 @@ def login_and_scrape(driver, candidates):
                 posts_total += len(texts)
                 logger.info(f"  Upserted {len(texts)} LinkedIn posts")
 
-            time.sleep(SCRAPE_DELAY)
+            _pause()
 
         logger.info(
             f"\nLinkedIn fetch complete: scraped {scraped}, posts {posts_total}"
@@ -339,7 +459,9 @@ def fetch_profile_selenium(driver, username: str) -> dict | None:
 
     url = f"https://www.linkedin.com/in/{username}/"
     driver.get(url)
-    time.sleep(5)  # wait for page to fully load
+    time.sleep(random.uniform(4, 8))  # wait for page to fully load
+    _human_scroll(driver)
+    time.sleep(random.uniform(1.0, 2.5))
 
     page_text = driver.find_element(By.TAG_NAME, "body").text
     page_title = driver.title
@@ -532,6 +654,17 @@ def main():
         help="Filter by party name or abbreviation (case-insensitive substring match)",
     )
     parser.add_argument(
+        "--profile-dir",
+        type=str,
+        default=None,
+        help=(
+            "Path to a persistent Chrome user-data directory. "
+            "Cookies and login state are preserved between runs, making the "
+            "browser look more like a real user. "
+            "Example: ~/.config/linkedin-scraper-profile"
+        ),
+    )
+    parser.add_argument(
         "--skip-fetched",
         action="store_true",
         default=False,
@@ -590,7 +723,11 @@ def main():
     finally:
         db.close()
 
-    driver = create_driver()
+    profile_dir = args.profile_dir
+    if profile_dir:
+        profile_dir = str(Path(profile_dir).expanduser().resolve())
+
+    driver = create_driver(profile_dir=profile_dir)
     try:
         login_and_scrape(driver, candidates)
     finally:

@@ -18,11 +18,11 @@ class Settings(BaseSettings):
 
     # Application
     ENVIRONMENT: str = "development"
-    ELECTION_CONFIG: str = "data/elections/amsterdam-2026.yml"
+    ELECTIONS_DIR: str = "data/elections/gemeenteraad-2026"
 
     @property
-    def election_config_path(self) -> Path:
-        return Path(self.ELECTION_CONFIG)
+    def elections_dir_path(self) -> Path:
+        return Path(self.ELECTIONS_DIR)
 
 
 settings = Settings()

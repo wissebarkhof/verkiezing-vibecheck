@@ -3,13 +3,13 @@
 {% block title %}Zoeken — Verkiezing Vibecheck{% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-bold text-gray-900 mb-2">Zoeken in verkiezingsprogramma's</h1>
+<h1 class="text-3xl font-bold text-gray-900 mb-2">Zoeken in verkiezingsprogramma's met AI</h1>
 <p class="text-sm text-gray-400 mb-6">
-    Antwoorden worden uitsluitend gegenereerd op basis van de <a href="/programmas" class="underline hover:text-gray-600">verkiezingsprogramma's</a>.
-    Bronnen onderaan elk antwoord verwijzen naar de bijbehorende pagina's in de originele pdf's.
+    Antwoorden worden uitsluitend gegenereerd op basis van de <a href="/verkiezingen/{{ election.slug }}/programmas" class="underline hover:text-gray-600">verkiezingsprogramma's</a>.
+    Bronnen onderaan elk antwoord verwijzen naar de bijbehorende pagina's in de originele pdf's. Powered by OpenAI.
 </p>
 
-<form id="search-form" hx-get="/zoeken/" hx-target="#results" hx-swap="innerHTML" hx-indicator="#loading" class="mb-4">
+<form id="search-form" hx-get="/verkiezingen/{{ election.slug }}/zoeken" hx-target="#results" hx-swap="innerHTML" hx-indicator="#loading" class="mb-4">
     <div class="flex gap-2">
         <input id="search-input" type="text" name="q" value="{{ query }}"
                placeholder="Stel een vraag over de verkiezingen..."

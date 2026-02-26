@@ -12,6 +12,8 @@ Requires BRAVE_API_KEY env var (free tier: https://brave.com/search/api/).
 Usage:
     uv run python scripts/hydrate_linkedin_urls.py
     uv run python scripts/hydrate_linkedin_urls.py --dry-run
+    uv run python scripts/hydrate_linkedin_urls.py --city amsterdam
+    uv run python scripts/hydrate_linkedin_urls.py --city den-haag --party GL-PvdA
 """
 
 import argparse
@@ -116,40 +118,14 @@ def find_best_match(candidate_name: str, urls: list[str]) -> tuple[str, float] |
     return None
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dry-run", action="store_true", help="Print matches without writing to YAML")
-    parser.add_argument(
-        "--party",
-        default=None,
-        help="Only process candidates from this party (abbreviation or name, e.g. BIJ1)",
-    )
-    args = parser.parse_args()
-
-    api_key = os.getenv("BRAVE_API_KEY")
-    if not api_key:
-        logger.error("BRAVE_API_KEY env var not set. Get a free key at https://brave.com/search/api/")
-        sys.exit(1)
-
-    config_path = Path(settings.ELECTION_CONFIG)
-    yaml = YAML()
-    yaml.preserve_quotes = True
-
-    with open(config_path) as f:
-        config = yaml.load(f)
+def _process_yaml(yaml_path: Path, yaml_parser, client: httpx.Client, args) -> tuple[int, list]:
+    """Process a single election YAML. Returns (wrote_count, suggestions)."""
+    with open(yaml_path) as f:
+        config = yaml_parser.load(f)
 
     city = config.get("election", {}).get("city", "")
     wrote = 0
     suggestions = []
-
-    client = httpx.Client(
-        timeout=15.0,
-        headers={
-            "Accept": "application/json",
-            "Accept-Encoding": "gzip",
-            "X-Subscription-Token": api_key,
-        },
-    )
 
     for party in config.get("parties", []):
         party_name = party.get("name", "")
@@ -187,20 +163,76 @@ def main():
 
             time.sleep(REQUEST_DELAY)
 
-    client.close()
-
     if not args.dry_run and wrote:
-        with open(config_path, "w") as f:
-            yaml.dump(config, f)
-        logger.info(f"\nWrote {wrote} LinkedIn URLs to {config_path}")
-    elif args.dry_run:
-        logger.info(f"\n[dry-run] Would write {wrote} LinkedIn URLs")
+        with open(yaml_path, "w") as f:
+            yaml_parser.dump(config, f)
+        logger.info(f"Wrote {wrote} LinkedIn URLs to {yaml_path}")
 
-    if suggestions:
+    return wrote, suggestions
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true", help="Print matches without writing to YAML")
+    parser.add_argument(
+        "--city",
+        default=None,
+        help="Only process this city (e.g. amsterdam, den-haag)",
+    )
+    parser.add_argument(
+        "--party",
+        default=None,
+        help="Only process candidates from this party (abbreviation or name, e.g. BIJ1)",
+    )
+    args = parser.parse_args()
+
+    api_key = os.getenv("BRAVE_API_KEY")
+    if not api_key:
+        logger.error("BRAVE_API_KEY env var not set. Get a free key at https://brave.com/search/api/")
+        sys.exit(1)
+
+    elections_dir = settings.elections_dir_path
+    yamls = sorted(elections_dir.glob("*.yml"))
+    if args.city:
+        yamls = [y for y in yamls if y.stem.lower() == args.city.lower()]
+    if not yamls:
+        logger.error(f"No YAML files found in {elections_dir}")
+        sys.exit(1)
+
+    yaml_parser = YAML()
+    yaml_parser.preserve_quotes = True
+
+    client = httpx.Client(
+        timeout=15.0,
+        headers={
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip",
+            "X-Subscription-Token": api_key,
+        },
+    )
+
+    total_wrote = 0
+    all_suggestions = []
+
+    try:
+        for yaml_path in yamls:
+            logger.info(f"\n=== {yaml_path.stem} ===")
+            wrote, suggestions = _process_yaml(yaml_path, yaml_parser, client, args)
+            total_wrote += wrote
+            all_suggestions.extend(suggestions)
+    finally:
+        client.close()
+
+    if args.dry_run:
+        logger.info(f"\n[dry-run] Would write {total_wrote} LinkedIn URLs")
+    else:
+        logger.info(f"\nTotal: wrote {total_wrote} LinkedIn URLs")
+
+    if all_suggestions:
         print("\nPossible matches to verify manually:")
         print(f"  {'Candidate':<40}  {'URL':<60}  Score")
         print(f"  {'-'*40}  {'-'*60}  -----")
-        for party_name, name, url, score in suggestions:
+        for party_name, name, url, score in all_suggestions:
             print(f"  {name:<40}  {url:<60}  {score:.0%}")
 
 

@@ -5,7 +5,7 @@
 {% block content %}
 {% if motion %}
     <div class="mb-4">
-        <a href="/moties/" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">&larr; Alle moties</a>
+        <a href="/verkiezingen/{{ election.slug }}/moties" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">&larr; Alle moties</a>
     </div>
 
     <h1 class="text-2xl font-bold text-gray-900 mb-3">{{ motion.title }}</h1>
@@ -88,7 +88,7 @@
                     {% for mp in motion.parties %}
                     <div class="text-sm">
                         {% if mp.party %}
-                            <a href="/partijen/{{ mp.party.id }}"
+                            <a href="/verkiezingen/{{ election.slug }}/partijen/{{ mp.party.id }}"
                                class="font-medium text-gray-900 underline decoration-gray-300 hover:text-gray-600 transition-colors">
                                 {{ mp.party.name }}
                             </a>
@@ -109,7 +109,7 @@
                     {% for mc in motion.candidates %}
                     <div class="text-sm">
                         {% if mc.candidate %}
-                            <a href="/kandidaten/{{ mc.candidate.id }}"
+                            <a href="/verkiezingen/{{ election.slug }}/kandidaten/{{ mc.candidate.id }}"
                                class="text-gray-900 underline decoration-gray-300 hover:text-gray-600 transition-colors">
                                 {{ mc.candidate.name }}
                             </a>

@@ -9,6 +9,8 @@ Uses ruamel.yaml for round-trip parsing so existing YAML formatting is preserved
 Usage:
     uv run python scripts/hydrate_bluesky_handles.py
     uv run python scripts/hydrate_bluesky_handles.py --dry-run
+    uv run python scripts/hydrate_bluesky_handles.py --city amsterdam
+    uv run python scripts/hydrate_bluesky_handles.py --city den-haag --party GL-PvdA
 """
 
 import argparse
@@ -82,22 +84,10 @@ def find_best_match(candidate_name: str, actors: list[dict]) -> tuple[str, float
     return None
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dry-run", action="store_true", help="Print matches without writing to YAML")
-    parser.add_argument(
-        "--party",
-        default=None,
-        help="Only process candidates from this party (abbreviation or name, e.g. BIJ1)",
-    )
-    args = parser.parse_args()
-
-    config_path = Path(settings.ELECTION_CONFIG)
-    yaml = YAML()
-    yaml.preserve_quotes = True
-
-    with open(config_path) as f:
-        config = yaml.load(f)
+def _process_yaml(yaml_path: Path, yaml_parser, args) -> tuple[int, list]:
+    """Process a single election YAML. Returns (wrote_count, suggestions)."""
+    with open(yaml_path) as f:
+        config = yaml_parser.load(f)
 
     wrote = 0
     suggestions = []
@@ -137,17 +127,58 @@ def main():
             time.sleep(0.3)  # be polite to the API
 
     if not args.dry_run and wrote:
-        with open(config_path, "w") as f:
-            yaml.dump(config, f)
-        logger.info(f"\nWrote {wrote} handles to {config_path}")
-    elif args.dry_run:
-        logger.info(f"\n[dry-run] Would write {wrote} handles")
+        with open(yaml_path, "w") as f:
+            yaml_parser.dump(config, f)
+        logger.info(f"Wrote {wrote} handles to {yaml_path}")
 
-    if suggestions:
+    return wrote, suggestions
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true", help="Print matches without writing to YAML")
+    parser.add_argument(
+        "--city",
+        default=None,
+        help="Only process this city (e.g. amsterdam, den-haag)",
+    )
+    parser.add_argument(
+        "--party",
+        default=None,
+        help="Only process candidates from this party (abbreviation or name, e.g. BIJ1)",
+    )
+    args = parser.parse_args()
+
+    elections_dir = settings.elections_dir_path
+    yamls = sorted(elections_dir.glob("*.yml"))
+    if args.city:
+        yamls = [y for y in yamls if y.stem.lower() == args.city.lower()]
+    if not yamls:
+        logger.error(f"No YAML files found in {elections_dir}")
+        sys.exit(1)
+
+    yaml_parser = YAML()
+    yaml_parser.preserve_quotes = True
+
+    total_wrote = 0
+    all_suggestions = []
+
+    for yaml_path in yamls:
+        logger.info(f"\n=== {yaml_path.stem} ===")
+        wrote, suggestions = _process_yaml(yaml_path, yaml_parser, args)
+        total_wrote += wrote
+        all_suggestions.extend(suggestions)
+
+    if args.dry_run:
+        logger.info(f"\n[dry-run] Would write {total_wrote} handles")
+    else:
+        logger.info(f"\nTotal: wrote {total_wrote} handles")
+
+    if all_suggestions:
         print("\nPossible matches to verify manually:")
         print(f"  {'Candidate':<40}  {'Handle':<40}  Score")
         print(f"  {'-'*40}  {'-'*40}  -----")
-        for party_name, name, handle, score in suggestions:
+        for party_name, name, handle, score in all_suggestions:
             print(f"  {name:<40}  @{handle:<40}  {score:.0%}")
 
 

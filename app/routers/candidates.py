@@ -4,23 +4,25 @@ from sqlalchemy.orm import Session, joinedload, selectinload
 from app.database import get_db
 from app.models import Candidate, Election, Motion, MotionCandidate, Party
 
-router = APIRouter(prefix="/kandidaten")
+router = APIRouter()
 
 
-@router.get("/")
-def candidate_list(request: Request, db: Session = Depends(get_db)):
-    election = db.query(Election).first()
-    parties = []
-    if election:
-        parties = (
-            db.query(Party)
-            .filter(Party.election_id == election.id)
-            .options(selectinload(Party.candidates))
-            .order_by(Party.current_seats.desc().nullslast(), Party.name)
-            .all()
+@router.get("/verkiezingen/{slug}/kandidaten")
+def candidate_list(slug: str, request: Request, db: Session = Depends(get_db)):
+    election = db.query(Election).filter(Election.slug == slug).first()
+    if not election:
+        return request.app.state.templates.TemplateResponse(
+            request, "errors/404.html", {}, status_code=404
         )
-        for party in parties:
-            party.candidates.sort(key=lambda c: c.position_on_list)
+    parties = (
+        db.query(Party)
+        .filter(Party.election_id == election.id)
+        .options(selectinload(Party.candidates))
+        .order_by(Party.polled_seats.desc().nullslast(), Party.current_seats.desc().nullslast(), Party.name)
+        .all()
+    )
+    for party in parties:
+        party.candidates.sort(key=lambda c: c.position_on_list)
     return request.app.state.templates.TemplateResponse(
         request,
         "candidates/list.html",
@@ -28,22 +30,26 @@ def candidate_list(request: Request, db: Session = Depends(get_db)):
     )
 
 
-@router.get("/{candidate_id}")
+@router.get("/verkiezingen/{slug}/kandidaten/{candidate_id}")
 def candidate_detail(
-    candidate_id: int, request: Request, db: Session = Depends(get_db)
+    slug: str, candidate_id: int, request: Request, db: Session = Depends(get_db)
 ):
+    election = db.query(Election).filter(Election.slug == slug).first()
+    if not election:
+        return request.app.state.templates.TemplateResponse(
+            request, "errors/404.html", {}, status_code=404
+        )
     candidate = (
         db.query(Candidate)
         .options(joinedload(Candidate.party), joinedload(Candidate.posts))
         .filter(Candidate.id == candidate_id)
         .first()
     )
-    if not candidate:
+    if not candidate or candidate.party.election_id != election.id:
         return request.app.state.templates.TemplateResponse(
-            request, "candidates/detail.html", {"candidate": None}
+            request, "candidates/detail.html", {"candidate": None, "election": election}
         )
 
-    # Motions submitted by this candidate
     candidate_motions = (
         db.query(Motion)
         .join(MotionCandidate)
@@ -55,5 +61,5 @@ def candidate_detail(
     return request.app.state.templates.TemplateResponse(
         request,
         "candidates/detail.html",
-        {"candidate": candidate, "candidate_motions": candidate_motions},
+        {"election": election, "candidate": candidate, "candidate_motions": candidate_motions},
     )

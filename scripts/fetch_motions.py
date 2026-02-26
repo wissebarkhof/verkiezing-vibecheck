@@ -122,11 +122,15 @@ def main():
     parser = argparse.ArgumentParser(description="Fetch motions from Notubiz API")
     parser.add_argument("--date-from", type=date.fromisoformat, default=DEFAULT_DATE_FROM)
     parser.add_argument("--date-to", type=date.fromisoformat, default=date.today())
+    parser.add_argument("--city", default=None, help="Only process this city (e.g. amsterdam)")
     args = parser.parse_args()
 
     db = SessionLocal()
     try:
-        election = db.query(Election).first()
+        if args.city:
+            election = db.query(Election).filter(Election.city == args.city.lower()).first()
+        else:
+            election = db.query(Election).first()
         if not election:
             logger.error("No election found. Run ingestion first.")
             return

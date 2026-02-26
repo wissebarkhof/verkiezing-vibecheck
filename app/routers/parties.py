@@ -5,20 +5,22 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Election, Motion, MotionParty, Party
 
-router = APIRouter(prefix="/partijen")
+router = APIRouter()
 
 
-@router.get("/")
-def party_list(request: Request, db: Session = Depends(get_db)):
-    election = db.query(Election).first()
-    parties = []
-    if election:
-        parties = (
-            db.query(Party)
-            .filter(Party.election_id == election.id)
-            .order_by(Party.current_seats.desc().nullslast(), Party.name)
-            .all()
+@router.get("/verkiezingen/{slug}/partijen")
+def party_list(slug: str, request: Request, db: Session = Depends(get_db)):
+    election = db.query(Election).filter(Election.slug == slug).first()
+    if not election:
+        return request.app.state.templates.TemplateResponse(
+            request, "errors/404.html", {}, status_code=404
         )
+    parties = (
+        db.query(Party)
+        .filter(Party.election_id == election.id)
+        .order_by(Party.current_seats.desc().nullslast(), Party.name)
+        .all()
+    )
     return request.app.state.templates.TemplateResponse(
         request,
         "parties/list.html",
@@ -26,15 +28,23 @@ def party_list(request: Request, db: Session = Depends(get_db)):
     )
 
 
-@router.get("/{party_id}")
-def party_detail(party_id: int, request: Request, db: Session = Depends(get_db)):
-    party = db.query(Party).filter(Party.id == party_id).first()
+@router.get("/verkiezingen/{slug}/partijen/{party_id}")
+def party_detail(slug: str, party_id: int, request: Request, db: Session = Depends(get_db)):
+    election = db.query(Election).filter(Election.slug == slug).first()
+    if not election:
+        return request.app.state.templates.TemplateResponse(
+            request, "errors/404.html", {}, status_code=404
+        )
+    party = (
+        db.query(Party)
+        .filter(Party.id == party_id, Party.election_id == election.id)
+        .first()
+    )
     if not party:
         return request.app.state.templates.TemplateResponse(
-            request, "parties/detail.html", {"party": None}
+            request, "parties/detail.html", {"party": None, "election": election}
         )
 
-    # Motions data
     motion_count = (
         db.query(func.count(Motion.id))
         .join(MotionParty)
@@ -54,6 +64,7 @@ def party_detail(party_id: int, request: Request, db: Session = Depends(get_db))
         request,
         "parties/detail.html",
         {
+            "election": election,
             "party": party,
             "motion_count": motion_count,
             "recent_motions": recent_motions,

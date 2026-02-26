@@ -1,0 +1,1061 @@
+election:
+  name: Gemeenteraadsverkiezingen Den Haag 2026
+  city: den-haag
+  date: '2026-03-18'
+  total_seats: 45
+parties:
+- name: Hart voor Den Haag / Groep de Mos
+  abbreviation: ''
+  list_number: 1
+  candidates:
+  - name: Richard de Mos
+    position: 1
+  - name: Ralf Sluijs
+    position: 2
+  - name: Cynthia Langbroek
+    position: 3
+  - name: Arjen Dubbelaar
+    position: 4
+  - name: Mairan Sewtahal
+    position: 5
+  - name: Coen Bom
+    position: 6
+  - name: Necati Akbaş
+    position: 7
+  - name: Jelle Meinesz
+    position: 8
+  - name: Abdoel Haryouli
+    position: 9
+  - name: Damiën Zeller
+    position: 10
+  - name: Amanda Lock
+    position: 11
+  - name: Ismet Bingöl
+    position: 12
+  - name: Gerard Kroon
+    position: 13
+  - name: Martin van den Goorbergh
+    position: 14
+  - name: Tommie Beugelsdijk
+    position: 15
+  - name: Carlos Martinez van Andel
+    position: 16
+  - name: Diego Canter Visscher
+    position: 17
+  - name: Mert Karadoğan
+    position: 18
+  - name: Angela Biseswar
+    position: 19
+  - name: Karolina Polak
+    position: 20
+  - name: Oscar Olierook
+    position: 21
+  - name: Frank Kanhai
+    position: 22
+  - name: Curtis Partoredjo
+    position: 23
+  - name: Marisa Kleinee
+    position: 24
+  - name: Samir Sharif
+    position: 25
+  - name: Linda de Jong
+    position: 26
+  - name: Wanda Roelofse
+    position: 27
+  - name: Victor Meijer
+    position: 28
+  - name: Monique van Stuijvenberg
+    position: 29
+  - name: Jordy Carrero Breevaart
+    position: 30
+  - name: Priscilla Hoogenboom
+    position: 31
+  - name: Willem van Ettinger
+    position: 32
+  - name: Hava Taş
+    position: 33
+  - name: Arjan van den Berg
+    position: 34
+  - name: Bram Poons
+    position: 35
+  - name: Rob Pronk
+    position: 36
+  - name: Marcello van Rijthoven
+    position: 37
+  - name: René Vink
+    position: 38
+  - name: Robèrt Truijens
+    position: 39
+  - name: Erik de Zwart
+    position: 40
+  - name: Cock Jol
+    position: 41
+  - name: Jan Pronk
+    position: 42
+  - name: Shafana Abdoelkhan
+    position: 43
+  - name: Lauran Kordalis
+    position: 44
+  - name: Rachid Guernaoui
+    position: 45
+  - name: Rein Mercha Dewus
+    position: 46
+  - name: Jeffrey de Zwaan
+    position: 47
+  - name: Rick Romijn Blokpoel
+    position: 48
+  - name: Daryl Janmaat
+    position: 49
+  - name: Lex Schoenmaker
+    position: 50
+- name: GROENLINKS / Partij van de Arbeid
+  abbreviation: Gl-PvdA
+  list_number: 2
+  candidates:
+  - name: Mariëlle Vavier
+    position: 1
+  - name: Samir Ahraui
+    position: 2
+  - name: Hera Zenab Butt
+    position: 3
+  - name: Janneke Holman
+    position: 4
+  - name: Vincent Thepass
+    position: 5
+  - name: Maarten De Vuyst
+    position: 6
+  - name: Abdelkader Karbache
+    position: 7
+  - name: Lisa van de Voort
+    position: 8
+  - name: Simo Azzarhouni
+    position: 9
+  - name: Jasmijn Haak Wegmann
+    position: 10
+  - name: Marene Elgershuizen
+    position: 11
+  - name: Vincent Vergeer
+    position: 12
+  - name: Fenna Timsi
+    position: 13
+  - name: Nadine Avéres
+    position: 14
+  - name: Jaap Steenkamer
+    position: 15
+  - name: Kristina van der Molen
+    position: 16
+  - name: Sebastiaan Huijsen
+    position: 17
+  - name: Redmer Marck
+    position: 18
+  - name: Juno Balder
+    position: 19
+  - name: Ab Waasdorp
+    position: 20
+  - name: Luuk Voncken
+    position: 21
+  - name: Remy van Aanholt
+    position: 22
+  - name: Tjomme Klop
+    position: 23
+  - name: Roy Blokvoort
+    position: 24
+  - name: Inge van der Spek
+    position: 25
+  - name: Tommy de Bruijn
+    position: 26
+  - name: Sterre van Heemst
+    position: 27
+  - name: Mahmoud Al Naser
+    position: 28
+  - name: Sem Grootscholten
+    position: 29
+  - name: Bente van Oort
+    position: 30
+  - name: Dave Croes
+    position: 31
+  - name: Gerard van der Linden
+    position: 32
+  - name: Bo Tan-Weenink
+    position: 33
+  - name: Jilles Peters
+    position: 34
+  - name: Piet Driest
+    position: 35
+  - name: Kenan Doğan
+    position: 36
+  - name: Linda Vermeulen
+    position: 37
+  - name: Jonna den Uyl
+    position: 38
+  - name: Ahmed Abushaam
+    position: 39
+  - name: Peter Lincewicz
+    position: 40
+  - name: Sinan Özkaya
+    position: 41
+  - name: Kirti Bahadoersing
+    position: 42
+  - name: Bert van Alphen
+    position: 43
+  - name: Manon Korthals
+    position: 44
+  - name: Isabel Bos
+    position: 45
+  - name: Wimar Bolhuis
+    position: 46
+  - name: Lenne Baboeram
+    position: 47
+  - name: Arjen Kapteijns
+    position: 48
+  - name: Jeltje van Nieuwenhoven
+    position: 49
+  - name: Luc Stultiens
+    position: 50
+- name: D66
+  abbreviation: 'D66'
+  list_number: 3
+  candidates:
+  - name: Yousef Assad
+    position: 1
+  - name: Marije Mostert
+    position: 2
+  - name: Eva Berkman
+    position: 3
+  - name: Otto Thors
+    position: 4
+  - name: Ahsen Başer
+    position: 5
+  - name: Peter Mekers
+    position: 6
+  - name: Shelley Kouwenhoven
+    position: 7
+  - name: Shakira van Steenis
+    position: 8
+  - name: Julia van Herpen
+    position: 9
+  - name: Tahar Kramti
+    position: 10
+  - name: Nena Ogwuru
+    position: 11
+  - name: Bob van de Mortel
+    position: 12
+  - name: Lotte Langley
+    position: 13
+  - name: Marcella Schute
+    position: 14
+  - name: Deirdre Schuitemaker
+    position: 15
+  - name: Michel Crevecoeur
+    position: 16
+  - name: Shahroz Syed
+    position: 17
+  - name: Olivia van der Sanden
+    position: 18
+  - name: Zane de Ponte
+    position: 19
+  - name: Renée Bekker
+    position: 20
+  - name: Kim Hermann
+    position: 21
+  - name: Patrick Beekhuizen
+    position: 22
+  - name: Sven Ruggenberg
+    position: 23
+  - name: Sharwin Ganga
+    position: 24
+  - name: Eveline Blitz
+    position: 25
+  - name: Jasper Fritzsche
+    position: 26
+  - name: Marco Swan
+    position: 27
+  - name: Nonna Joosse
+    position: 28
+  - name: Eline Huizing
+    position: 29
+  - name: Dennis Berens
+    position: 30
+  - name: Andrew van Esch
+    position: 31
+  - name: Lucas Harms
+    position: 32
+  - name: Anil Samlal
+    position: 33
+  - name: Fred Herrebout
+    position: 34
+  - name: Jerimi van Laar
+    position: 35
+  - name: George Rodenhuis
+    position: 36
+  - name: Zain Kiyani
+    position: 37
+  - name: Hannah Coppes
+    position: 38
+  - name: Anand Jharap
+    position: 39
+  - name: Fonda Sahla
+    position: 40
+  - name: Ria Oosterop
+    position: 41
+  - name: Lisanne van der Weijden
+    position: 42
+  - name: Jitske Steigenga
+    position: 43
+  - name: Demi van Wijk
+    position: 44
+  - name: Anno Fekkes
+    position: 45
+  - name: Caroline Verduin
+    position: 46
+  - name: Dennis Groenewold
+    position: 47
+  - name: Edwin Rutten
+    position: 48
+  - name: Ingrid van Engelshoven
+    position: 49
+  - name: Saskia Bruines
+    position: 50
+- name: VVD
+  abbreviation: 'VVD'
+  list_number: 4
+  candidates:
+  - name: Lotte van Basten Batenburg
+    position: 1
+  - name: Rutger de Ridder
+    position: 2
+  - name: Caroline Peeck
+    position: 3
+  - name: Debbie van de Wijngaard
+    position: 4
+  - name: Noud Dumoulin
+    position: 5
+  - name: Daphne Lodder
+    position: 6
+  - name: Theo Groen
+    position: 7
+  - name: Matthias Knijnenberg
+    position: 8
+  - name: Benjamin Broekhuizen
+    position: 9
+  - name: Nicolás Pesman
+    position: 10
+  - name: Albert Tuit
+    position: 11
+  - name: Ewout Lubberdink
+    position: 12
+  - name: Paola Alkemade
+    position: 13
+  - name: Bas Hageman
+    position: 14
+  - name: Hermien Hoekman
+    position: 15
+  - name: Reinout de Groot
+    position: 16
+  - name: Max de Leeuw
+    position: 17
+  - name: David Laseur
+    position: 18
+  - name: Leon Scholten
+    position: 19
+  - name: Nordin Verhagen
+    position: 20
+  - name: Talitha Duijn
+    position: 21
+  - name: Arjen Benedictus
+    position: 22
+  - name: Nick den Dulk
+    position: 23
+  - name: Victor den Tuinder
+    position: 24
+  - name: Marloes Kolthof
+    position: 25
+  - name: Sander den Heijer
+    position: 26
+  - name: Julia Burkhardt
+    position: 27
+  - name: Jason Mulder
+    position: 28
+  - name: Denise Eikelenboom
+    position: 29
+  - name: Friso van Asten
+    position: 30
+  - name: Michiel Bekker
+    position: 31
+  - name: Victor van Kommer
+    position: 32
+  - name: John Knieriem
+    position: 33
+  - name: Ronald Koster
+    position: 34
+  - name: Chris van der Helm
+    position: 35
+  - name: Remco de Vos
+    position: 36
+  - name: Ibo Gülsen
+    position: 37
+  - name: Ingrid Michon-Derkzen
+    position: 38
+  - name: Minke Hofstra
+    position: 39
+  - name: Evan Clark
+    position: 40
+  - name: Anthony Uduba
+    position: 41
+  - name: Jozien Lommerts
+    position: 42
+  - name: Jan Brand
+    position: 43
+  - name: Edy Bruinooge
+    position: 44
+  - name: Anouk van Brug
+    position: 45
+  - name: Kavita Parbhudayal
+    position: 46
+  - name: Alexander Roep
+    position: 47
+  - name: Ockje Tellegen
+    position: 48
+  - name: Eelco Heinen
+    position: 49
+- name: Partij voor de Dieren
+  abbreviation: 'PvdD'
+  list_number: 5
+  candidates:
+  - name: Robert Barker
+    position: 1
+  - name: Diego Demaree
+    position: 2
+  - name: Esmée Fonville
+    position: 3
+  - name: Ewout van Hoek
+    position: 4
+  - name: Larissa Groenewegen
+    position: 5
+  - name: Rolf Pronk
+    position: 6
+  - name: Nora Fehres
+    position: 7
+  - name: Jan Willem van den Bos
+    position: 8
+  - name: Manouk Smeets
+    position: 9
+  - name: Huub Wittenbols
+    position: 10
+  - name: Tanja Meeuwsen
+    position: 11
+  - name: Martijn Jansen
+    position: 12
+  - name: Arda Özden
+    position: 13
+  - name: Joeri Oudshoorn
+    position: 14
+  - name: Navid Madani
+    position: 15
+  - name: Sophie van Gentevoort
+    position: 16
+  - name: Tatjana Grocheva
+    position: 17
+  - name: Imke van Hagen
+    position: 18
+  - name: Titus van der Valk
+    position: 19
+  - name: Boris van Tuijl
+    position: 20
+  - name: Claudia Stellingwerf
+    position: 21
+  - name: Nicole Dick
+    position: 22
+  - name: Anne-Tjerk Mante
+    position: 23
+  - name: Sam van Leeuwen
+    position: 24
+  - name: Anneke Kooijmans
+    position: 25
+  - name: Daan Weterings-Bollmann
+    position: 26
+  - name: Elsa Miedema
+    position: 27
+  - name: Dolf van der Schoot
+    position: 28
+  - name: Atila Akin
+    position: 29
+  - name: Hanneke Schmeets
+    position: 30
+  - name: Arjan Smits
+    position: 31
+  - name: Marijke Bessels
+    position: 32
+  - name: Lana van den Bos
+    position: 33
+  - name: Freya van Wageningen
+    position: 34
+  - name: Dorien Hoefer
+    position: 35
+  - name: Harmke Berghuis
+    position: 36
+  - name: Erik van Dam
+    position: 37
+  - name: Eze Nwankwor
+    position: 38
+  - name: Elena Alonso Gonzalez
+    position: 39
+  - name: Benjamin den Butter
+    position: 40
+  - name: Natasja Verkaik
+    position: 41
+  - name: Jan ten Cate
+    position: 42
+  - name: Frits Willem Bakker
+    position: 43
+  - name: Clara Visser
+    position: 44
+  - name: Scott Beekhuizen
+    position: 45
+  - name: Leonie Gerritsen
+    position: 46
+  - name: Robin Smit
+    position: 47
+  - name: Christine Teunissen
+    position: 48
+  - name: Esther Ouwehand
+    position: 49
+- name: CDA
+  abbreviation: 'CDA'
+  list_number: 6
+  candidates:
+  - name: Kavish Partiman
+    position: 1
+  - name: Hinke de Groot
+    position: 2
+  - name: Jolijn Standhardt
+    position: 3
+  - name: Kesia Watson
+    position: 4
+  - name: Jaap van der Valk
+    position: 5
+  - name: Stijn van Hilten
+    position: 6
+  - name: Meverly Benjamin
+    position: 7
+  - name: Menno Jehee
+    position: 8
+  - name: Iris Scholten
+    position: 9
+  - name: Marieke Waterlander-de Boer
+    position: 10
+  - name: Kasper van Steveninck
+    position: 11
+  - name: Diederik van der Maas
+    position: 12
+  - name: Gerard Lucius
+    position: 13
+  - name: Tjerk Wagenaar
+    position: 14
+  - name: Fatma Aktas
+    position: 15
+  - name: Amber Smeets
+    position: 16
+  - name: Arjen Looijenga
+    position: 17
+  - name: Koen Oosthoek
+    position: 18
+  - name: Aris Prins
+    position: 19
+  - name: Ellis Stolwijk
+    position: 20
+  - name: Michel Rogier
+    position: 21
+  - name: Frank van den Heuvel
+    position: 22
+  - name: Marije van Schaik
+    position: 23
+  - name: Willem Jelle Berg
+    position: 24
+  - name: Pieter Jan Dijkman
+    position: 25
+  - name: Arjen Veerman
+    position: 26
+  - name: Jeroen de Graaf
+    position: 27
+  - name: Babette Lammerts
+    position: 28
+  - name: Jacqueline Biesheuvel-Vermeijden
+    position: 29
+  - name: Joost Breas
+    position: 30
+  - name: Heidy van der Ploeg
+    position: 31
+  - name: Frans de Vries
+    position: 32
+  - name: Marian van den Hoek
+    position: 33
+  - name: Wilbert Stolte
+    position: 34
+  - name: Bastiaan Verweij
+    position: 35
+  - name: Karsten Klein
+    position: 36
+  - name: Rutger Vermast
+    position: 37
+  - name: Wim van de Camp
+    position: 38
+  - name: Onno Ruding
+    position: 39
+  - name: Hilbert Bredemeijer
+    position: 40
+- name: DENK
+  abbreviation: 'DENK'
+  list_number: 7
+  candidates:
+  - name: Nur Icar
+    position: 1
+  - name: Adeel Mahmood
+    position: 2
+  - name: Ayşe Kaya
+    position: 3
+  - name: Hatim Belahcen
+    position: 4
+  - name: Ruşen Koç
+    position: 5
+  - name: Hatice Bayat
+    position: 6
+  - name: Mohammed Ghay
+    position: 7
+  - name: Adrianna Wolińska
+    position: 8
+  - name: Youssaf Bouyazdouzen
+    position: 9
+  - name: Aya Selmani
+    position: 10
+  - name: Canan Akmeşe
+    position: 11
+  - name: Öznur Elmas
+    position: 12
+  - name: Rashieda Ascha Mohamed
+    position: 13
+  - name: Jülide Iğdir
+    position: 14
+  - name: Nahid Zabihi
+    position: 15
+  - name: Sonya Rashid
+    position: 16
+  - name: Asma Ben Nejma
+    position: 17
+  - name: Wassim Ramzi
+    position: 18
+  - name: Gül Parlar
+    position: 19
+  - name: Eda Çelik
+    position: 20
+  - name: Hardi Shwaan
+    position: 21
+  - name: Melda Şahin
+    position: 22
+  - name: Nour Selmani
+    position: 23
+  - name: Türkan Kurt
+    position: 24
+  - name: Janik Yasin Slob
+    position: 25
+  - name: Amir El Hani
+    position: 26
+  - name: Ikrame El-Qoraychy
+    position: 27
+  - name: Hasan Dilerer
+    position: 28
+  - name: Nadir Ouarraki
+    position: 29
+  - name: Hena Alpsoy
+    position: 30
+  - name: Bilal Arab
+    position: 31
+  - name: Yousef El Hamadani
+    position: 32
+  - name: Emin Ayverdi
+    position: 33
+  - name: Sabina Alieva
+    position: 34
+  - name: Suray Myuslyumov
+    position: 35
+  - name: Nassira Abaâziz
+    position: 36
+  - name: Mourad Ouari
+    position: 37
+  - name: Stephan van Baarle
+    position: 38
+- name: Haagse Stadspartij
+  abbreviation: ''
+  list_number: 8
+  candidates:
+  - name: Fatima Faïd
+    position: 1
+  - name: Ahlam Benali
+    position: 2
+  - name: Patricia Dinkela
+    position: 3
+  - name: Kelly Musyoka
+    position: 4
+  - name: Aruna Lalbiharie
+    position: 5
+  - name: Daphne van Esch
+    position: 6
+  - name: Soerish Mangroelal
+    position: 7
+  - name: Fatema Mahmoud
+    position: 8
+  - name: Margot Alvarez Parra
+    position: 9
+  - name: Nils Vos
+    position: 10
+  - name: Marloes van Meel
+    position: 11
+  - name: Tess Kirby
+    position: 12
+  - name: Hanno van Megchelen
+    position: 13
+  - name: Emile Sprenger
+    position: 14
+  - name: Peter Bos
+    position: 15
+
+- name: Socialistische Partij
+  abbreviation: SP
+  list_number: 9
+  candidates:
+  - name: Tijmen van Wijngaarden
+    position: 1
+  - name: Janet Ramesar
+    position: 2
+  - name: Lorenzo Girardi
+    position: 3
+  - name: Yael Keijzer
+    position: 4
+  - name: Mathieu Weiss
+    position: 5
+  - name: Inge van de Vooren
+    position: 6
+  - name: Anne Cramer
+    position: 7
+  - name: Branko Bufacchi
+    position: 8
+  - name: Nico de Kok
+    position: 9
+  - name: Marieke Alleman
+    position: 10
+  - name: Leonid Levin
+    position: 11
+  - name: Woen Woen Lau
+    position: 12
+  - name: Sebastiaan van den Hout
+    position: 13
+  - name: Gert-Jan Linders
+    position: 14
+  - name: Joshua Versijde
+    position: 15
+  - name: Bastiaan Meijer
+    position: 16
+  - name: Rick Hoefsloot
+    position: 17
+  - name: Lesley Arp
+    position: 18
+- name: Partij voor de Vrijheid
+  abbreviation: PVV
+  list_number: 10
+  candidates:
+  - name: Chris Faddegon
+    position: 1
+  - name: Richard van den Bergh
+    position: 2
+  - name: Annemarie van Gent
+    position: 3
+- name: ChristenUnie-SGP
+  abbreviation: 'CU-SGP'
+  list_number: 11
+  candidates:
+  - name: Judith Klokkenburg-Reedeker
+    position: 1
+  - name: Michiel Noordzij
+    position: 2
+  - name: Johan Hofland
+    position: 3
+  - name: Gaetan Mbwete
+    position: 4
+  - name: Mirjam Haasnoot-van den Boogert
+    position: 5
+  - name: Daniël van Holten
+    position: 6
+  - name: Mathilde van de Ridder
+    position: 7
+  - name: Erik Boogert
+    position: 8
+  - name: Ko van Wingerden
+    position: 9
+  - name: Domino Ofori
+    position: 10
+  - name: Constance Osafo-Adjei
+    position: 11
+  - name: Evert de Niet
+    position: 12
+  - name: Stephan van der Kolk
+    position: 13
+  - name: Doretta Asare
+    position: 14
+  - name: Mariëlle van Berkum
+    position: 15
+  - name: Rolinka Boot
+    position: 16
+  - name: Anyao Yuan
+    position: 17
+  - name: Elisa van Dam
+    position: 18
+  - name: Daniel Wegen
+    position: 19
+  - name: Nadia Esmeralda van Wendel de Joode
+    position: 20
+  - name: Ewout van der Staaij
+    position: 21
+  - name: Bettelies Westerbeek
+    position: 22
+  - name: Monique Rog-Vermulst
+    position: 23
+  - name: Peter Zoutewelle
+    position: 24
+  - name: Jan Dijkshoorn
+    position: 25
+  - name: Hans Dingemanse
+    position: 26
+  - name: Iara de Witte
+    position: 27
+  - name: Antonie Bargeman
+    position: 28
+  - name: Steven Datema
+    position: 29
+  - name: Rudi Buis
+    position: 30
+  - name: Arnout Verheij
+    position: 31
+  - name: Marja de Jonge-van Houwelingen
+    position: 32
+  - name: Ytzen Lont
+    position: 33
+  - name: Henk Bal
+    position: 34
+  - name: Marjolijn Vreeken
+    position: 35
+  - name: Ruud Dorlas
+    position: 36
+  - name: Mariëtte van Moolenbroek
+    position: 37
+  - name: Stijn van Lier
+    position: 38
+  - name: Stéphanie de Groot
+    position: 39
+  - name: Hendrik-Jan Talsma
+    position: 40
+  - name: Pieter Grinwis
+    position: 41
+- name: Forum voor Democratie
+  abbreviation: 'FvD'
+  list_number: 12
+  candidates:
+  - name: Robbert van der Meijden
+    position: 1
+  - name: Roëlle van Gelderen
+    position: 2
+  - name: Timon Busscher
+    position: 3
+  - name: Britt van Houten
+    position: 4
+  - name: Paul de Rooij
+    position: 5
+  - name: Delon Tatem
+    position: 6
+  - name: Cynthia de Groot
+    position: 7
+  - name: Resi Hoogendam
+    position: 8
+  - name: Ron Zijlstra
+    position: 9
+  - name: Liesbeth Gieben
+    position: 10
+  - name: Michel de la Rie
+    position: 11
+  - name: Ramin Ghoerbien
+    position: 12
+  - name: Patrick van de Schilde
+    position: 13
+  - name: Robert Kwakkelstein
+    position: 14
+  - name: Marija Morozova
+    position: 15
+  - name: Nick Haseth
+    position: 16
+  - name: Pepijn van Houwelingen
+    position: 17
+- name: Volt
+  abbreviation: 'Volt'
+  list_number: 13
+  candidates:
+  - name: Mylène Tabernal
+    position: 1
+  - name: Jonne Tuijn
+    position: 2
+  - name: Astrid Plugge
+    position: 3
+  - name: Jochem Sprenger
+    position: 4
+  - name: Pauline van der Vorm
+    position: 5
+  - name: Jildert Valkema
+    position: 6
+  - name: Zsuzsanna Süle
+    position: 7
+  - name: Thomas Zwikker
+    position: 8
+  - name: Elize Verburg
+    position: 9
+  - name: Martijn van der Meij
+    position: 10
+  - name: Maike Böggemann
+    position: 11
+  - name: Miguel Lopez
+    position: 12
+  - name: Annelies Heek
+    position: 13
+  - name: Erik Verhofstad
+    position: 14
+  - name: Hetti van Hamersveld
+    position: 15
+  - name: Simon Bleijenberg
+    position: 16
+- name: Nieuw Sociaal Contract
+  abbreviation: NSC
+  list_number: 14
+  candidates:
+  - name: Sam Chauthie
+    position: 1
+  - name: Thomas Karmarker
+    position: 2
+  - name: Romana Moussa
+    position: 3
+  - name: Mostafa Alahyarian
+    position: 4
+  - name: Wil Steijling
+    position: 5
+  - name: Steve Gierdharie
+    position: 6
+  - name: Kees Hulsman
+    position: 7
+  - name: Inti Oosterkamp
+    position: 8
+  - name: Janet Ranke
+    position: 9
+  - name: Peter Prinsen
+    position: 10
+  - name: Jan van der Meer
+    position: 11
+  - name: Pieter Jaap Sprenger
+    position: 12
+  - name: Frederika Gans
+    position: 13
+- name: INL Den Haag
+  abbreviation: ''
+  list_number: 15
+  candidates:
+  - name: Imro Blom
+    position: 1
+  - name: Reitze Winklaar
+    position: 2
+  - name: Paulo Valentim Domingos Martins
+    position: 3
+- name: ''
+  abbreviation: ''
+  list_number: 16
+  candidates:
+  - name: Tahsin Çetinkaya
+    position: 1
+  - name: Bahar Bozyel
+    position: 2
+  - name: Kadir Işik
+    position: 3
+  - name: Akin Özvezneci
+    position: 4
+  - name: Asie Yusein
+    position: 5
+  - name: Ahmed Karabalik
+    position: 6
+  - name: Aptoul Bairaktar
+    position: 7
+  - name: Hikmet Kaan
+    position: 8
+- name: Drerrie voor Den Haag
+  abbreviation: DvD
+  list_number: 17
+  candidates:
+  - name: Sidi Mohammed El Baroudi
+    position: 1
+  - name: Mohamed Kalai
+    position: 2
+  - name: Marwa Rahimi
+    position: 3
+  - name: Shireen Karadaghi
+    position: 4
+  - name: Emre Şahin
+    position: 5
+  - name: Sami Souirti
+    position: 6
+  - name: Mounir Kalai
+    position: 7
+  - name: Musab Mohamed
+    position: 8
+  - name: Ilias Souirti
+    position: 9
+  - name: Fadzli Fadzli Bin Zahari
+    position: 10
+  - name: Mélissa Sherin Tata
+    position: 11
+  - name: Nour Aboushahin
+    position: 12
+  - name: Mounir Al Had-doui
+    position: 13
+  - name: Sofyan Akhlef
+    position: 14
+  - name: Bekir Şahin
+    position: 15
+- name: Partij voor de Rechtsstaat
+  abbreviation: ''
+  list_number: 18
+  candidates:
+  - name: Funda Ileri
+    position: 1
+- name: ''
+  abbreviation: ''
+  list_number: 19
+  candidates:
+  - name: Ramdhani
+    position: 1
+  - name: Belkhatir
+    position: 2
+- name: 50PLUS
+  abbreviation: '50PLUS'
+  list_number: 20
+  candidates:
+  - name: Sofia Tsitsouashvili
+    position: 1
+  - name: Rambaran
+    position: 2
+  - name: van Bergen-Faaij
+    position: 3
+  - name: Claassen
+    position: 4
+  - name: Mchedlishvili
+    position: 5
+  - name: Visser
+    position: 6
+  - name: Rotteveel
+    position: 7
+  - name: Zaidi
+    position: 8
+  - name: van Otterloo
+    position: 9

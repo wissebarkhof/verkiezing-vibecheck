@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from app.database import SessionLocal
-from app.models import Party
+from app.models import Election, Party
 from app.services.llm import summarize_program
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -30,11 +30,22 @@ def main():
         default=None,
         help="Only generate summary for this party (abbreviation or name, e.g. BIJ1)",
     )
+    parser.add_argument(
+        "--city",
+        default=None,
+        help="Only process this city (e.g. amsterdam)",
+    )
     args = parser.parse_args()
 
     db = SessionLocal()
     try:
         q = db.query(Party).filter(Party.program_text.isnot(None))
+        if args.city:
+            election = db.query(Election).filter(Election.city == args.city.lower()).first()
+            if not election:
+                logger.info(f"No election found for city '{args.city}'")
+                return
+            q = q.filter(Party.election_id == election.id)
         if args.party:
             needle = args.party.lower()
             q = q.filter(

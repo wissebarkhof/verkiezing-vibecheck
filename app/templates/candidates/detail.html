@@ -5,7 +5,7 @@
 {% block content %}
 {% if candidate %}
     <div class="mb-4">
-        <a href="/kandidaten" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">&larr; Alle kandidaten</a>
+        <a href="/verkiezingen/{{ election.slug }}/kandidaten" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">&larr; Alle kandidaten</a>
     </div>
 
     {# Hero #}
@@ -19,7 +19,7 @@
             <h1 class="text-3xl font-bold text-gray-900 mb-1">{{ candidate.name }}</h1>
             <p class="text-gray-500">
                 Nr. {{ candidate.position_on_list }} —
-                <a href="/partijen/{{ candidate.party.id }}"
+                <a href="/verkiezingen/{{ election.slug }}/partijen/{{ candidate.party.id }}"
                    class="underline decoration-gray-300 hover:text-gray-900 transition-colors">
                     {{ candidate.party.name }}
                 </a>

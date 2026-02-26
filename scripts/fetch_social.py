@@ -121,11 +121,19 @@ def main():
         default=None,
         help="Only process candidates from this party (abbreviation or name, e.g. BIJ1)",
     )
+    parser.add_argument(
+        "--city",
+        default=None,
+        help="Only process this city (e.g. amsterdam)",
+    )
     args = parser.parse_args()
 
     db = SessionLocal()
     try:
-        election = db.query(Election).first()
+        if args.city:
+            election = db.query(Election).filter(Election.city == args.city.lower()).first()
+        else:
+            election = db.query(Election).first()
         if not election:
             logger.error("No election found. Run ingestion first.")
             return

@@ -20,6 +20,28 @@ def slugify(city: str, date_val: date) -> str:
     return f"{city}-{date_val.year}"
 
 
+def ingest_elections_dir(
+    db: Session, elections_dir: Path, city_filter: str | None = None
+) -> list[Election]:
+    """Ingest all *.yml files in elections_dir into the database.
+
+    If city_filter is given (e.g. 'amsterdam'), only that city's YAML is ingested.
+    """
+    yamls = sorted(elections_dir.glob("*.yml"))
+    if city_filter:
+        yamls = [y for y in yamls if y.stem.lower() == city_filter.lower()]
+    if not yamls:
+        logger.warning(f"No YAML files found in {elections_dir}" + (f" for city '{city_filter}'" if city_filter else ""))
+        return []
+
+    elections = []
+    for config_path in yamls:
+        logger.info(f"Ingesting: {config_path.name}")
+        election = ingest_election(db, config_path)
+        elections.append(election)
+    return elections
+
+
 def ingest_election(
     db: Session, config_path: Path, party_filter: str | None = None
 ) -> Election:
@@ -29,11 +51,16 @@ def ingest_election(
     If party_filter is given (abbreviation or name), only that party is ingested.
     """
     config = load_yaml_config(config_path)
-    data_dir = config_path.parent.parent  # data/ directory (parent of elections/)
+    # YAML lives at data/elections/gemeenteraad-2026/amsterdam.yml → go up 3 levels to data/
+    data_dir = config_path.parent.parent.parent
 
     election_data = config["election"]
     election_date = date.fromisoformat(election_data["date"])
     slug = slugify(election_data["city"], election_date)
+
+    total_seats = election_data.get("total_seats")
+    if total_seats is not None:
+        total_seats = int(total_seats)
 
     # Upsert election
     election = db.query(Election).filter(Election.slug == slug).first()
@@ -41,6 +68,7 @@ def ingest_election(
         election.name = election_data["name"]
         election.city = election_data["city"]
         election.date = election_date
+        election.total_seats = total_seats
         logger.info(f"Updated election: {election.name}")
     else:
         election = Election(
@@ -48,6 +76,7 @@ def ingest_election(
             name=election_data["name"],
             city=election_data["city"],
             date=election_date,
+            total_seats=total_seats,
         )
         db.add(election)
         db.flush()

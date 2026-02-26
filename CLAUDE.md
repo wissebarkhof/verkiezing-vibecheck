@@ -25,13 +25,29 @@ uv run alembic upgrade head
 uv run alembic revision --autogenerate -m "description"
 
 # Data ingestion scripts (run in order for a new election)
-uv run python scripts/ingest.py              # YAML + PDFs → DB
-uv run python scripts/generate_embeddings.py # chunks → pgvector
-uv run python scripts/generate_summaries.py  # AI party summaries (Dutch)
-uv run python scripts/generate_comparisons.py # AI topic comparisons (Dutch)
-uv run python scripts/fetch_social.py        # Bluesky posts → AI summaries
-uv run python scripts/fetch_motions.py       # Notubiz → council motions/amendments
-uv run python scripts/generate_motion_summaries.py  # AI motion summaries per party
+#
+# Step 0: generate/update election YAMLs from the official Kiesraad CSV
+#   CSV lives in data/raw_data/ (download from data.overheid.nl)
+uv run python scripts/generate_election_yaml.py --gemeente Amsterdam
+uv run python scripts/generate_election_yaml.py --gemeente Rotterdam
+uv run python scripts/generate_election_yaml.py --gemeente "'s-Gravenhage" --city den-haag
+#
+# Steps 1–7: load all YAMLs into DB, generate AI content
+uv run python scripts/ingest.py                        # all cities → DB
+uv run python scripts/ingest.py --city amsterdam       # single city
+uv run python scripts/generate_embeddings.py           # chunks → pgvector
+uv run python scripts/generate_summaries.py            # AI party summaries (Dutch)
+uv run python scripts/generate_comparisons.py          # AI topic comparisons (Dutch)
+uv run python scripts/generate_comparisons.py --city amsterdam  # single city
+uv run python scripts/fetch_social.py                  # Bluesky posts → AI summaries
+uv run python scripts/fetch_motions.py                 # Notubiz → council motions/amendments
+uv run python scripts/generate_motion_summaries.py     # AI motion summaries per party
+#
+# Enrichment (can run after step 0, writes back to YAML)
+uv run python scripts/hydrate_bluesky_handles.py              # all cities
+uv run python scripts/hydrate_bluesky_handles.py --city amsterdam  # single city
+uv run python scripts/hydrate_linkedin_urls.py                # all cities
+uv run python scripts/hydrate_linkedin_urls.py --city amsterdam    # single city
 
 # Tests
 uv run pytest
@@ -44,12 +60,36 @@ Copy `.env.example` to `.env`. Required variables:
 - `DATABASE_URL` — PostgreSQL connection string
 - `ANTHROPIC_API_KEY` — for Anthropic models via LiteLLM
 - `OPENAI_API_KEY` — for OpenAI models + embeddings
-- `ELECTION_CONFIG` — path to YAML config, e.g. `data/elections/amsterdam-2026.yml`
+- `ELECTIONS_DIR` — directory containing election YAMLs, e.g. `data/elections/gemeenteraad-2026`
 - `ENVIRONMENT` — `development` or `production`
+
+## Data folder layout
+
+```
+data/
+├── elections/
+│   └── gemeenteraad-2026/          ← one YAML per city (auto-discovered)
+│       ├── amsterdam.yml
+│       ├── den-haag.yml
+│       └── rotterdam.yml
+├── raw_data/                        ← official CSVs from data.overheid.nl
+│   ├── Kandidatenlijsten_GR2026.csv
+│   └── Raadzetels_GR2026.csv
+├── logos/                           ← party logo files
+└── programs/
+    └── amsterdam-2026/              ← party program PDFs (gitignored)
+```
+
+YAML paths (`logo`, `program_pdf`) are relative to `data/`.
 
 ## Election Config (YAML)
 
-Election-specific data lives entirely in `data/elections/<slug>.yml`. The app is election-agnostic; swap the YAML + PDFs to support another city.
+Election-specific data lives in `data/elections/gemeenteraad-2026/<city>.yml`.
+The app is election-agnostic; swap the YAML + PDFs to support another city.
+
+**Generate / update the YAML from the official Kiesraad CSV first** (step 0 above).
+The CSV is the authoritative source for party and candidate lists; the YAML adds
+enrichment (websites, logos, program PDFs, social handles, seat counts, topics).
 
 ```yaml
 election:

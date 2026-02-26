@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <link rel="stylesheet" href="/static/css/style.css">
     {% block head %}{% endblock %}
 </head>
@@ -23,13 +24,16 @@
             <a href="/" class="site-logo">VerkiezingsVibecheck</a>
             {% block nav_links %}
             {% set path = request.url.path %}
+            {% set path_parts = path.split('/') %}
+            {% set election_slug = path_parts[2] if path_parts|length > 2 and path_parts[1] == 'verkiezingen' else '' %}
+            {% set base = '/verkiezingen/' ~ election_slug %}
             <div class="flex gap-8">
-                <a href="/partijen"   class="nav-link {% if path.startswith('/partijen') %}nav-link--active{% endif %}"   style="--accent: #a0f5e9">Partijen</a>
-                <a href="/kandidaten" class="nav-link {% if path.startswith('/kandidaten') %}nav-link--active{% endif %}" style="--accent: #9ddcf2">Kandidaten</a>
-                <a href="/moties/"    class="nav-link {% if path.startswith('/moties') %}nav-link--active{% endif %}"     style="--accent: #a6a0f5">Moties</a>
-                <a href="/vergelijk"  class="nav-link {% if path.startswith('/vergelijk') %}nav-link--active{% endif %}"  style="--accent: #eaa0f5">Vergelijk</a>
-                <a href="/zoeken"     class="nav-link {% if path.startswith('/zoeken') %}nav-link--active{% endif %}"     style="--accent: #99f09f">Zoeken</a>
-                <a href="/programmas" class="nav-link {% if path.startswith('/programmas') %}nav-link--active{% endif %}" style="--accent: #f5d76e">Programma's</a>
+                <a href="{{ base }}/partijen"   class="nav-link {% if '/partijen' in path %}nav-link--active{% endif %}"   style="--accent: #a0f5e9">Partijen</a>
+                <a href="{{ base }}/kandidaten" class="nav-link {% if '/kandidaten' in path %}nav-link--active{% endif %}" style="--accent: #9ddcf2">Kandidaten</a>
+                <a href="{{ base }}/moties"     class="nav-link {% if '/moties' in path %}nav-link--active{% endif %}"     style="--accent: #a6a0f5">Moties</a>
+                <a href="{{ base }}/vergelijk"  class="nav-link {% if '/vergelijk' in path %}nav-link--active{% endif %}"  style="--accent: #eaa0f5">Vergelijk</a>
+                <a href="{{ base }}/zoeken"     class="nav-link {% if '/zoeken' in path %}nav-link--active{% endif %}"     style="--accent: #99f09f">Zoeken</a>
+                <a href="{{ base }}/programmas" class="nav-link {% if '/programmas' in path %}nav-link--active{% endif %}" style="--accent: #f5d76e">Programma's</a>
             </div>
             {% endblock %}
         </div>

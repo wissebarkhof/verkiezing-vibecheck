@@ -95,7 +95,7 @@ az containerapp create \
   --env-vars \
       DATABASE_URL="$DATABASE_URL" \
       ENVIRONMENT=production \
-      ELECTION_CONFIG=data/elections/amsterdam-2026.yml \
+      ELECTIONS_DIR=data/elections/gemeenteraad-2026 \
       ANTHROPIC_API_KEY=secretref:anthropic-key \
       OPENAI_API_KEY=secretref:openai-key \
   --secrets \

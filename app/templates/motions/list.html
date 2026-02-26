@@ -8,7 +8,7 @@
 <div class="flex flex-col md:flex-row gap-6">
     {# Filter sidebar #}
     <div class="md:w-64 flex-shrink-0">
-        <form hx-get="/moties/" hx-target="#motions-list" hx-swap="innerHTML" hx-push-url="true"
+        <form hx-get="/verkiezingen/{{ election.slug }}/moties" hx-target="#motions-list" hx-swap="innerHTML" hx-push-url="true"
               class="bg-white rounded-lg border border-gray-200 p-4 space-y-4">
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wide text-gray-400 mb-1">Zoeken</label>
@@ -46,7 +46,7 @@
             </button>
         </form>
 
-        <a href="/moties/statistieken"
+        <a href="/verkiezingen/{{ election.slug }}/moties/statistieken"
            class="block mt-4 text-center text-sm text-gray-500 hover:text-gray-900 underline decoration-gray-300 transition-colors">
             Statistieken per partij &rarr;
         </a>

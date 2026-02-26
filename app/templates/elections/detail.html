@@ -10,8 +10,9 @@
         {{ election.date.strftime('%d %B %Y') }} &middot; {{ election.city | capitalize }}
     </p>
 
-    {% if party_count or candidate_count or motion_count %}
+    {% if party_count or candidate_count or motion_count or election.total_seats %}
     <div class="flex gap-6 mt-4 text-sm text-gray-500">
+        {% if election.total_seats %}<span><span class="font-semibold text-gray-700">{{ election.total_seats }}</span> raadzetels</span>{% endif %}
         {% if party_count %}<span><span class="font-semibold text-gray-700">{{ party_count }}</span> partijen</span>{% endif %}
         {% if candidate_count %}<span><span class="font-semibold text-gray-700">{{ candidate_count }}</span> kandidaten</span>{% endif %}
         {% if motion_count %}<span><span class="font-semibold text-gray-700">{{ motion_count }}</span> moties</span>{% endif %}
@@ -22,7 +23,7 @@
 <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Verken de verkiezing</p>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    <a href="/partijen"
+    <a href="/verkiezingen/{{ election.slug }}/partijen"
        class="group card-accent-top block bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 p-5"
        style="--card-accent: linear-gradient(90deg, #a0f5e9, #9ddcf2)">
         <h3 class="text-base font-semibold text-gray-900 mb-1 group-hover:text-gray-700">Partijen</h3>
@@ -30,7 +31,7 @@
         {% if party_count %}<p class="text-xs text-gray-400 mt-3">{{ party_count }} partijen</p>{% endif %}
     </a>
 
-    <a href="/kandidaten"
+    <a href="/verkiezingen/{{ election.slug }}/kandidaten"
        class="group card-accent-top block bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 p-5"
        style="--card-accent: linear-gradient(90deg, #9ddcf2, #a6a0f5)">
         <h3 class="text-base font-semibold text-gray-900 mb-1 group-hover:text-gray-700">Kandidaten</h3>
@@ -38,21 +39,21 @@
         {% if candidate_count %}<p class="text-xs text-gray-400 mt-3">{{ candidate_count }} kandidaten</p>{% endif %}
     </a>
 
-    <a href="/vergelijk"
+    <a href="/verkiezingen/{{ election.slug }}/vergelijk"
        class="group card-accent-top block bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 p-5"
        style="--card-accent: linear-gradient(90deg, #eaa0f5, #a6a0f5)">
         <h3 class="text-base font-semibold text-gray-900 mb-1 group-hover:text-gray-700">Vergelijk</h3>
         <p class="text-sm text-gray-500">Vergelijk partijstandpunten per onderwerp</p>
     </a>
 
-    <a href="/zoeken"
+    <a href="/verkiezingen/{{ election.slug }}/zoeken"
        class="group card-accent-top block bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 p-5"
        style="--card-accent: linear-gradient(90deg, #99f09f, #a0f5e9)">
         <h3 class="text-base font-semibold text-gray-900 mb-1 group-hover:text-gray-700">Zoeken</h3>
         <p class="text-sm text-gray-500">Stel vragen over verkiezingsprogramma's</p>
     </a>
 
-    <a href="/moties/"
+    <a href="/verkiezingen/{{ election.slug }}/moties"
        class="group card-accent-top block bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 p-5"
        style="--card-accent: linear-gradient(90deg, #a6a0f5, #eaa0f5)">
         <h3 class="text-base font-semibold text-gray-900 mb-1 group-hover:text-gray-700">Moties</h3>
@@ -60,7 +61,7 @@
         {% if motion_count %}<p class="text-xs text-gray-400 mt-3">{{ motion_count }} moties</p>{% endif %}
     </a>
 
-    <a href="/programmas"
+    <a href="/verkiezingen/{{ election.slug }}/programmas"
        class="group card-accent-top block bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 p-5"
        style="--card-accent: linear-gradient(90deg, #f5d76e, #f5ad6e)">
         <h3 class="text-base font-semibold text-gray-900 mb-1 group-hover:text-gray-700">Programma's</h3>

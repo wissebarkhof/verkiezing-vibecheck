@@ -14,6 +14,7 @@ class Election(Base):
     name: Mapped[str] = mapped_column(String(200))
     city: Mapped[str] = mapped_column(String(100))
     date: Mapped[date] = mapped_column(Date)
+    total_seats: Mapped[int | None] = mapped_column(default=None)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), onupdate=func.now()

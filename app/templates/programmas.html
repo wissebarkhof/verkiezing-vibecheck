@@ -6,7 +6,7 @@
 <h1 class="text-3xl font-bold text-gray-900 mb-2">Verkiezingsprogramma's</h1>
 <p class="text-sm text-gray-400 mb-8">
     Hieronder vind je de originele verkiezingsprogramma's van alle deelnemende partijen.
-    De AI-antwoorden op de <a href="/zoeken/" class="underline hover:text-gray-600">zoekpagina</a> zijn uitsluitend gebaseerd op deze documenten.
+    De AI-antwoorden op de <a href="/verkiezingen/{{ election.slug }}/zoeken" class="underline hover:text-gray-600">zoekpagina</a> zijn uitsluitend gebaseerd op deze documenten.
 </p>
 
 {% set avatar_colors = ['#a0f5e9','#9ddcf2','#a6a0f5','#eaa0f5','#99f09f','#f5ad6e'] %}
@@ -31,7 +31,7 @@
 
         {# Name #}
         <div class="flex-1 min-w-0">
-            <a href="/partijen/{{ party.id }}" class="text-sm font-medium text-gray-900 hover:underline">
+            <a href="/verkiezingen/{{ election.slug }}/partijen/{{ party.id }}" class="text-sm font-medium text-gray-900 hover:underline">
                 {{ party.name }}
             </a>
         </div>

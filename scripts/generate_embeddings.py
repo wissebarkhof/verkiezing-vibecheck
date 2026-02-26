@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from app.database import SessionLocal
-from app.models import Party
+from app.models import Election, Party
 from app.services.embedding import embed_all_documents
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -30,11 +30,17 @@ def main():
         default=None,
         help="Only embed documents for this party (abbreviation or name, e.g. BIJ1)",
     )
+    parser.add_argument(
+        "--city",
+        default=None,
+        help="Only process this city (e.g. amsterdam)",
+    )
     args = parser.parse_args()
 
     db = SessionLocal()
     try:
         party_id = None
+        election_id = None
         if args.party:
             needle = args.party.lower()
             party = db.query(Party).filter(
@@ -45,8 +51,15 @@ def main():
                 sys.exit(1)
             party_id = party.id
             logger.info(f"Filtering to party: {party.name}")
+        elif args.city:
+            election = db.query(Election).filter(Election.city == args.city.lower()).first()
+            if not election:
+                logger.error(f"No election found for city '{args.city}'")
+                sys.exit(1)
+            election_id = election.id
+            logger.info(f"Filtering to city: {args.city} (election_id={election_id})")
 
-        count = embed_all_documents(db, party_id=party_id)
+        count = embed_all_documents(db, party_id=party_id, election_id=election_id)
         logger.info(f"Embedded {count} documents total")
     finally:
         db.close()

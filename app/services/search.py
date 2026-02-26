@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 DEFAULT_TOP_K = 8
 
 
-def search(db: Session, query: str, top_k: int = DEFAULT_TOP_K) -> dict:
+def search(
+    db: Session, query: str, top_k: int = DEFAULT_TOP_K, election_id: int | None = None
+) -> dict:
     """RAG search: embed query, find similar chunks, generate answer.
 
     Returns:
@@ -20,17 +22,24 @@ def search(db: Session, query: str, top_k: int = DEFAULT_TOP_K) -> dict:
     """
     query_embedding = generate_embedding(query)
 
+    params: dict = {"embedding": str(query_embedding), "limit": top_k}
+    election_filter = ""
+    if election_id is not None:
+        election_filter = "AND p.election_id = :election_id"
+        params["election_id"] = election_id
+
     # pgvector cosine distance: <=> operator (lower = more similar)
     results = db.execute(
-        text("""
+        text(f"""
             SELECT d.id, d.content, d.party_id, d.metadata,
                    d.embedding <=> cast(:embedding as vector) AS distance
             FROM documents d
-            WHERE d.embedding IS NOT NULL
+            JOIN parties p ON p.id = d.party_id
+            WHERE d.embedding IS NOT NULL {election_filter}
             ORDER BY d.embedding <=> cast(:embedding as vector)
             LIMIT :limit
         """),
-        {"embedding": str(query_embedding), "limit": top_k},
+        params,
     ).fetchall()
 
     if not results:

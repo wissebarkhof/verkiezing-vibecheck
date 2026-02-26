@@ -2,10 +2,12 @@
 # Full data ingestion pipeline for Verkiezing Vibecheck.
 #
 # Usage:
-#   ./scripts/run_pipeline.sh                        # run all steps for all parties
+#   ./scripts/run_pipeline.sh                        # run all steps for all cities
+#   ./scripts/run_pipeline.sh --city amsterdam       # run all steps for one city only
 #   ./scripts/run_pipeline.sh --from step5           # resume from a specific step
 #   ./scripts/run_pipeline.sh --party BIJ1           # run all steps for one party only
-#   ./scripts/run_pipeline.sh --party BIJ1 --from step5
+#   ./scripts/run_pipeline.sh --city amsterdam --from step5
+#   ./scripts/run_pipeline.sh --city amsterdam --party BIJ1 --from step5
 #
 # Steps:
 #   step1  ingest           Load YAML + PDFs into DB
@@ -18,7 +20,7 @@
 #   step8  social           Fetch Bluesky posts + AI social summaries
 #   step9  linkedin              Fetch LinkedIn profile data + posts per candidate
 #   step10 linkedin-summaries    Generate AI LinkedIn summaries from stored profile data
-#   step11 motions               Fetch council motions from Notubiz (always runs unfiltered)
+#   step11 motions               Fetch council motions from Notubiz
 #   step12 motion-summaries      Generate AI motion summaries per party
 
 set -euo pipefail
@@ -26,6 +28,7 @@ set -euo pipefail
 STEPS=(step1 step2 step3 step4 step5 step6 step7 step8 step9 step10 step11 step12)
 FROM_STEP=""
 PARTY=""
+CITY=""
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
@@ -38,15 +41,25 @@ while [[ $# -gt 0 ]]; do
             PARTY="$2"
             shift 2
             ;;
+        --city)
+            CITY="$2"
+            shift 2
+            ;;
         *)
             echo "Unknown argument: $1"
-            echo "Usage: $0 [--from <stepN>] [--party <abbreviation>]"
+            echo "Usage: $0 [--city <city>] [--from <stepN>] [--party <abbreviation>]"
             exit 1
             ;;
     esac
 done
 
-# Build optional --party flag to pass down to scripts
+# Build optional --city and --party flags to pass down to scripts
+CITY_ARG=()
+if [[ -n "$CITY" ]]; then
+    CITY_ARG=(--city "$CITY")
+    echo "City filter: $CITY"
+fi
+
 PARTY_ARG=()
 if [[ -n "$PARTY" ]]; then
     PARTY_ARG=(--party "$PARTY")
@@ -82,22 +95,34 @@ run_step() {
 }
 
 run_step step1  "Ingest YAML + PDFs into DB" \
-    uv run python scripts/ingest.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/ingest.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 run_step step2  "Hydrate Bluesky handles (writes to YAML)" \
-    uv run python scripts/hydrate_bluesky_handles.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/hydrate_bluesky_handles.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 run_step step3  "Hydrate LinkedIn URLs (writes to YAML)" \
-    uv run python scripts/hydrate_linkedin_urls.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/hydrate_linkedin_urls.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 run_step step4  "Re-ingest YAML so hydrated fields land in DB" \
-    uv run python scripts/ingest.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/ingest.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 run_step step5  "Generate pgvector embeddings" \
-    uv run python scripts/generate_embeddings.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/generate_embeddings.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 run_step step6  "Generate AI party program summaries" \
-    uv run python scripts/generate_summaries.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/generate_summaries.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 if [[ -n "$PARTY" ]]; then
     # Advance the skip pointer if --from step7 was specified
@@ -108,23 +133,33 @@ if [[ -n "$PARTY" ]]; then
     echo "⏭  Skipping step7: Generate AI topic comparisons (cross-party, not applicable to single-party run)"
 else
     run_step step7  "Generate AI topic comparisons" \
-        uv run python scripts/generate_comparisons.py
+        uv run python scripts/generate_comparisons.py \
+            ${CITY_ARG[@]:+"${CITY_ARG[@]}"}
 fi
 
 run_step step8  "Fetch Bluesky posts + AI social summaries" \
-    uv run python scripts/fetch_social.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/fetch_social.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 run_step step9  "Fetch LinkedIn profile data + posts per candidate" \
-    uv run python scripts/fetch_linkedin.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/fetch_linkedin.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 run_step step10 "Generate AI LinkedIn summaries" \
-    uv run python scripts/generate_linkedin_summaries.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/generate_linkedin_summaries.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 run_step step11 "Fetch council motions from Notubiz" \
-    uv run python scripts/fetch_motions.py
+    uv run python scripts/fetch_motions.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"}
 
 run_step step12 "Generate AI motion summaries per party" \
-    uv run python scripts/generate_motion_summaries.py ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
+    uv run python scripts/generate_motion_summaries.py \
+        ${CITY_ARG[@]:+"${CITY_ARG[@]}"} \
+        ${PARTY_ARG[@]:+"${PARTY_ARG[@]}"}
 
 echo ""
 echo "✓ Pipeline complete"

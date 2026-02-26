@@ -7,13 +7,14 @@ from sqlalchemy.orm import Session, joinedload
 from app.database import get_db
 from app.models import Election, Motion, MotionCandidate, MotionParty, Party
 
-router = APIRouter(prefix="/moties")
+router = APIRouter()
 
 PAGE_SIZE = 20
 
 
-@router.get("/")
+@router.get("/verkiezingen/{slug}/moties")
 def motion_list(
+    slug: str,
     request: Request,
     db: Session = Depends(get_db),
     type: str = "",
@@ -22,16 +23,13 @@ def motion_list(
     q: str = "",
     page: int = 1,
 ):
-    election = db.query(Election).first()
+    election = db.query(Election).filter(Election.slug == slug).first()
     if not election:
         return request.app.state.templates.TemplateResponse(
-            request, "motions/list.html", {"election": None, "motions": [], "parties": []}
+            request, "errors/404.html", {}, status_code=404
         )
 
-    query = (
-        db.query(Motion)
-        .filter(Motion.election_id == election.id)
-    )
+    query = db.query(Motion).filter(Motion.election_id == election.id)
 
     if type:
         query = query.filter(Motion.motion_type == type)
@@ -93,12 +91,12 @@ def motion_list(
     )
 
 
-@router.get("/statistieken")
-def motion_stats(request: Request, db: Session = Depends(get_db)):
-    election = db.query(Election).first()
+@router.get("/verkiezingen/{slug}/moties/statistieken")
+def motion_stats(slug: str, request: Request, db: Session = Depends(get_db)):
+    election = db.query(Election).filter(Election.slug == slug).first()
     if not election:
         return request.app.state.templates.TemplateResponse(
-            request, "motions/stats.html", {"election": None, "stats": []}
+            request, "errors/404.html", {}, status_code=404
         )
 
     parties = (
@@ -169,7 +167,6 @@ def motion_stats(request: Request, db: Session = Depends(get_db)):
                 "success_rate": success_rate,
             })
 
-    # Sort by total motions descending
     stats.sort(key=lambda s: s["total"], reverse=True)
 
     return request.app.state.templates.TemplateResponse(
@@ -177,18 +174,23 @@ def motion_stats(request: Request, db: Session = Depends(get_db)):
     )
 
 
-@router.get("/{motion_id}")
-def motion_detail(motion_id: int, request: Request, db: Session = Depends(get_db)):
+@router.get("/verkiezingen/{slug}/moties/{motion_id}")
+def motion_detail(slug: str, motion_id: int, request: Request, db: Session = Depends(get_db)):
+    election = db.query(Election).filter(Election.slug == slug).first()
+    if not election:
+        return request.app.state.templates.TemplateResponse(
+            request, "errors/404.html", {}, status_code=404
+        )
     motion = (
         db.query(Motion)
         .options(
             joinedload(Motion.parties).joinedload(MotionParty.party),
             joinedload(Motion.candidates).joinedload(MotionCandidate.candidate),
         )
-        .filter(Motion.id == motion_id)
+        .filter(Motion.id == motion_id, Motion.election_id == election.id)
         .first()
     )
 
     return request.app.state.templates.TemplateResponse(
-        request, "motions/detail.html", {"motion": motion}
+        request, "motions/detail.html", {"election": election, "motion": motion}
     )

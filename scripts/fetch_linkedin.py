@@ -17,6 +17,7 @@ import hashlib
 import logging
 import random
 import re
+import subprocess
 import sys
 import time
 from datetime import datetime
@@ -64,6 +65,18 @@ _NAV_STRINGS = [
     "© LinkedIn Corporation",
     "Helpcentrum",
     "Toegankelijkheid",
+    # Cookie consent page — scraper was redirected before reaching the activity feed
+    "LinkedIn respecteert uw privacy",
+    "LinkedIn en derden gebruiken essentiële",
+    "Selecteer Accepteren of Afwijzen",
+    "Akkoord en lid worden",
+    "Lid worden van LinkedIn",
+    "essentiële en niet-essentiële cookies",
+    "Instellingen voor gasten",
+    # Login wall
+    "Log in to LinkedIn",
+    "Aanmelden bij LinkedIn",
+    "Wachtwoord (meer dan 6 tekens)",
 ]
 
 
@@ -96,6 +109,24 @@ def _extract_username(linkedin_url: str) -> str | None:
     return parts[-1] if parts else None
 
 
+def _get_chrome_major_version() -> int | None:
+    """Detect the installed Chrome major version to keep ChromeDriver in sync."""
+    candidates = [
+        ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "--version"],
+        ["google-chrome", "--version"],
+        ["chromium-browser", "--version"],
+    ]
+    for cmd in candidates:
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
+            m = re.search(r"Chrome (\d+)\.", result.stdout)
+            if m:
+                return int(m.group(1))
+        except Exception:
+            continue
+    return None
+
+
 def create_driver(profile_dir: str | None = None):
     """Create an undetected Chrome driver with anti-fingerprinting options.
 
@@ -117,7 +148,10 @@ def create_driver(profile_dir: str | None = None):
         options.add_argument(f"--user-data-dir={profile_dir}")
         logger.info(f"Using persistent Chrome profile: {profile_dir}")
 
-    driver = uc.Chrome(options=options)
+    chrome_version = _get_chrome_major_version()
+    if chrome_version:
+        logger.info(f"Detected Chrome version: {chrome_version}")
+    driver = uc.Chrome(options=options, version_main=chrome_version)
     # Mask navigator.webdriver via CDP
     driver.execute_cdp_cmd(
         "Page.addScriptToEvaluateOnNewDocument",
@@ -152,11 +186,14 @@ def fetch_posts_selenium(driver, username: str) -> list[dict]:
     driver.get(url)
     time.sleep(random.uniform(4, 7))
 
-    # Bail out immediately if the page signals there are no posts.
+    # Bail out immediately if the page signals there are no posts or is a wall.
     try:
         body_text = driver.find_element(By.TAG_NAME, "body").text
         if any(signal in body_text for signal in _EMPTY_ACTIVITY_SIGNALS):
             logger.info("  Activity page is empty, skipping")
+            return []
+        if _is_nav_text(body_text):
+            logger.warning("  Activity page looks like a cookie/login wall, skipping")
             return []
     except Exception:
         pass
@@ -654,6 +691,12 @@ def main():
         help="Filter by party name or abbreviation (case-insensitive substring match)",
     )
     parser.add_argument(
+        "--city",
+        type=str,
+        default=None,
+        help="Only process this city (e.g. amsterdam)",
+    )
+    parser.add_argument(
         "--profile-dir",
         type=str,
         default=None,
@@ -679,7 +722,10 @@ def main():
     try:
         from sqlalchemy import exists
 
-        election = db.query(Election).first()
+        if args.city:
+            election = db.query(Election).filter(Election.city == args.city.lower()).first()
+        else:
+            election = db.query(Election).first()
         if not election:
             logger.error("No election found. Run ingestion first.")
             return

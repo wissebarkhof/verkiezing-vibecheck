@@ -3,7 +3,7 @@ import logging
 import litellm
 from sqlalchemy.orm import Session
 
-from app.models import Document
+from app.models import Document, Party
 from app.services.llm import EMBEDDING_MODEL
 
 logger = logging.getLogger(__name__)
@@ -23,14 +23,22 @@ def generate_embeddings_batch(texts: list[str]) -> list[list[float]]:
     return [item["embedding"] for item in response.data]
 
 
-def embed_all_documents(db: Session, party_id: int | None = None) -> int:
+def embed_all_documents(
+    db: Session,
+    party_id: int | None = None,
+    election_id: int | None = None,
+) -> int:
     """Generate embeddings for all documents that don't have one yet.
 
-    If party_id is given, only documents belonging to that party are processed.
+    If party_id is given, only documents for that party are processed.
+    If election_id is given (and no party_id), only documents for parties in
+    that election are processed.
     """
     q = db.query(Document).filter(Document.embedding.is_(None))
     if party_id is not None:
         q = q.filter(Document.party_id == party_id)
+    elif election_id is not None:
+        q = q.join(Party).filter(Party.election_id == election_id)
     docs = q.all()
     if not docs:
         logger.info("No documents need embedding")

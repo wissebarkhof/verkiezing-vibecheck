@@ -21,7 +21,7 @@
         {% for party in parties %}
         {% set ci = loop.index0 % 6 %}
         {% set lijsttrekker = party.candidates | selectattr('position_on_list', 'eq', 1) | first %}
-        <a href="/partijen/{{ party.id }}"
+        <a href="/verkiezingen/{{ election.slug }}/partijen/{{ party.id }}"
            class="flex flex-col bg-white rounded-lg border border-gray-200 hover:border-gray-300 card-accent-top transition-all duration-200 p-5 gap-4"
            style="--card-accent: {{ card_gradients[ci] }}">
 

@@ -7,7 +7,7 @@
     {% if candidate_motions %}
     <div class="space-y-2">
         {% for motion in candidate_motions %}
-        <a href="/moties/{{ motion.id }}"
+        <a href="/verkiezingen/{{ election.slug }}/moties/{{ motion.id }}"
            class="block p-3 rounded-lg border border-gray-100 hover:border-gray-200 bg-white transition-colors">
             <div class="flex items-start justify-between gap-2">
                 <span class="text-sm text-gray-900 line-clamp-1">{{ motion.title }}</span>

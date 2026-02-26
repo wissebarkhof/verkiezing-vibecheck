@@ -9,7 +9,7 @@ from app.services.llm import answer_question
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_TOP_K = 8
+DEFAULT_TOP_K = 12
 
 
 def search(

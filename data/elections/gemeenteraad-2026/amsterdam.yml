@@ -10,7 +10,7 @@ parties:
   website: "https://amsterdam.pvda.nl"
   logo: "logos/pvda.png"
   program_pdf: "programs/amsterdam-2026/pvda.pdf"
-  current_seats: 7
+  current_seats: 9
   polled_seats: 8
   poll_updated_at: "2026-02-10"
   candidates:
@@ -268,7 +268,7 @@ parties:
   website: "https://d66.nl/amsterdam"
   logo: "logos/d66.png"
   program_pdf: "programs/amsterdam-2026/d66.pdf"
-  current_seats: 9
+  current_seats: 7
   polled_seats: 7
   poll_updated_at: "2026-02-10"
   candidates:

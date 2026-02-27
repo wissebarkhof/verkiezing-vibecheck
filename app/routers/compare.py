@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models import Election, TopicComparison
+from app.models import Election, Party, TopicComparison
 
 router = APIRouter()
 
@@ -20,8 +20,18 @@ def compare_topics(slug: str, request: Request, db: Session = Depends(get_db)):
         .order_by(TopicComparison.topic_name)
         .all()
     )
+    parties = (
+        db.query(Party)
+        .filter(Party.election_id == election.id)
+        .order_by(
+            Party.polled_seats.desc().nullslast(),
+            Party.current_seats.desc().nullslast(),
+            Party.name,
+        )
+        .all()
+    )
     return request.app.state.templates.TemplateResponse(
         request,
         "compare.html",
-        {"election": election, "comparisons": comparisons},
+        {"election": election, "comparisons": comparisons, "parties": parties},
     )

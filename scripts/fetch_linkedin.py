@@ -712,8 +712,9 @@ def main():
         action="store_true",
         default=False,
         help=(
-            "Also skip candidates that already have LinkedIn posts stored "
-            "(useful when adding new accounts without re-fetching existing ones)"
+            "Skip candidates that already have a profile photo or education data "
+            "stored (i.e. whose profile was successfully scraped before). "
+            "Accounts with no posts will not be re-fetched."
         ),
     )
     args = parser.parse_args()
@@ -740,14 +741,15 @@ def main():
         )
 
         if args.skip_fetched:
+            # Skip candidates whose profile was already scraped, regardless of
+            # whether they had posts. We use photo_url or linkedin_education as
+            # the "already fetched" signal so that accounts with no posts don't
+            # get re-scraped on every run.
             query = query.filter(
-                Candidate.linkedin_summary.is_(None),
-                ~exists().where(
-                    SocialPost.candidate_id == Candidate.id,
-                    SocialPost.platform == "linkedin",
-                ),
+                Candidate.photo_url.is_(None),
+                Candidate.linkedin_education.is_(None),
             )
-            logger.info("--skip-fetched: skipping candidates that already have a summary or LinkedIn posts")
+            logger.info("--skip-fetched: skipping candidates that already have a profile photo or education data")
 
         if args.party:
             party_filter = args.party.lower()

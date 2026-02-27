@@ -15,16 +15,75 @@
 ] %}
 
 {% if comparisons %}
-    <div class="space-y-6">
+    {# Collect party names that appear in any comparison #}
+    {% set ns = namespace(parties_with_data=[]) %}
+    {% for comparison in comparisons %}
+        {% if comparison.comparison_json %}
+            {% for party_name in comparison.comparison_json.keys() %}
+                {% if party_name != 'raw_response' and party_name not in ns.parties_with_data %}
+                    {% set ns.parties_with_data = ns.parties_with_data + [party_name] %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {# Party filter pills #}
+    <div class="mb-4">
+        <h2 class="text-sm font-medium text-gray-500 mb-2">Filter partijen</h2>
+        <div class="flex flex-wrap gap-2" id="party-filters">
+            {% for party in parties %}
+                {% set has_data = party.name in ns.parties_with_data %}
+                <button type="button"
+                    class="party-filter-pill px-3 py-1 rounded-full text-sm font-medium border transition-colors
+                        {% if has_data %}
+                            bg-indigo-50 text-indigo-700 border-indigo-300
+                        {% else %}
+                            bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed
+                        {% endif %}"
+                    data-party="{{ party.name }}"
+                    {% if has_data %}data-active="true"{% else %}data-active="false" disabled{% endif %}>
+                    {{ party.abbreviation or party.name }}
+                </button>
+            {% endfor %}
+        </div>
+        <p class="mt-2 text-xs text-gray-400">Voor niet-klikbare partijen hebben we geen verkiezingsprogramma kunnen vinden en zijn daarom niet opgenomen in de vergelijking.</p>
+    </div>
+
+    {# Topic tabs #}
+    <div class="mb-6">
+        <div class="flex flex-wrap gap-2" id="topic-tabs">
+            {% for comparison in comparisons %}
+                <button type="button"
+                    class="topic-tab px-4 py-2 rounded-full text-sm font-semibold border transition-colors
+                        {% if loop.first %}
+                            text-white border-transparent
+                        {% else %}
+                            bg-white text-gray-700 border-gray-200 hover:border-gray-400
+                        {% endif %}"
+                    {% if loop.first %}
+                        style="background: {{ card_gradients[0] }}"
+                    {% endif %}
+                    data-topic="{{ comparison.topic_name }}"
+                    data-gradient="{{ card_gradients[loop.index0 % 6] }}">
+                    {{ comparison.topic_name }}
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# Topic panels #}
+    <div id="topic-panels">
         {% for comparison in comparisons %}
-        <div class="bg-white rounded-lg border border-gray-200 card-accent-top p-6"
-             style="--card-accent: {{ card_gradients[loop.index0 % 6] }}">
+        <div class="bg-white rounded-lg border border-gray-200 card-accent-top p-6 {% if not loop.first %}hidden{% endif %}"
+             style="--card-accent: {{ card_gradients[loop.index0 % 6] }}"
+             data-topic-panel="{{ comparison.topic_name }}">
             <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ comparison.topic_name }}</h2>
             {% if comparison.comparison_json %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {% for party_name, position in comparison.comparison_json.items() %}
                         {% if party_name != 'raw_response' %}
-                        <div class="rounded-lg border border-gray-100 p-4 bg-white">
+                        <div class="rounded-lg border border-gray-100 p-4 bg-white"
+                             data-party-card="{{ party_name }}">
                             <h3 class="text-sm font-semibold text-gray-900 mb-2">{{ party_name }}</h3>
                             <div class="prose prose-sm max-w-none text-gray-600">{{ position | markdown }}</div>
                         </div>

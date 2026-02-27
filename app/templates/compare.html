@@ -15,24 +15,12 @@
 ] %}
 
 {% if comparisons %}
-    {# Collect party names that appear in any comparison #}
-    {% set ns = namespace(parties_with_data=[]) %}
-    {% for comparison in comparisons %}
-        {% if comparison.comparison_json %}
-            {% for party_name in comparison.comparison_json.keys() %}
-                {% if party_name != 'raw_response' and party_name not in ns.parties_with_data %}
-                    {% set ns.parties_with_data = ns.parties_with_data + [party_name] %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
-
     {# Party filter pills #}
     <div class="mb-4">
         <h2 class="text-sm font-medium text-gray-500 mb-2">Filter partijen</h2>
         <div class="flex flex-wrap gap-2" id="party-filters">
             {% for party in parties %}
-                {% set has_data = party.name in ns.parties_with_data %}
+                {% set has_data = party.program_text is not none %}
                 <button type="button"
                     class="party-filter-pill px-3 py-1 rounded-full text-sm font-medium border transition-colors
                         {% if has_data %}

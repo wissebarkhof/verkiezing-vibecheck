@@ -54,8 +54,37 @@ _EMPTY_ACTIVITY_SIGNALS = [
     "will appear here",
 ]
 
-# LinkedIn UI / navigation strings. If any of these appear in extracted post
-# text it means we captured the page chrome, not an actual post.
+# Phrases that appear on LinkedIn 404 / profile-not-found pages.
+_NOT_FOUND_SIGNALS = [
+    "Hmm, we can't seem to find this page",
+    "We kunnen deze pagina niet vinden",
+    "This page doesn't exist",
+    "Deze pagina bestaat niet",
+    "Page not found",
+    "Pagina niet gevonden",
+    "404",
+]
+
+# Strings that appear on cookie-consent or login-wall pages only — NOT on a
+# normal authenticated activity feed. Used for full-page early-exit checks.
+_WALL_SIGNALS = [
+    # Cookie consent page
+    "LinkedIn respecteert uw privacy",
+    "LinkedIn en derden gebruiken essentiële",
+    "Selecteer Accepteren of Afwijzen",
+    "Akkoord en lid worden",
+    "essentiële en niet-essentiële cookies",
+    "Instellingen voor gasten",
+    # Login wall
+    "Log in to LinkedIn",
+    "Aanmelden bij LinkedIn",
+    "Wachtwoord (meer dan 6 tekens)",
+]
+
+# LinkedIn UI / navigation strings. If any of these appear in an *individual*
+# extracted post element it means we captured page chrome, not an actual post.
+# Do NOT use this list on full body text — many of these strings appear in the
+# site navigation on every authenticated LinkedIn page.
 _NAV_STRINGS = [
     "meldingen in totaal",
     "Feedupdates meldingen",
@@ -65,23 +94,30 @@ _NAV_STRINGS = [
     "© LinkedIn Corporation",
     "Helpcentrum",
     "Toegankelijkheid",
-    # Cookie consent page — scraper was redirected before reaching the activity feed
-    "LinkedIn respecteert uw privacy",
-    "LinkedIn en derden gebruiken essentiële",
-    "Selecteer Accepteren of Afwijzen",
-    "Akkoord en lid worden",
     "Lid worden van LinkedIn",
-    "essentiële en niet-essentiële cookies",
-    "Instellingen voor gasten",
-    # Login wall
-    "Log in to LinkedIn",
-    "Aanmelden bij LinkedIn",
-    "Wachtwoord (meer dan 6 tekens)",
-]
+] + _WALL_SIGNALS
+
+
+def _is_wall_page(text: str) -> bool:
+    """Return True if the full page text looks like a cookie-consent or login wall."""
+    return any(signal in text for signal in _WALL_SIGNALS)
+
+
+def _is_not_found_page(driver) -> bool:
+    """Return True if the current page is a LinkedIn 404 / profile-not-found page."""
+    title = driver.title or ""
+    if "404" in title or "not found" in title.lower() or "niet gevonden" in title.lower():
+        return True
+    try:
+        from selenium.webdriver.common.by import By
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        return any(signal in body_text for signal in _NOT_FOUND_SIGNALS)
+    except Exception:
+        return False
 
 
 def _is_nav_text(text: str) -> bool:
-    """Return True if the text looks like LinkedIn navigation / UI chrome."""
+    """Return True if an individual post/block looks like LinkedIn UI chrome."""
     return any(nav in text for nav in _NAV_STRINGS)
 
 
@@ -183,8 +219,13 @@ def fetch_posts_selenium(driver, username: str) -> list[dict]:
     from selenium.webdriver.common.by import By
 
     url = f"https://www.linkedin.com/in/{username}/recent-activity/all/"
+    logger.info(f"  GET {url}")
     driver.get(url)
     time.sleep(random.uniform(4, 7))
+
+    if _is_not_found_page(driver):
+        logger.warning(f"  Activity page returned 404 / not found for {username}, skipping")
+        return []
 
     # Bail out immediately if the page signals there are no posts or is a wall.
     try:
@@ -192,7 +233,7 @@ def fetch_posts_selenium(driver, username: str) -> list[dict]:
         if any(signal in body_text for signal in _EMPTY_ACTIVITY_SIGNALS):
             logger.info("  Activity page is empty, skipping")
             return []
-        if _is_nav_text(body_text):
+        if _is_wall_page(body_text):
             logger.warning("  Activity page looks like a cookie/login wall, skipping")
             return []
     except Exception:
@@ -495,8 +536,14 @@ def fetch_profile_selenium(driver, username: str) -> dict | None:
     from selenium.webdriver.common.by import By
 
     url = f"https://www.linkedin.com/in/{username}/"
+    logger.info(f"  GET {url}")
     driver.get(url)
     time.sleep(random.uniform(4, 8))  # wait for page to fully load
+
+    if _is_not_found_page(driver):
+        logger.warning(f"  Profile page returned 404 / not found for {username}, skipping")
+        return None
+
     _human_scroll(driver)
     time.sleep(random.uniform(1.0, 2.5))
 

@@ -5,8 +5,12 @@ election:
   total_seats: 45
 parties:
 - name: Hart voor Den Haag / Groep de Mos
-  abbreviation: ''
+  abbreviation: HvDH
   list_number: 1
+  website: "https://www.hartvoordenhaag.nl"
+  current_seats: 9
+  polled_seats: 12
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Richard de Mos
     position: 1
@@ -109,8 +113,13 @@ parties:
   - name: Lex Schoenmaker
     position: 50
 - name: GROENLINKS / Partij van de Arbeid
-  abbreviation: Gl-PvdA
+  abbreviation: GL-PvdA
   list_number: 2
+  website: "https://denhaag.groenlinkspvda.nl"
+  logo: "logos/groenlinks.png"
+  current_seats: 8
+  polled_seats: 8
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Mariëlle Vavier
     position: 1
@@ -213,8 +222,13 @@ parties:
   - name: Luc Stultiens
     position: 50
 - name: D66
-  abbreviation: 'D66'
+  abbreviation: D66
   list_number: 3
+  website: "https://d66.nl/denhaag"
+  logo: "logos/d66.png"
+  current_seats: 8
+  polled_seats: 8
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Yousef Assad
     position: 1
@@ -317,8 +331,13 @@ parties:
   - name: Saskia Bruines
     position: 50
 - name: VVD
-  abbreviation: 'VVD'
+  abbreviation: VVD
   list_number: 4
+  website: "https://vvddenhaag.nl"
+  logo: "logos/vvd.png"
+  current_seats: 7
+  polled_seats: 3
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Lotte van Basten Batenburg
     position: 1
@@ -419,8 +438,13 @@ parties:
   - name: Eelco Heinen
     position: 49
 - name: Partij voor de Dieren
-  abbreviation: 'PvdD'
+  abbreviation: PvdD
   list_number: 5
+  website: "https://denhaag.partijvoordedieren.nl"
+  logo: "logos/pvdd.png"
+  current_seats: 2
+  polled_seats: 2
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Robert Barker
     position: 1
@@ -521,8 +545,13 @@ parties:
   - name: Esther Ouwehand
     position: 49
 - name: CDA
-  abbreviation: 'CDA'
+  abbreviation: CDA
   list_number: 6
+  website: "https://www.cda.nl/zuid-holland/s-gravenhage"
+  logo: "logos/cda.png"
+  current_seats: 3
+  polled_seats: 2
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Kavish Partiman
     position: 1
@@ -605,8 +634,13 @@ parties:
   - name: Hilbert Bredemeijer
     position: 40
 - name: DENK
-  abbreviation: 'DENK'
+  abbreviation: DENK
   list_number: 7
+  website: "https://www.bewegingdenk.nl/den-haag"
+  logo: "logos/denk.png"
+  current_seats: 2
+  polled_seats: 4
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Nur Icar
     position: 1
@@ -685,8 +719,12 @@ parties:
   - name: Stephan van Baarle
     position: 38
 - name: Haagse Stadspartij
-  abbreviation: ''
+  abbreviation: HSP
   list_number: 8
+  website: "https://haagsestadspartij.nl"
+  current_seats: 1
+  polled_seats: 0
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Fatima Faïd
     position: 1
@@ -722,6 +760,11 @@ parties:
 - name: Socialistische Partij
   abbreviation: SP
   list_number: 9
+  website: "https://denhaag.sp.nl"
+  logo: "logos/sp.png"
+  current_seats: 2
+  polled_seats: 0
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Tijmen van Wijngaarden
     position: 1
@@ -762,6 +805,10 @@ parties:
 - name: Partij voor de Vrijheid
   abbreviation: PVV
   list_number: 10
+  website: "https://www.haagsepvv.nl"
+  current_seats: 1
+  polled_seats: 3
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Chris Faddegon
     position: 1
@@ -770,8 +817,13 @@ parties:
   - name: Annemarie van Gent
     position: 3
 - name: ChristenUnie-SGP
-  abbreviation: 'CU-SGP'
+  abbreviation: CU-SGP
   list_number: 11
+  website: "https://denhaag.christenunie.nl"
+  logo: "logos/cu.png"
+  current_seats: 1
+  polled_seats: 1
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Judith Klokkenburg-Reedeker
     position: 1
@@ -856,8 +908,13 @@ parties:
   - name: Pieter Grinwis
     position: 41
 - name: Forum voor Democratie
-  abbreviation: 'FvD'
+  abbreviation: FvD
   list_number: 12
+  website: "https://fvd.nl/gemeentes/den-haag"
+  logo: "logos/fvd.png"
+  current_seats: 1
+  polled_seats: 1
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Robbert van der Meijden
     position: 1
@@ -893,9 +950,14 @@ parties:
     position: 16
   - name: Pepijn van Houwelingen
     position: 17
-- name: Volt
-  abbreviation: 'Volt'
+- name: VOLT
+  abbreviation: VOLT
   list_number: 13
+  website: "https://voltnederland.org/zuid-holland/volt-den-haag"
+  logo: "logos/volt.png"
+  current_seats: 0
+  polled_seats: 1
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Mylène Tabernal
     position: 1
@@ -932,6 +994,8 @@ parties:
 - name: Nieuw Sociaal Contract
   abbreviation: NSC
   list_number: 14
+  website: "https://www.nieuwsociaalcontract.nl"
+  current_seats: 0
   candidates:
   - name: Sam Chauthie
     position: 1
@@ -960,8 +1024,9 @@ parties:
   - name: Frederika Gans
     position: 13
 - name: INL Den Haag
-  abbreviation: ''
+  abbreviation: INL
   list_number: 15
+  current_seats: 0
   candidates:
   - name: Imro Blom
     position: 1
@@ -969,9 +1034,10 @@ parties:
     position: 2
   - name: Paulo Valentim Domingos Martins
     position: 3
-- name: ''
+- name: Blanco lijst Cetinkaya
   abbreviation: ''
   list_number: 16
+  current_seats: 0
   candidates:
   - name: Tahsin Çetinkaya
     position: 1
@@ -992,6 +1058,7 @@ parties:
 - name: Drerrie voor Den Haag
   abbreviation: DvD
   list_number: 17
+  current_seats: 0
   candidates:
   - name: Sidi Mohammed El Baroudi
     position: 1
@@ -1024,22 +1091,28 @@ parties:
   - name: Bekir Şahin
     position: 15
 - name: Partij voor de Rechtsstaat
-  abbreviation: ''
+  abbreviation: PvdR
   list_number: 18
+  website: "https://www.partijvoorderechtsstaat.nl"
+  current_seats: 0
   candidates:
   - name: Funda Ileri
     position: 1
-- name: ''
+- name: Blanco lijst Ramdhani
   abbreviation: ''
   list_number: 19
+  current_seats: 0
   candidates:
   - name: Ramdhani
     position: 1
   - name: Belkhatir
     position: 2
-- name: 50PLUS
-  abbreviation: '50PLUS'
+- name: 50Plus
+  abbreviation: 50Plus
   list_number: 20
+  website: "https://www.50pluspartij.nl"
+  logo: "logos/50plus.svg"
+  current_seats: 0
   candidates:
   - name: Sofia Tsitsouashvili
     position: 1

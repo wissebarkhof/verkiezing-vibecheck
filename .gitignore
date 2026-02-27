@@ -58,6 +58,12 @@ data/programs/*
 !data/programs/amsterdam-2026/
 data/programs/amsterdam-2026/*
 !data/programs/amsterdam-2026/*.pdf
+!data/programs/den-haag-2026/
+data/programs/den-haag-2026/*
+!data/programs/den-haag-2026/*.pdf
+!data/programs/rotterdam-2026/
+data/programs/rotterdam-2026/*
+!data/programs/rotterdam-2026/*.pdf
 !data/.gitkeep
 !data/programs/.gitkeep
 logs/*

@@ -5,8 +5,12 @@ election:
   total_seats: 45
 parties:
 - name: Leefbaar Rotterdam
-  abbreviation: ''
+  abbreviation: LR
   list_number: 1
+  website: "https://www.leefbaarrotterdam.nl"
+  current_seats: 10
+  polled_seats: 10
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Ronald Buijt
     position: 1
@@ -109,8 +113,13 @@ parties:
   - name: Ronald Sörensen
     position: 50
 - name: GROENLINKS / Partij van de Arbeid
-  abbreviation: PvdA
+  abbreviation: GL-PvdA
   list_number: 2
+  website: "https://rotterdam.groenlinkspvda.nl"
+  logo: "logos/gl-pvda.png"
+  current_seats: 9
+  polled_seats: 9
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Jeroen Postma
     position: 1
@@ -211,8 +220,13 @@ parties:
   - name: John Buijsman
     position: 49
 - name: VVD
-  abbreviation: ''
+  abbreviation: VVD
   list_number: 3
+  website: "https://www.vvdrotterdam.nl"
+  logo: "logos/vvd.png"
+  current_seats: 5
+  polled_seats: 4
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Tim Versnel
     position: 1
@@ -315,8 +329,13 @@ parties:
   - name: Dieke van Groningen-de Haas
     position: 50
 - name: D66
-  abbreviation: ''
+  abbreviation: D66
   list_number: 4
+  website: "https://d66.nl/rotterdam"
+  logo: "logos/d66.png"
+  current_seats: 4
+  polled_seats: 9
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Chantal Zeegers
     position: 1
@@ -419,8 +438,13 @@ parties:
   - name: Salima Belhaj
     position: 50
 - name: DENK
-  abbreviation: ''
+  abbreviation: DENK
   list_number: 5
+  website: "https://www.bewegingdenk.nl/rotterdam"
+  logo: "logos/denk.png"
+  current_seats: 4
+  polled_seats: 3
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Faouzi Achbar
     position: 1
@@ -522,9 +546,14 @@ parties:
     position: 49
   - name: Stephan van Baarle
     position: 50
-- name: Volt
-  abbreviation: ''
+- name: VOLT
+  abbreviation: VOLT
   list_number: 6
+  website: "https://voltnederland.org/zuid-holland/community-rotterdam"
+  logo: "logos/volt.png"
+  current_seats: 2
+  polled_seats: 2
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Luuc Dekkers
     position: 1
@@ -569,8 +598,13 @@ parties:
   - name: Tijmen van der Werf
     position: 21
 - name: Partij voor de Dieren
-  abbreviation: ''
+  abbreviation: PvdD
   list_number: 7
+  website: "https://rotterdam.partijvoordedieren.nl"
+  logo: "logos/pvdd.png"
+  current_seats: 2
+  polled_seats: 1
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Pınar Coşkun
     position: 1
@@ -629,8 +663,13 @@ parties:
   - name: Ingrid Visseren-Hamakers
     position: 28
 - name: BIJ1
-  abbreviation: ''
+  abbreviation: BIJ1
   list_number: 8
+  website: "https://rotterdam.bij1.org"
+  logo: "logos/bij1.png"
+  current_seats: 2
+  polled_seats: 1
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Tikhoe Isaack
     position: 1
@@ -680,9 +719,14 @@ parties:
     position: 23
   - name: Edson Olf
     position: 24
-- name: 50PLUS
-  abbreviation: ''
+- name: 50Plus
+  abbreviation: 50Plus
   list_number: 9
+  website: "https://rotterdam50plus.nl"
+  logo: "logos/50plus.svg"
+  current_seats: 2
+  polled_seats: 1
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Sjef Siemons
     position: 1
@@ -703,8 +747,13 @@ parties:
   - name: van der Linde
     position: 9
 - name: ChristenUnie
-  abbreviation: ''
+  abbreviation: CU
   list_number: 10
+  website: "https://rotterdam.christenunie.nl"
+  logo: "logos/cu.png"
+  current_seats: 1
+  polled_seats: 0
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Gerben van Dijk
     position: 1
@@ -788,9 +837,14 @@ parties:
     position: 40
   - name: Tjalling Vonk
     position: 41
-- name: SP
-  abbreviation: Socialistische Partij
+- name: Socialistische Partij
+  abbreviation: SP
   list_number: 11
+  website: "https://rotterdam.sp.nl"
+  logo: "logos/sp.png"
+  current_seats: 1
+  polled_seats: 1
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Emin Başoğlu
     position: 1
@@ -859,8 +913,13 @@ parties:
   - name: Theo Coşkun
     position: 33
 - name: CDA
-  abbreviation: ''
+  abbreviation: CDA
   list_number: 12
+  website: "https://www.cda.nl/zuid-holland/rotterdam"
+  logo: "logos/cda.png"
+  current_seats: 1
+  polled_seats: 1
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: René Segers-Hoogendoorn
     position: 1
@@ -911,8 +970,13 @@ parties:
   - name: Guido David
     position: 24
 - name: Forum voor Democratie
-  abbreviation: ''
+  abbreviation: FvD
   list_number: 13
+  website: "https://fvd.nl/gemeentes/rotterdam"
+  logo: "logos/fvd.png"
+  current_seats: 1
+  polled_seats: 0
+  poll_updated_at: "2026-01-25"
   candidates:
   - name: Daan Hamhuis
     position: 1
@@ -959,8 +1023,10 @@ parties:
   - name: Lidewij de Vos
     position: 22
 - name: PARTIJvdSPORT
-  abbreviation: ''
+  abbreviation: PvdS
   list_number: 14
+  website: "https://partijvdsport.nl/rotterdam"
+  current_seats: 0
   candidates:
   - name: Elise Rensing
     position: 1
@@ -969,8 +1035,9 @@ parties:
   - name: Miranda Boskamp
     position: 3
 - name: Vrede voor Dieren
-  abbreviation: ''
+  abbreviation: VvD
   list_number: 15
+  current_seats: 0
   candidates:
   - name: Ruud van der Velden
     position: 1
@@ -997,8 +1064,9 @@ parties:
   - name: Joris Lutz
     position: 12
 - name: (PBAR) Beweging Armoedebestrijding
-  abbreviation: ''
+  abbreviation: PBAR
   list_number: 16
+  current_seats: 0
   candidates:
   - name: John Roseval
     position: 1
@@ -1021,8 +1089,9 @@ parties:
   - name: Carlos Wouter
     position: 10
 - name: JOU, Lijst Verkoelen
-  abbreviation: ''
+  abbreviation: JOU
   list_number: 17
+  current_seats: 0
   candidates:
   - name: Ellen Verkoelen
     position: 1
@@ -1107,8 +1176,9 @@ parties:
   - name: Riek Bakker
     position: 41
 - name: Rotterdam NEXT
-  abbreviation: ''
+  abbreviation: NEXT
   list_number: 18
+  current_seats: 0
   candidates:
   - name: Ahmed Moridi
     position: 1
@@ -1143,6 +1213,7 @@ parties:
 - name: Staatkundig Gereformeerde Partij
   abbreviation: SGP
   list_number: 19
+  current_seats: 1
   candidates:
   - name: Maurits Verhoeven
     position: 1
@@ -1203,8 +1274,9 @@ parties:
   - name: Gerbrand van Hoef
     position: 29
 - name: Wij Kleurrijk Rotterdam
-  abbreviation: ''
+  abbreviation: WKR
   list_number: 20
+  current_seats: 0
   candidates:
   - name: Wilgo Pengel
     position: 1
@@ -1221,8 +1293,9 @@ parties:
   - name: Vanessa de Wolff
     position: 7
 - name: Wij van de Wijk
-  abbreviation: ''
+  abbreviation: WvdW
   list_number: 21
+  current_seats: 0
   candidates:
   - name: Janine Kallenbach - Heinen
     position: 1

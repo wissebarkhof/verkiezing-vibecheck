@@ -3,7 +3,8 @@
 {% block title %}Kandidaten — Verkiezing Vibecheck{% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-bold text-gray-900 mb-6">Kandidaten</h1>
+<h1 class="text-3xl font-bold text-gray-900 mb-1">Kandidaten</h1>
+     <p class="text-lg text-gray-500 mb-6">Misschien heb je besloten op welke partij je gaat stemmen. Maar wie wordt jouw kandidaat?</p>
 
 {% set card_gradients = [
     'linear-gradient(90deg,#a0f5e9,#9ddcf2)',
@@ -13,18 +14,34 @@
     'linear-gradient(90deg,#99f09f,#f5ad6e)',
     'linear-gradient(90deg,#f5ad6e,#a0f5e9)',
 ] %}
+{% set avatar_colors = ['#a0f5e9','#9ddcf2','#a6a0f5','#eaa0f5','#99f09f','#f5ad6e'] %}
 
 {% if parties %}
+    <p class="text-gray-400 text-sm mb-6">
+        Hieronder staan de kandidatenlijsten van alle partijen die meedoen. Bij de kandidaten die actief zijn op Bluesky staat een blauwe vlinder en van veel kandidaten hebben we het CV van LinkedIn voor je toegevoegd. Van hun online presence is door middel van AI een samenvatting gemaakt en als kandidaten nu al actief zijn in de raad, hebben we een overzicht van hun ingediende moties toegevoegd. Zo krijg je snel een idee waar ze zich mee bezig houden. Over kandidaten die geen sociale media hebben is informatie te vinden op de site van de partij zelf.
+    </p>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {% for p in parties %}
         {% set ci = loop.index0 % 6 %}
         {% set party_id = loop.index %}
         <div class="bg-white rounded-lg border border-gray-200 card-accent-top p-4"
              style="--card-accent: {{ card_gradients[ci] }}">
-            <h2 class="font-semibold text-gray-800 border-b border-gray-100 pb-2 mb-3">
-                {{ p.name }}
-                <span class="block text-xs text-gray-400 font-normal">{{ p.abbreviation }}</span>
-            </h2>
+            <div class="flex items-center gap-2 border-b border-gray-100 pb-2 mb-3">
+                {% if p.logo_url %}
+                    <img src="/logos/{{ p.logo_url | replace('logos/', '') }}"
+                         alt="{{ p.abbreviation }} logo"
+                         class="h-8 w-8 object-contain flex-shrink-0">
+                {% else %}
+                    <div class="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0"
+                         style="background: {{ avatar_colors[ci] }}">
+                        <span class="text-xs font-bold text-gray-700">{{ p.abbreviation[:2] }}</span>
+                    </div>
+                {% endif %}
+                <div>
+                    <h2 class="font-semibold text-gray-800 leading-tight">{{ p.name }}</h2>
+                    <span class="text-xs text-gray-400 font-normal">{{ p.abbreviation }}</span>
+                </div>
+            </div>
             {% set c_seats = p.current_seats %}
             {% set poll_seats = p.polled_seats %}
             <ul class="space-y-1 text-sm">

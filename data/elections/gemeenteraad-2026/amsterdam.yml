@@ -1675,7 +1675,7 @@ parties:
   abbreviation: "PvO"
   list_number: 21
   website: "https://partijvoorontwikkeling.nl"
-  program_pdf: "data/programs/amsterdam-2026/pvo.pdf"
+  program_pdf: "programs/amsterdam-2026/pvo.pdf"
   logo: "logos/pvo.webp"
   current_seats: 0
   candidates:
@@ -1692,7 +1692,7 @@ parties:
   abbreviation: "CU"
   list_number: 22
   website: "https://amsterdam.christenunie.nl"
-  program_pdf: "data/programs/amsterdam-2026/cu.pdf"
+  program_pdf: "programs/amsterdam-2026/cu.pdf"
   logo: "logos/cu.png"
   current_seats: 0
   candidates:
@@ -1791,7 +1791,7 @@ parties:
   abbreviation: "Ellect"
   list_number: 23
   website: "https://www.ellect.eu"
-  program_pdf: "data/programs/amsterdam-2026/ellect.pdf"
+  program_pdf: "programs/amsterdam-2026/ellect.pdf"
   logo: "logos/ellect.png"
   current_seats: 0
   candidates:
@@ -1810,7 +1810,7 @@ parties:
   abbreviation: "HvA"
   list_number: 24
   website: "https://hartvooramsterdam.nl"
-  program_pdf: "data/programs/amsterdam-2026/hva.pdf"
+  program_pdf: "programs/amsterdam-2026/hva.pdf"
   logo: logos/hva.avif
   current_seats: 0
   candidates:
@@ -1837,7 +1837,7 @@ parties:
   list_number: 25
   current_seats: 0
   website: https://anti-racistische-moslimpartij.nl/
-  program_pdf: "data/programs/amsterdam-2026/armp.pdf"
+  program_pdf: "programs/amsterdam-2026/armp.pdf"
   candidates:
   - name: Ozan Türkdogan
     position: 1
@@ -1845,7 +1845,7 @@ parties:
   abbreviation: "LP"
   list_number: 26
   website: "https://stemlp.nl"
-  program_pdf: data/programs/amsterdam-2026/lp.pdf
+  program_pdf: programs/amsterdam-2026/lp.pdf
   logo: "logos/armp.png"
   current_seats: 0
   candidates:
@@ -1867,7 +1867,7 @@ parties:
   abbreviation: "NL Plan"
   list_number: 27
   website: "https://www.nlplan.nl"
-  program_pdf: data/programs/amsterdam-2026/nlplan.pdf
+  program_pdf: programs/amsterdam-2026/nlplan.pdf
   logo: "logos/nlplan.webp"
   current_seats: 0
   candidates:
@@ -1887,7 +1887,7 @@ parties:
   list_number: 28
   website: "https://amsterdam.piratenpartij.nl"
   current_seats: 0
-  program_pdf: data/programs/amsterdam-2026/piraten.pdf
+  program_pdf: programs/amsterdam-2026/piraten.pdf
   logo: "logos/piraten.png"
   candidates:
   - name: Kirsten Zimmerman
@@ -1944,7 +1944,7 @@ parties:
   abbreviation: "LEF"
   list_number: 29
   website: "https://www.lef.nl"
-  program_pdf: data/programs/amsterdam-2026/lef.pdf
+  program_pdf: programs/amsterdam-2026/lef.pdf
   logo: "logos/lef.webp"
   current_seats: 0
   candidates:
@@ -1969,7 +1969,7 @@ parties:
   abbreviation: "LCA"
   list_number: 30
   website: "https://liberaalcollectief.nl"
-  program_pdf: data/programs/amsterdam-2026/lca.pdf
+  program_pdf: programs/amsterdam-2026/lca.pdf
   logo: "logos/lca.png"
   current_seats: 0
   candidates:
@@ -2027,7 +2027,7 @@ parties:
   abbreviation: "PvdR"
   list_number: 34
   website: "https://www.partijvoorderechtsstaat.nl"
-  program_pdf: data/programs/amsterdam-2026/pvdr.pdf
+  program_pdf: programs/amsterdam-2026/pvdr.pdf
   logo: logos/pvdr.jpeg
   current_seats: 0
   candidates:
@@ -2046,7 +2046,7 @@ parties:
   abbreviation: "DSvA"
   list_number: 35
   website: "https://www.destemvanamsterdam.nl"
-  program_pdf: data/programs/amsterdam-2026/dsva.pdf
+  program_pdf: programs/amsterdam-2026/dsva.pdf
   logos: logos/dsva.jpeg
   current_seats: 0
   candidates:

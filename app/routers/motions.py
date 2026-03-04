@@ -19,10 +19,12 @@ def motion_list(
     db: Session = Depends(get_db),
     type: str = "",
     result: str = "",
-    party_id: int | None = None,
+    party_id: str | None = None,
     q: str = "",
     page: int = 1,
 ):
+    party_id_int: int | None = int(party_id) if party_id and party_id.strip() else None
+
     election = db.query(Election).filter(Election.slug == slug).first()
     if not election:
         return request.app.state.templates.TemplateResponse(
@@ -35,8 +37,8 @@ def motion_list(
         query = query.filter(Motion.motion_type == type)
     if result:
         query = query.filter(Motion.result == result)
-    if party_id:
-        query = query.join(MotionParty).filter(MotionParty.party_id == party_id)
+    if party_id_int:
+        query = query.join(MotionParty).filter(MotionParty.party_id == party_id_int)
     if q.strip():
         query = query.filter(Motion.title.ilike(f"%{q.strip()}%"))
 
@@ -77,7 +79,7 @@ def motion_list(
         "total_pages": total_pages,
         "filter_type": type,
         "filter_result": result,
-        "filter_party_id": party_id,
+        "filter_party_id": party_id_int,
         "filter_q": q,
     }
 

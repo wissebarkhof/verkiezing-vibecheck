@@ -131,6 +131,28 @@ h1, h2, h3, h4, h5, h6 {
   transform: scaleX(1);
 }
 
+/* --- Mobile nav links --- */
+.mobile-nav-link {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-decoration: none;
+  padding: 0.5rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.mobile-nav-link:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.mobile-nav-link--active {
+  color: #111827;
+  background-color: #f9fafb;
+}
+
 /* --- Motion type badges (replace generic Tailwind blue/purple) --- */
 .badge-motie {
   background: rgba(160, 245, 233, 0.4);
